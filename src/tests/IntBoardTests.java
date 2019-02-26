@@ -7,12 +7,14 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import experiments.BoardCell;
+import experiments.IntBoard;
 
 class IntBoardTests {
-
+	
+	public IntBoard board;
 	@Before
 	public void beforeAll() {
-		board = new IntBoard(); // constructor should call calcAdjacencies()
+		IntBoard board = new IntBoard(); // constructor should call calcAdjacencies()
 	}
 	
 	/**
@@ -55,6 +57,7 @@ class IntBoardTests {
 	/**
 	 * Test adjacencies for a left edge
 	 */
+	@Test
 	public void testAdjacencyLeftEdge() {
 		BoardCell cell = board.getCell(3,0);
 		Set<BoardCell> testList = board.getAdjList(cell);

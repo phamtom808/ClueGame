@@ -4,8 +4,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+/*
+ * Emily Christensen and Dane Pham
+ * IntBoard Class: Handles the entire board, adjancies for each cell, possible targets for a given roll
+ */
+
 public class IntBoard {
 	
+	//Instance Variables
 	private Map<BoardCell, HashSet<BoardCell>> adjMatrix; 
 	private BoardCell[][] gameBoard;
 	private HashSet<BoardCell> targets;
@@ -14,6 +20,10 @@ public class IntBoard {
 		this.gameBoard = new BoardCell[4][4];
 		this.adjMatrix = new HashMap<BoardCell, HashSet<BoardCell>>();
 		this.targets = new HashSet<BoardCell>();
+	}
+	
+	public BoardCell getCell(int x, int y) {
+		return null;
 	}
 	
 	public HashSet<BoardCell> getAdjList(BoardCell cell){
