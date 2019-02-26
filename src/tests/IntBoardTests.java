@@ -63,6 +63,33 @@ class IntBoardTests {
 		assertEquals(2, testList.size());
 	}
 	
+	/**
+	 * Test adjacencies for second column middle of grid
+	 */
+	@Test
+	public void testSecondColumn() {
+		BoardCell cell = board.getCell(1,1);
+		Set<BoardCell> testList = board.getAdjList(cell);
+		assertTrue(testList.contains(board.getCell(0,1)));
+		assertTrue(testList.contains(board.getCell(2,1)));
+		assertTrue(testList.contains(board.getCell(1,0)));
+		assertTrue(testList.contains(board.getCell(1,3)));
+		assertEquals(4, testList.size());
+	}
+	
+	/**
+	 * Test adjacencies for second from last column, middle of grid
+	 */
+	@Test
+	public void testThirdColumn() {
+		Board cell = board.getCell(2,2);
+		Set<BoardCell> testList = board.getAdjList(cell);
+		assertTrue(testList.contains(board.getCell(1,2)));
+		assertTrue(testList.contains(board.getCell(3,2)));
+		assertTrue(testList.contains(board.getCell(2,1)));
+		assertTrue(testList.contains(board.getCell(2,3)));
+		assertEquals(testlist.conatins(4, testList.size()));
+	}
 	@Test
 	void test() {
 		fail("Not yet implemented");
