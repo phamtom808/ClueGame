@@ -44,7 +44,11 @@ public class IntBoard {
 	}
 	
 	public void calcAdjacencies() {
-		return;
+		for(int i = 0; i<gameBoard.length; i++) {
+			for(int j = 0; j<gameBoard.length; j++) {
+				adjMatrix.put(this.getCell(i, j),this.getAdjList(this.getCell(i, j)));
+			}
+		}
 	}
 	
 	public HashSet<BoardCell> getTargets(){
