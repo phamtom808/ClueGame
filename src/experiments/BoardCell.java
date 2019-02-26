@@ -19,12 +19,12 @@ public class BoardCell {
 	
 	//Getter for X 
 	public int getX() {
-		return 0;
+		return this.x;
 	}
 	
 	//Getter for Y
 	public int getY() {
-		return 0;
+		return this.y;
 	}
 	
 }
