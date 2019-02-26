@@ -9,4 +9,12 @@ public class BoardCell {
 		this.x = x;
 		this.y = y;
 	}	
+	
+	public int getX() {
+		return 0;
+	}
+	
+	public int getY() {
+		return 0;
+	}
 }
