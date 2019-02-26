@@ -22,6 +22,10 @@ public class IntBoard {
 		this.targets = new HashSet<BoardCell>();
 	}
 	
+	public BoardCell getCell(int x, int y) {
+		return null;
+	}
+	
 	public HashSet<BoardCell> getAdjList(BoardCell cell){
 		HashSet<BoardCell> adjCells = new HashSet<BoardCell>();
 		return adjCells;

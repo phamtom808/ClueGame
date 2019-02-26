@@ -10,7 +10,8 @@ import experiments.BoardCell;
 import experiments.IntBoard;
 
 class IntBoardTests {
-
+	
+	public IntBoard board;
 	@Before
 	public void beforeAll() {
 		IntBoard board = new IntBoard(); // constructor should call calcAdjacencies()
