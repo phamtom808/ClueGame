@@ -1,5 +1,10 @@
 package tests;
 
+/*
+ * Emily Christensen and Dane Pham
+ * Unit Tests
+ */
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Set;
@@ -100,5 +105,4 @@ class IntBoardTests {
 	void test() {
 		fail("Not yet implemented");
 	}
-
 }
