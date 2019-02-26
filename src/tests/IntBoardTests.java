@@ -90,13 +90,13 @@ class IntBoardTests {
 	 */
 	@Test
 	public void testThirdColumn() {
-		Board cell = board.getCell(2,2);
+		BoardCell cell = board.getCell(2,2);
 		Set<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(1,2)));
 		assertTrue(testList.contains(board.getCell(3,2)));
 		assertTrue(testList.contains(board.getCell(2,1)));
 		assertTrue(testList.contains(board.getCell(2,3)));
-		assertEquals(testlist.conatins(4, testList.size()));
+		assertEquals(4, testList.size());
 	}
 	@Test
 	void test() {
