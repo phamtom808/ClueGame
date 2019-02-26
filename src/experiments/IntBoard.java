@@ -1,5 +1,6 @@
 package experiments;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -43,6 +44,10 @@ public class IntBoard {
 		return adjCells;
 	}
 	
+	/*
+	 * For all the cells in each column of gameboard
+	 * 
+	 */
 	public void calcAdjacencies() {
 		for(int i = 0; i<gameBoard.length; i++) {
 			for(int j = 0; j<gameBoard.length; j++) {
@@ -55,8 +60,35 @@ public class IntBoard {
 		return this.targets;
 	}
 	
+	public void findAllTargets(BoardCell thisCell, int numSteps, HashSet<BoardCell> visitedCells, HashSet<BoardCell> targets){
+		HashSet<BoardCell> adjacentCells = this.getAdjList(thisCell);
+		for(BoardCell adjCell : adjacentCells) {
+			for(BoardCell visited : visitedCells) {
+				if(adjCell == visited) {
+					continue;
+				}
+				else
+				{
+					visitedCells.add(adjCell);
+					if(numSteps == 1) {
+						targets.add(adjCell);
+					} else {
+						this.findAllTargets(adjCell, numSteps-1, visitedCells, targets);
+					}
+				}
+			}
+			visitedCells.remove(adjCell);
+		}
+	}
+	
 	public HashSet<BoardCell> calcTargets(BoardCell startCell, int pathLength){
 		HashSet<BoardCell> targets= new HashSet<BoardCell>();
+		HashSet<BoardCell> visitedCells = new HashSet<BoardCell>();
+		
+		visitedCells.add(startCell); //add startCell to the visited list
+		
+		findAllTargets(startCell, pathLength, targets, visitedCells);
+		
 		return targets;
 	}
 }
