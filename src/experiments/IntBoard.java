@@ -23,11 +23,23 @@ public class IntBoard {
 	}
 	
 	public BoardCell getCell(int x, int y) {
-		return null;
+		return gameBoard[x][y];
 	}
 	
 	public HashSet<BoardCell> getAdjList(BoardCell cell){
 		HashSet<BoardCell> adjCells = new HashSet<BoardCell>();
+		if(cell.getX() > 0) {
+			adjCells.add(this.getCell(cell.getX()-1,cell.getY()));
+		}
+		if(cell.getX() < gameBoard[0].length-1) {
+			adjCells.add(this.getCell(cell.getX()+1, cell.getY()));
+		}
+		if(cell.getY() > 0) {
+			adjCells.add(this.getCell(cell.getX(), cell.getY()-1));
+		}
+		if(cell.getY() < gameBoard.length-1) {
+			adjCells.add(this.getCell(cell.getX(), cell.getY()+1));
+		}
 		return adjCells;
 	}
 	
