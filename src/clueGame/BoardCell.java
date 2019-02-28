@@ -1,4 +1,7 @@
 package clueGame;
+
+import java.util.HashSet;
+
 /*
  * Emily Christensen and Dane Pham
  * BoardCell Class: handles the individual cells of the clue board
@@ -11,11 +14,15 @@ public class BoardCell {
 	private int x;
 	private int y;
 	private char initial;
+	private HashSet<BoardCell> adjCells;
+	
 	
 	//BoardCell constructor
-	public BoardCell(int x, int y) {
+	public BoardCell(int x, int y, char initial) {
 		this.x = x;
 		this.y = y;
+		this.initial = initial;
+		adjCells = new HashSet<BoardCell>();
 	}	
 	
 	//Getter for X 
@@ -40,5 +47,12 @@ public class BoardCell {
 		return true;
 	}
 	
+	public void calcAdjCells() {
+		return;
+	}
+	
+	public HashSet<BoardCell> getAdjCells() {
+		return this.adjCells;
+	}
 	
 }
