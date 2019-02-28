@@ -14,16 +14,14 @@ public class IntBoard {
 	
 	//Instance Variables
 	private Map<BoardCell, HashSet<BoardCell>> adjMatrix; 
-	private ArrayList<ArrayList<BoardCell>> gameBoard;
+	private BoardCell[][] gameBoard;
 	private HashSet<BoardCell> targets;
 	
 	public IntBoard() {
-		gameBoard = new ArrayList<ArrayList<BoardCell>>();
+		this.gameBoard = new BoardCell[4][4];
 		for(int i = 0; i<4; i++) {
-			ArrayList<BoardCell> column = new ArrayList<BoardCell>();
 			for(int j = 0; j<4; j++) {
-				BoardCell b = new BoardCell(i,j);
-				column.add(b);
+				gameBoard[i][j] = new BoardCell(i,j);
 			}
 		}
 		this.adjMatrix = new HashMap<BoardCell, HashSet<BoardCell>>();
@@ -32,29 +30,27 @@ public class IntBoard {
 	}
 	
 	public BoardCell getCell(int x, int y) {
-		ArrayList<BoardCell> column = this.gameBoard.get(x);
-		BoardCell b = column.get(y);
-		return b;
+		return gameBoard[x][y];
 	}
 	
-	public void editCell(int x, int y, BoardCell cell) {
+/*	public void editCell(int x, int y, BoardCell cell) {
 		ArrayList<BoardCell> column = this.gameBoard.get(x);
 		column.add(y,cell);
 		this.gameBoard.add(x,column);
 	}
-	
+*/	
 	public HashSet<BoardCell> getAdjList(BoardCell cell){
 		HashSet<BoardCell> adjCells = new HashSet<BoardCell>();
 		if(cell.getX() > 0) {
 			adjCells.add(this.getCell(cell.getX()-1,cell.getY()));
 		}
-		if(cell.getX() < gameBoard.get(0).size()-1) {
+		if(cell.getX() < gameBoard[0].length-1) {
 			adjCells.add(this.getCell(cell.getX()+1, cell.getY()));
 		}
 		if(cell.getY() > 0) {
 			adjCells.add(this.getCell(cell.getX(), cell.getY()-1));
 		}
-		if(cell.getY() < gameBoard.size()-1) {
+		if(cell.getY() < gameBoard.length-1) {
 			adjCells.add(this.getCell(cell.getX(), cell.getY()+1));
 		}
 		return adjCells;
@@ -65,8 +61,8 @@ public class IntBoard {
 	 * 
 	 */
 	public void calcAdjacencies() {
-		for(int i = 0; i<gameBoard.size(); i++) {
-			for(int j = 0; j<gameBoard.size(); j++) {
+		for(int i = 0; i<gameBoard.length; i++) {
+			for(int j = 0; j<gameBoard.length; j++) {
 				adjMatrix.put(this.getCell(i, j),this.getAdjList(this.getCell(i, j)));
 			}
 		}
@@ -98,7 +94,7 @@ public class IntBoard {
 	}
 	
 	public HashSet<BoardCell> calcTargets(BoardCell startCell, int pathLength){
-		this.targets= new HashSet<BoardCell>();
+		HashSet<BoardCell> targets= new HashSet<BoardCell>();
 		HashSet<BoardCell> visitedCells = new HashSet<BoardCell>();
 		
 		visitedCells.add(startCell); //add startCell to the visited list
