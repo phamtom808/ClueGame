@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Set;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import experiments.BoardCell;
@@ -17,8 +19,8 @@ import experiments.IntBoard;
 class IntBoardTests {
 	
 	public IntBoard board;
-	@Before
-	public void beforeAll() {
+	@BeforeEach
+	public static void beforeAll() {
 		IntBoard board = new IntBoard(); // constructor should call calcAdjacencies()
 	}
 	
