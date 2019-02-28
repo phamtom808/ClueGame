@@ -1,4 +1,4 @@
-package experiments;
+package clueGame;
 /*
  * Emily Christensen and Dane Pham
  * BoardCell Class: handles the individual cells of the clue board
