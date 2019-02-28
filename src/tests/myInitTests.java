@@ -43,6 +43,12 @@ public class myInitTests {
 	}
 	
 	@Test
+	public void testDimensions() {
+		assertEquals(NUMBER_COLUMNS, board.getNumColumns());
+		assertEquals(NUMBER_ROWS, board.getNumRows());
+	}
+	
+	@Test
 	public void test() {
 		fail("Not yet implemented");
 	}
