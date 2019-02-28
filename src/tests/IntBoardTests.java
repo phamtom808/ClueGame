@@ -19,9 +19,10 @@ import experiments.IntBoard;
 class IntBoardTests {
 	
 	public IntBoard board;
+	
 	@BeforeEach
-	public static void beforeAll() {
-		IntBoard board = new IntBoard(); // constructor should call calcAdjacencies()
+	public void beforeAll() {
+		 board = new IntBoard(); // constructor should call calcAdjacencies()
 	}
 	
 	/**
@@ -83,7 +84,7 @@ class IntBoardTests {
 		assertTrue(testList.contains(board.getCell(0,1)));
 		assertTrue(testList.contains(board.getCell(2,1)));
 		assertTrue(testList.contains(board.getCell(1,0)));
-		assertTrue(testList.contains(board.getCell(1,3)));
+		assertTrue(testList.contains(board.getCell(1,2)));
 		assertEquals(4, testList.size());
 	}
 	
@@ -92,7 +93,8 @@ class IntBoardTests {
 	 */
 	@Test
 	public void testThirdColumn() {
-		BoardCell cell = board.getCell(2,2);
+		BoardCell cell = new BoardCell(0,0);
+		cell = board.getCell(2,2);
 		Set<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(1,2)));
 		assertTrue(testList.contains(board.getCell(3,2)));
@@ -100,11 +102,6 @@ class IntBoardTests {
 		assertTrue(testList.contains(board.getCell(2,3)));
 		assertEquals(4, testList.size());
 	}
-	/**
-	 * test in case a failure is thrown, alerts user of error
-	 */
-	@Test
-	void test() {
-		fail("Not yet implemented");
-	}
+
 }
+
