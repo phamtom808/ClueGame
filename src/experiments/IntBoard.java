@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import clueGame.BoardCell;
+
 /*
  * Emily Christensen and Dane Pham
  * IntBoard Class: Handles the entire board, adjancies for each cell, possible targets for a given roll

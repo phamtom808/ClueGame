@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import experiments.BoardCell;
+import clueGame.BoardCell;
 import experiments.IntBoard;
 
 class IntBoardTests {
@@ -93,8 +93,7 @@ class IntBoardTests {
 	 */
 	@Test
 	public void testThirdColumn() {
-		BoardCell cell = new BoardCell(0,0);
-		cell = board.getCell(2,2);
+		BoardCell cell = board.getCell(2,2);
 		Set<BoardCell> testList = board.getAdjList(cell);
 		assertTrue(testList.contains(board.getCell(1,2)));
 		assertTrue(testList.contains(board.getCell(3,2)));
