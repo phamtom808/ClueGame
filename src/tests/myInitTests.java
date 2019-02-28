@@ -17,7 +17,15 @@ public class myInitTests {
 	
 	@BeforeClass
 	public static void setUp() {
-		board = board.getInstances();
+		board = Board.getInstance();
+		board.setConfigFiles("BoardLayout.csv", "ClueRooms.txt");
+		board.initialize();
+	}
+	
+	@Test
+	public void testLegend() {
+		
+		assertEquals(LEGEND_SIZE,)
 	}
 	
 	@Test
