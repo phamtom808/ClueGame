@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Set;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import clueGame.BoardCell;
@@ -18,9 +20,9 @@ class IntBoardTests {
 	
 	public IntBoard board;
 	
-	@Before
+	@BeforeEach
 	public void beforeAll() {
-		board = new IntBoard(); // constructor should call calcAdjacencies()
+		 board = new IntBoard(); // constructor should call calcAdjacencies()
 	}
 	
 	/**
@@ -82,7 +84,7 @@ class IntBoardTests {
 		assertTrue(testList.contains(board.getCell(0,1)));
 		assertTrue(testList.contains(board.getCell(2,1)));
 		assertTrue(testList.contains(board.getCell(1,0)));
-		assertTrue(testList.contains(board.getCell(1,3)));
+		assertTrue(testList.contains(board.getCell(1,2)));
 		assertEquals(4, testList.size());
 	}
 	
@@ -99,4 +101,6 @@ class IntBoardTests {
 		assertTrue(testList.contains(board.getCell(2,3)));
 		assertEquals(4, testList.size());
 	}
+
 }
+
