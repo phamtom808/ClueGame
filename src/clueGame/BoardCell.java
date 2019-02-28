@@ -10,6 +10,7 @@ public class BoardCell {
 	//Instance Variables: x (column), y (row)
 	private int x;
 	private int y;
+	private char initial;
 	
 	//BoardCell constructor
 	public BoardCell(int x, int y) {
@@ -26,5 +27,18 @@ public class BoardCell {
 	public int getY() {
 		return this.y;
 	}
+	
+	public boolean isDoorway() {
+		return true;
+	}
+	
+	public boolean isRoom() {
+		return true;
+	}
+	
+	public boolean isWalkway() {
+		return true;
+	}
+	
 	
 }
