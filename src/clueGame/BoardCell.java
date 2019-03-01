@@ -37,6 +37,14 @@ public class BoardCell {
 		return this.y;
 	}
 	
+	public DoorDirection getDoorDirection() {
+		return this.doorDirection;
+	}
+	
+	public char getInitial() {
+		return this.initial;
+	}
+	
 	public boolean isDoorway() {
 		if(this.doorDirection != DoorDirection.NONE) {
 			return true;
