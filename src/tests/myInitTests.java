@@ -79,6 +79,20 @@ public class myInitTests {
 	}
 	
 	@Test
+	public void testNumberOfDoors() {
+		int doors = 0;
+		for(int i = 0; i < board.numRows; i++) {
+			for(int j = 0; j < board.numColumns; j++) {
+				BoardCell cell = board.getCellAt(i, j);
+				if(cell.isDoorway()) {
+					doors++;
+				}
+			}
+		}
+		assertEquals(22, doors);
+	}
+	
+	@Test
 	public void test() {
 		fail("Not yet implemented");
 	}
