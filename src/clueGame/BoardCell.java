@@ -13,13 +13,13 @@ public class BoardCell {
 	//Instance Variables: x (column), y (row)
 	private int x;
 	private int y;
-	private char initial;
+	private Character initial;
 	private HashSet<BoardCell> adjCells;
 	private DoorDirection doorDirection;
 	
 	
 	//BoardCell constructor
-	public BoardCell(int x, int y, char initial) {
+	public BoardCell(int x, int y, Character initial) {
 		this.x = x;
 		this.y = y;
 		this.initial = initial;

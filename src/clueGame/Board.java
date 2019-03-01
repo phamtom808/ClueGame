@@ -16,7 +16,7 @@ public class Board {
 	private Set<BoardCell> targets;
 	private String roomConfigFile;
 	private String boardConfigFile;
-	private static Board theInstance = new Board();
+	private static Board theInstance;
 	
 	private Board() {}
 	
@@ -25,6 +25,7 @@ public class Board {
 	}
 	
 	public void initialize() {
+		theInstance = new Board();
 		gameBoard = new BoardCell[numColumns][numRows];
 		try {
 			this.loadRoomConfig();
@@ -46,8 +47,6 @@ public class Board {
 	
 	public BoardCell getCellAt(int x, int y) {
 		return this.gameBoard[x][y];
-		/*BoardCell b = new BoardCell(0,0,' ');
-		return b;*/
 	}
 	
 	/*
@@ -80,7 +79,7 @@ public class Board {
 			Scanner readConfig = new Scanner(boardConfigFile);
 			readConfig.useDelimiter(",");
 			while(readConfig.hasNext()) {
-				//Set up cells
+				
 			}
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: File not found");
