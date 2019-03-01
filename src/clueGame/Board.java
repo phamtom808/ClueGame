@@ -26,7 +26,12 @@ public class Board {
 	
 	public void initialize() {
 		gameBoard = new BoardCell[numColumns][numRows];
-		this.calcAdjacencies();
+		try {
+			this.loadRoomConfig();
+			this.loadBoardConfig();
+		}catch(BadConfigFormatException e) {
+			System.out.println(e);
+		}
 	}
 	
 	//Function to calculate adjacent cells stored in BoardCell class, so is adjacency data
@@ -69,7 +74,19 @@ public class Board {
 		}
 	}
 	
-	public void loadBoardConfig() throws BadConfigFileException {
+	public void loadBoardConfig() throws BadConfigFormatException {
+		try {
+			File boardConfigFile = new File(this.boardConfigFile);
+			Scanner readConfig = new Scanner(boardConfigFile);
+			readConfig.useDelimiter(",");
+			while(readConfig.hasNext()) {
+				//Set up cells
+			}
+		}catch(FileNotFoundException e) {
+			throw new BadConfigFormatException("Error: File not found");
+		}catch(Exception e) {
+			throw new BadConfigFormatException("Error: Room config file formatted incorrectly.");
+		}
 		return;
 	}
 	
