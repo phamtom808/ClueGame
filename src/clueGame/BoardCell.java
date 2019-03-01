@@ -15,6 +15,7 @@ public class BoardCell {
 	private int y;
 	private char initial;
 	private HashSet<BoardCell> adjCells;
+	private DoorDirection doorDirection;
 	
 	
 	//BoardCell constructor
@@ -23,6 +24,7 @@ public class BoardCell {
 		this.y = y;
 		this.initial = initial;
 		adjCells = new HashSet<BoardCell>();
+		doorDirection = DoorDirection.NONE;
 	}	
 	
 	//Getter for X 
@@ -36,23 +38,48 @@ public class BoardCell {
 	}
 	
 	public boolean isDoorway() {
-		return true;
+		if(this.doorDirection != DoorDirection.NONE) {
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean isRoom() {
-		return true;
+		if(this.initial != 'W') {
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean isWalkway() {
-		return true;
+		if(this.initial == 'W') {
+			return true;
+		}
+		return false;
 	}
 	
-	public void calcAdjCells() {
+	public void calcAdjCells(Board thisBoard) {
+		if(this.x > 0) {
+			adjCells.add(thisBoard.getCellAt(x-1, y));
+		}
+		if(this.y > 0) {
+			adjCells.add(thisBoard.getCellAt(x, y-1));
+		}
+		if(this.x < thisBoard.numRows) {
+			adjCells.add(thisBoard.getCellAt(x+1, y));
+		}
+		if(this.y < thisBoard.numColumns) {
+			adjCells.add(thisBoard.getCellAt(x, y+1));
+		}
 		return;
 	}
 	
 	public HashSet<BoardCell> getAdjCells() {
 		return this.adjCells;
+	}
+	
+	public void setDoorDirection(DoorDirection doorDirection) {
+		this.doorDirection = doorDirection;
 	}
 	
 }

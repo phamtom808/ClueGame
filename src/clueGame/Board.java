@@ -12,7 +12,6 @@ public class Board {
 	private Map<Character, String> legend;
 	private Set<BoardCell> targets;
 	
-	
 	private static Board theInstance;
 	
 	private Board() {}
@@ -28,11 +27,11 @@ public class Board {
 	
 	//Function to calculate adjacent cells stored in BoardCell class, so is adjacency data
 	public void calcAdjacencies() {
-		/*for(int i = 0; i<this.numColumns; i++) {
+		for(int i = 0; i<this.numColumns; i++) {
 			for(int j = 0; j<this.numRows; j++) {
-				this.gameBoard[i][j].calcAdjCells();
+				this.gameBoard[i][j].calcAdjCells(getInstance());
 			}
-		}*/
+		}
 		return;
 	}
 	
