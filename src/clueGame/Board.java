@@ -45,14 +45,28 @@ public class Board {
 		return b;*/
 	}
 	
+	/*
+	 * loadRoomConfig
+	 * Attempt to read in config file. If file doesn't open/isn't found, throw BadConfigFormatException with message that file wasn't found
+	 * If file opens, but there is another error (file text isn't in proper format), throw BadConfigFormatException with message that file wasn't formatted properly
+	 * Otherwise, add char key, string roomName to legend map
+	 */
 	public void loadRoomConfig() throws BadConfigFormatException {
 		try {
 			File roomConfigFile = new File(ROOM_CONFIG_FILE);
 			Scanner readConfig = new Scanner(roomConfigFile);
+			readConfig.useDelimiter(",");
+			while(readConfig.hasNext()) {
+					char key =  readConfig.next().charAt(0);
+					String roomName = readConfig.next();
+					String isCard = readConfig.next();
+					legend.put(key, roomName);
+			}
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: File not found");
+		}catch(Exception e) {
+			throw new BadConfigFormatException("Error: Room config file formatted incorrectly.");
 		}
-		return;
 	}
 	
 	public void loadBoardConfig() {
