@@ -11,8 +11,9 @@ public class Board {
 	private BoardCell[][] gameBoard;
 	private Map<Character, String> legend;
 	private Set<BoardCell> targets;
-	
-	private static Board theInstance;
+	private static final String ROOM_CONFIG_FILE = "roomConfig.txt";
+	private static final String BOARD_CONFIG_FILE = "boardConfig.txt";
+	private static Board theInstance = new Board();
 	
 	private Board() {}
 	
@@ -21,7 +22,7 @@ public class Board {
 	}
 	
 	public void initialize() {
-		this.gameBoard = new BoardCell[numColumns][numRows];
+		gameBoard = new BoardCell[numColumns][numRows];
 		this.calcAdjacencies();
 	}
 	
@@ -36,9 +37,9 @@ public class Board {
 	}
 	
 	public BoardCell getCellAt(int x, int y) {
-		//return this.gameBoard[x][y];
-		BoardCell b = new BoardCell(0,0,' ');
-		return b;
+		return this.gameBoard[x][y];
+		/*BoardCell b = new BoardCell(0,0,' ');
+		return b;*/
 	}
 	
 	public void loadRoomConfig() {
