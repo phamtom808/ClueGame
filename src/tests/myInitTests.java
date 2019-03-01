@@ -93,8 +93,14 @@ public class myInitTests {
 	}
 	
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testInitials() {
+		assertEquals('C', board.getCellAt(4, 3).getInitial());
+		assertEquals('L', board.getCellAt(6, 9).getInitial());
+		assertEquals('S', board.getCellAt(9,19).getInitial());
+		
+		assertEquals('W', board.getCellAt(13, 14).getInitial());
+		
+		assertEquals('X', board.getCellAt(11, 11).getInitial());
 	}
 
 }
