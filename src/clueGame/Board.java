@@ -11,8 +11,8 @@ public class Board {
 	private BoardCell[][] gameBoard;
 	private Map<Character, String> legend;
 	private Set<BoardCell> targets;
-	private static final String ROOM_CONFIG_FILE = "roomConfig.txt";
-	private static final String BOARD_CONFIG_FILE = "boardConfig.txt";
+	private static final String ROOM_CONFIG_FILE = "roomConfig.csv";
+	private static final String BOARD_CONFIG_FILE = "boardConfig.csv";
 	private static Board theInstance = new Board();
 	
 	private Board() {}
@@ -43,6 +43,7 @@ public class Board {
 	}
 	
 	public void loadRoomConfig() {
+		
 		return;
 	}
 	
