@@ -28,20 +28,20 @@ public class myInitTests {
 	
 	@Test
 	public void testLegend() {
-		Map<String, String> legend = board.getLegend();
+		Map<Character, String> legend = board.getLegend();
 		assertEquals(LEGEND_SIZE, legend.size());
 		
-		assertEquals("Conservatory", legend.get("C"));
-		assertEquals("Kitchen", legend.get("K"));
-		assertEquals("Bedroom", legend.get("B"));
-		assertEquals("Theater", legend.get("T"));
-		assertEquals("Living Room", legend.get("L"));
-		assertEquals("Study", legend.get("S"));
-		assertEquals("Pool", legend.get("P"));
-		assertEquals("Garrage", legend.get("G"));
-		assertEquals("Hall" , legend.get("H"));
-		assertEquals("Closet", legend.get("X"));
-		assertEquals("Walkway", legend.get("W"));	
+		assertEquals("Conservatory", legend.get('C'));
+		assertEquals("Kitchen", legend.get('K'));
+		assertEquals("Bedroom", legend.get('B'));
+		assertEquals("Theater", legend.get('T'));
+		assertEquals("Living Room", legend.get('L'));
+		assertEquals("Study", legend.get('S'));
+		assertEquals("Pool", legend.get('P'));
+		assertEquals("Garrage", legend.get('G'));
+		assertEquals("Hall" , legend.get('H'));
+		assertEquals("Closet", legend.get('X'));
+		assertEquals("Walkway", legend.get('W'));	
 	}
 	
 	@Test
@@ -81,8 +81,8 @@ public class myInitTests {
 	@Test
 	public void testNumberOfDoors() {
 		int doors = 0;
-		for(int i = 0; i < board.numRows; i++) {
-			for(int j = 0; j < board.numColumns; j++) {
+		for(int i = 0; i < board.getNumRows(); i++) {
+			for(int j = 0; j < board.getNumColumns(); j++) {
 				BoardCell cell = board.getCellAt(i, j);
 				if(cell.isDoorway()) {
 					doors++;
