@@ -41,7 +41,7 @@ public class BoardCell {
 		return this.doorDirection;
 	}
 	
-	public char getInitial() {
+	public Character getInitial() {
 		return this.initial;
 	}
 	

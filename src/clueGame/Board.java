@@ -77,9 +77,32 @@ public class Board {
 		try {
 			File boardConfigFile = new File(this.boardConfigFile);
 			Scanner readConfig = new Scanner(boardConfigFile);
-			readConfig.useDelimiter(",");
+			readConfig.useDelimiter("\n");
+			int i = 0;
 			while(readConfig.hasNext()) {
-				
+				String nline = readConfig.nextLine();
+				int k = 0;
+				for(int j = 0; j<nline.length(); j++) {
+					Character a = nline.charAt(j);
+					if(a != ',') {
+						BoardCell b = new BoardCell(i,k,a);
+						k++;
+						if(a == 'D') {
+							j++;
+							Character direction = nline.charAt(j);
+							if(direction == 'R') {
+								b.setDoorDirection(DoorDirection.RIGHT);
+							}else if(direction == 'L') {
+								b.setDoorDirection(DoorDirection.LEFT);
+							}else if(direction == 'U') {
+								b.setDoorDirection(DoorDirection.UP);
+							}else if(direction == 'D') {
+								b.setDoorDirection(DoorDirection.DOWN);
+							}
+						}
+						gameBoard[i][k] = b;
+					}
+				}
 			}
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: File not found");
