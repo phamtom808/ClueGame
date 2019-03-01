@@ -65,13 +65,12 @@ public class BoardCell {
 		if(this.y > 0) {
 			adjCells.add(thisBoard.getCellAt(x, y-1));
 		}
-		if(this.x < thisBoard.numRows) {
+		if(this.x < thisBoard.getNumRows()) {
 			adjCells.add(thisBoard.getCellAt(x+1, y));
 		}
-		if(this.y < thisBoard.numColumns) {
+		if(this.y < thisBoard.getNumColumns()) {
 			adjCells.add(thisBoard.getCellAt(x, y+1));
 		}
-		return;
 	}
 	
 	public HashSet<BoardCell> getAdjCells() {

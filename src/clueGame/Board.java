@@ -9,13 +9,13 @@ import java.util.Set;
 public class Board {
 	
 	public static final int MAX_BOARD_SIZE = 50;
-	public int numRows; //Corresponds to y
-	public int numColumns; //Corresponds to x
+	private int numRows; //Corresponds to y
+	private int numColumns; //Corresponds to x
 	private BoardCell[][] gameBoard;
 	private Map<Character, String> legend;
 	private Set<BoardCell> targets;
-	private static final String ROOM_CONFIG_FILE = "roomConfig.txt";
-	private static final String BOARD_CONFIG_FILE = "boardConfig.csv";
+	private String roomConfigFile;
+	private String boardConfigFile;
 	private static Board theInstance = new Board();
 	
 	private Board() {}
@@ -53,11 +53,11 @@ public class Board {
 	 */
 	public void loadRoomConfig() throws BadConfigFormatException {
 		try {
-			File roomConfigFile = new File(ROOM_CONFIG_FILE);
+			File roomConfigFile = new File(this.roomConfigFile);
 			Scanner readConfig = new Scanner(roomConfigFile);
 			readConfig.useDelimiter(",");
 			while(readConfig.hasNext()) {
-					char key =  readConfig.next().charAt(0);
+					Character key =  readConfig.next().charAt(0);
 					String roomName = readConfig.next();
 					String isCard = readConfig.next();
 					legend.put(key, roomName);
@@ -69,7 +69,24 @@ public class Board {
 		}
 	}
 	
-	public void loadBoardConfig() {
+	public void loadBoardConfig() throws BadConfigFileException {
 		return;
+	}
+	
+	public int getNumRows() {
+		return this.numRows;
+	}
+	
+	public int getNumColumns() {
+		return this.numColumns;
+	}
+	
+	public Map<Character,String> getLegend(){
+		return this.legend;
+	}
+	
+	public void setConfigFiles(String bdCfgFile, String rmCfgFile) {
+		boardConfigFile = bdCfgFile;
+		roomConfigFile = rmCfgFile;
 	}
 }
