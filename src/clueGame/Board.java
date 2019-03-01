@@ -1,5 +1,8 @@
 package clueGame;
 
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,7 +14,7 @@ public class Board {
 	private BoardCell[][] gameBoard;
 	private Map<Character, String> legend;
 	private Set<BoardCell> targets;
-	private static final String ROOM_CONFIG_FILE = "roomConfig.csv";
+	private static final String ROOM_CONFIG_FILE = "roomConfig.txt";
 	private static final String BOARD_CONFIG_FILE = "boardConfig.csv";
 	private static Board theInstance = new Board();
 	
@@ -42,8 +45,13 @@ public class Board {
 		return b;*/
 	}
 	
-	public void loadRoomConfig() {
-		
+	public void loadRoomConfig() throws BadConfigFormatException {
+		try {
+			File roomConfigFile = new File(ROOM_CONFIG_FILE);
+			Scanner readConfig = new Scanner(roomConfigFile);
+		}catch(FileNotFoundException e) {
+			throw new BadConfigFormatException("Error: File not found");
+		}
 		return;
 	}
 	
