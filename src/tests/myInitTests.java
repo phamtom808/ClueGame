@@ -8,6 +8,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import clueGame.Board;
+import clueGame.BoardCell;
+import clueGame.DoorDirection;
 
 public class myInitTests {
 	
@@ -46,6 +48,34 @@ public class myInitTests {
 	public void testDimensions() {
 		assertEquals(NUMBER_COLUMNS, board.getNumColumns());
 		assertEquals(NUMBER_ROWS, board.getNumRows());
+	}
+	
+	@Test
+	public void doorDirection() {
+		BoardCell cell = board.getCellAt(9,4);
+		assertTrue(cell.isDoorway());
+		assertEquals(DoorDirection.DOWN, cell.getDoorDirection());
+		
+		cell = board.getCellAt(16,8);
+		assertTrue(cell.isDoorway());
+		assertEquals(DoorDirection.LEFT, cell.getDoorDirection());
+		
+		cell = board.getCellAt(11, 18);
+		assertTrue(cell.isDoorway());
+		assertEquals(DoorDirection.RIGHT, cell.getDoorDirection());
+		
+		cell = board.getCellAt(2, 15);
+		assertTrue(cell.isDoorway());
+		assertEquals(DoorDirection.UP, cell.getDoorDirection());
+		
+		cell = board.getCellAt(11, 9);
+		assertFalse(cell.isDoorway());
+		
+		cell = board.getCellAt(17, 17);
+		assertFalse(cell.isDoorway());
+		
+		cell = board.getCellAt(20, 6);
+		assertFalse(cell.isDoorway());
 	}
 	
 	@Test
