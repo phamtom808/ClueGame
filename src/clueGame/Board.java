@@ -67,12 +67,20 @@ public class Board {
 					legend.put(key, roomName);
 			}
 		}catch(FileNotFoundException e) {
-			throw new BadConfigFormatException("Error: File not found");
+			throw new BadConfigFormatException("Error: Room Config File not found");
 		}catch(Exception e) {
 			throw new BadConfigFormatException("Error: Room config file formatted incorrectly.");
 		}
 	}
+
 	
+	/*
+	 * loadBoardConfig method
+	 * Reads in data from CSV file, using \n as delimiters. 
+	 * If it can't open the file, throws specific BadConfigFormatException that matches roomConfigFile
+	 * Assuming nothing causes an error, read in each new line from readConfig, if the character is a D, read in next char for direction, then set direction on cell
+	 * After creating cell, add it to gameboard in proper index
+	 */
 	public void loadBoardConfig() throws BadConfigFormatException {
 		try {
 			File boardConfigFile = new File(this.boardConfigFile);
@@ -105,9 +113,9 @@ public class Board {
 				}
 			}
 		}catch(FileNotFoundException e) {
-			throw new BadConfigFormatException("Error: File not found");
+			throw new BadConfigFormatException("Error: Board Config File not found");
 		}catch(Exception e) {
-			throw new BadConfigFormatException("Error: Room config file formatted incorrectly.");
+			throw new BadConfigFormatException("Error: Board config file formatted incorrectly.");
 		}
 		return;
 	}
