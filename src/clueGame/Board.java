@@ -103,39 +103,34 @@ public class Board {
 		try {
 			File boardConfigFile = new File(this.boardConfigFile);
 			Scanner readConfig = new Scanner(boardConfigFile);
-			readConfig.useDelimiter("\n");
 			int i = 0;
 			while(readConfig.hasNext()) {
-				String nline = readConfig.nextLine();
-				int k = 0;
-				for(int j = 0; j<nline.length(); j++) {
-					Character a = nline.charAt(j);
-					if(a != ',') {
-						BoardCell b = new BoardCell(i,k,a);
-						k++;
-						if(j<nline.length() - 1) {
-							if(nline.charAt(j+1) != ',') {
-								j++;
-								Character direction = nline.charAt(j);
-								if(direction == 'R') {
-									b.setDoorDirection(DoorDirection.RIGHT);
-								}else if(direction == 'L') {
-									b.setDoorDirection(DoorDirection.LEFT);
-								}else if(direction == 'U') {
-									b.setDoorDirection(DoorDirection.UP);
-								}else if(direction == 'D') {
-									b.setDoorDirection(DoorDirection.DOWN);
-								}else {
-									b.setDoorDirection(DoorDirection.NONE);
-								}
-							}
+				String data = readConfig.nextLine();
+				String[] cells = data.split(",");
+				for(int j = 0; j<cells.length; j++) {
+					String cellData = cells[j];
+					Character initial = cellData.charAt(0);
+					BoardCell b = new BoardCell(i,j,initial);
+					if(initial == 'D') {
+						Character direction = data.charAt(1);
+						if(direction == 'R') {
+							b.setDoorDirection(DoorDirection.RIGHT);
+						}else if(direction == 'L') {
+							b.setDoorDirection(DoorDirection.LEFT);
+						}else if(direction == 'D') {
+							b.setDoorDirection(DoorDirection.DOWN);
+						}else if(direction == 'U') {
+							b.setDoorDirection(DoorDirection.UP);
+						}else {
+							b.setDoorDirection(DoorDirection.NONE);
 						}
-						gameBoard[i][k] = b;
 					}
+					gameBoard[i][j] = b;
 				}
+				i++;
 			}
 			numRows = i;
-			numColumns = gameBoard[i].length;
+			numColumns = gameBoard[0].length-1;
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Board Config File not found");
 		}catch(Exception e) {
