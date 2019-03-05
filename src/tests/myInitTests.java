@@ -28,7 +28,7 @@ public class myInitTests {
 	
 	@Test
 	public void testLegend() {
-		Map<String, String> legend = board.getLegend();
+		Map<Character, String> legend = board.getLegend();
 		assertEquals(LEGEND_SIZE, legend.size());
 		
 		assertEquals("Conservatory", legend.get("C"));

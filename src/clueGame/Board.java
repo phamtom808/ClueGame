@@ -3,6 +3,7 @@ package clueGame;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ public class Board {
 	private int numRows; //Corresponds to y
 	private int numColumns; //Corresponds to x
 	private BoardCell[][] gameBoard;
-	private Map<Character, String> legend;
+	private HashMap<Character, String> legend;
 	private Set<BoardCell> targets;
 	private String roomConfigFile;
 	private String boardConfigFile;
@@ -25,12 +26,23 @@ public class Board {
 	}
 	
 	public void initialize() {
-		gameBoard = new BoardCell[numColumns][numRows];
+		gameBoard = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+		legend = new HashMap<Character, String>();
 		try {
-			this.loadRoomConfig();
 			this.loadBoardConfig();
 		}catch(BadConfigFormatException e) {
 			System.out.println(e);
+			for(int i = 0; i<MAX_BOARD_SIZE; i++) {
+				for(int j = 0; j<MAX_BOARD_SIZE; j++) {
+					gameBoard[i][j] = new BoardCell(i,j,' ');
+				}
+			}
+		}
+		try {
+			this.loadRoomConfig();
+		}catch(BadConfigFormatException e) {
+			System.out.println(e);
+			legend.put(' ', "FailedConfig");
 		}
 	}
 	
@@ -46,8 +58,6 @@ public class Board {
 	
 	public BoardCell getCellAt(int x, int y) {
 		return this.gameBoard[x][y];
-		/*BoardCell b = new BoardCell(0,0,' ');
-		return b;*/
 	}
 	
 	/*
@@ -60,32 +70,66 @@ public class Board {
 		try {
 			File roomConfigFile = new File(this.roomConfigFile);
 			Scanner readConfig = new Scanner(roomConfigFile);
-			readConfig.useDelimiter(",");
 			while(readConfig.hasNext()) {
-					Character key =  readConfig.next().charAt(0);
-					String roomName = readConfig.next();
-					String isCard = readConfig.next();
-					legend.put(key, roomName);
+				readConfig.useDelimiter(",");
+				Character key =  readConfig.next().charAt(0);
+				String roomName = readConfig.next();
+				readConfig.useDelimiter("\n");
+				String isCard = readConfig.next();
+				legend.put(key, roomName);
 			}
 		}catch(FileNotFoundException e) {
-			throw new BadConfigFormatException("Error: File not found");
+			throw new BadConfigFormatException("Error: Room Config File not found");
 		}catch(Exception e) {
 			throw new BadConfigFormatException("Error: Room config file formatted incorrectly.");
 		}
 	}
+
 	
+	/*
+	 * loadBoardConfig method
+	 * Reads in data from CSV file, using \n as delimiters. 
+	 * If it can't open the file, throws specific BadConfigFormatException that matches roomConfigFile
+	 * Assuming nothing causes an error, read in each new line from readConfig, if the character is a D, read in next char for direction, then set direction on cell
+	 * After creating cell, add it to gameboard in proper index
+	 */
 	public void loadBoardConfig() throws BadConfigFormatException {
 		try {
 			File boardConfigFile = new File(this.boardConfigFile);
 			Scanner readConfig = new Scanner(boardConfigFile);
-			readConfig.useDelimiter(",");
+			readConfig.useDelimiter("\n");
+			int i = 0;
 			while(readConfig.hasNext()) {
-				//Set up cells
+				String nline = readConfig.nextLine();
+				int k = 0;
+				for(int j = 0; j<nline.length(); j++) {
+					Character a = nline.charAt(j);
+					if(a != ',') {
+						BoardCell b = new BoardCell(i,k,a);
+						k++;
+						if(a == 'D') {
+							j++;
+							Character direction = nline.charAt(j);
+							if(direction == 'R') {
+								b.setDoorDirection(DoorDirection.RIGHT);
+							}else if(direction == 'L') {
+								b.setDoorDirection(DoorDirection.LEFT);
+							}else if(direction == 'U') {
+								b.setDoorDirection(DoorDirection.UP);
+							}else if(direction == 'D') {
+								b.setDoorDirection(DoorDirection.DOWN);
+							}
+						}
+						gameBoard[i][k] = b;
+					}
+				}
 			}
+			numRows = i;
+			numColumns = gameBoard[i].length;
 		}catch(FileNotFoundException e) {
-			throw new BadConfigFormatException("Error: File not found");
+			throw new BadConfigFormatException("Error: Board Config File not found");
 		}catch(Exception e) {
-			throw new BadConfigFormatException("Error: Room config file formatted incorrectly.");
+			throw new BadConfigFormatException("Error: Board config file formatted incorrectly.");
 		}
 		return;
 	}
