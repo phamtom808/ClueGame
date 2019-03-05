@@ -108,19 +108,21 @@ public class Board {
 					if(a != ',') {
 						BoardCell b = new BoardCell(i,k,a);
 						k++;
-						if(nline.charAt(j+1) != ',') {
-							j++;
-							Character direction = nline.charAt(j);
-							if(direction == 'R') {
-								b.setDoorDirection(DoorDirection.RIGHT);
-							}else if(direction == 'L') {
-								b.setDoorDirection(DoorDirection.LEFT);
-							}else if(direction == 'U') {
-								b.setDoorDirection(DoorDirection.UP);
-							}else if(direction == 'D') {
-								b.setDoorDirection(DoorDirection.DOWN);
-							}else {
-								b.setDoorDirection(DoorDirection.NONE);
+						if(j<nline.length() - 1) {
+							if(nline.charAt(j+1) != ',') {
+								j++;
+								Character direction = nline.charAt(j);
+								if(direction == 'R') {
+									b.setDoorDirection(DoorDirection.RIGHT);
+								}else if(direction == 'L') {
+									b.setDoorDirection(DoorDirection.LEFT);
+								}else if(direction == 'U') {
+									b.setDoorDirection(DoorDirection.UP);
+								}else if(direction == 'D') {
+									b.setDoorDirection(DoorDirection.DOWN);
+								}else {
+									b.setDoorDirection(DoorDirection.NONE);
+								}
 							}
 						}
 						gameBoard[i][k] = b;
