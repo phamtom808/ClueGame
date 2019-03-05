@@ -20,6 +20,9 @@ public class myInitTests {
 	private static Board board;
 	
 	@BeforeClass
+	/**
+	 * tests if the board was initialized correctly and config files are set correctly
+	 */
 	public static void setUp() {
 		board = Board.getInstance();
 		board.setConfigFiles("BoardLayout.csv", "ClueRooms.txt");
@@ -27,30 +30,39 @@ public class myInitTests {
 	}
 	
 	@Test
+	/**
+	 * tests if the legend is loaded in correctly
+	 */
 	public void testLegend() {
 		Map<Character, String> legend = board.getLegend();
 		assertEquals(LEGEND_SIZE, legend.size());
 		
-		assertEquals("Conservatory", legend.get("C"));
-		assertEquals("Kitchen", legend.get("K"));
-		assertEquals("Bedroom", legend.get("B"));
-		assertEquals("Theater", legend.get("T"));
-		assertEquals("Living Room", legend.get("L"));
-		assertEquals("Study", legend.get("S"));
-		assertEquals("Pool", legend.get("P"));
-		assertEquals("Garrage", legend.get("G"));
-		assertEquals("Hall" , legend.get("H"));
-		assertEquals("Closet", legend.get("X"));
-		assertEquals("Walkway", legend.get("W"));	
+		assertEquals("Conservatory", legend.get('C'));
+		assertEquals("Kitchen", legend.get('K'));
+		assertEquals("Bedroom", legend.get('B'));
+		assertEquals("Theater", legend.get('T'));
+		assertEquals("Living Room", legend.get('L'));
+		assertEquals("Study", legend.get('S'));
+		assertEquals("Pool", legend.get('P'));
+		assertEquals("Garrage", legend.get('G'));
+		assertEquals("Hall" , legend.get('H'));
+		assertEquals("Closet", legend.get('X'));
+		assertEquals("Walkway", legend.get('W'));	
 	}
 	
 	@Test
+	/**
+	 * tests if the board dimensions were set correctly
+	 */
 	public void testDimensions() {
 		assertEquals(NUMBER_COLUMNS, board.getNumColumns());
 		assertEquals(NUMBER_ROWS, board.getNumRows());
 	}
 	
 	@Test
+	/**
+	 * tests if specific door cells are intialized with the correct door direction
+	 */
 	public void doorDirection() {
 		BoardCell cell = board.getCellAt(9,4);
 		assertTrue(cell.isDoorway());
@@ -79,6 +91,9 @@ public class myInitTests {
 	}
 	
 	@Test
+	/**
+	 * tests if the number of doors made are correct
+	 */
 	public void testNumberOfDoors() {
 		int doors = 0;
 		for(int i = 0; i < board.getNumRows(); i++) {
@@ -93,6 +108,9 @@ public class myInitTests {
 	}
 	
 	@Test
+	/**
+	 * tests if the various cell initials match the cell type
+	 */
 	public void testInitials() {
 		assertEquals('C', board.getCellAt(4, 3).getInitial());
 		assertEquals('L', board.getCellAt(6, 9).getInitial());
