@@ -5,22 +5,24 @@ package tests;
  * Unit Tests
  */
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
+import java.util.Map;
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
+import clueGame.Board;
 import clueGame.BoardCell;
+import clueGame.DoorDirection;
 import experiments.IntBoard;
 
 class IntBoardTests {
 	
 	public IntBoard board;
 	
-	@BeforeEach
+	@Before
 	public void beforeAll() {
 		 board = new IntBoard(); // constructor should call calcAdjacencies()
 	}

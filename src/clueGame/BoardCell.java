@@ -2,8 +2,9 @@ package clueGame;
 
 import java.util.HashSet;
 
-/*
- * Emily Christensen and Dane Pham
+/**
+ * @author Emily Christensen
+ * @author Dane Pham
  * BoardCell Class: handles the individual cells of the clue board
  */
 
