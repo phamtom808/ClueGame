@@ -42,6 +42,7 @@ public class Board {
 			this.loadRoomConfig();
 		}catch(BadConfigFormatException e) {
 			System.out.println(e);
+			legend.put(' ', "FailedConfig");
 		}
 	}
 	
@@ -69,12 +70,13 @@ public class Board {
 		try {
 			File roomConfigFile = new File(this.roomConfigFile);
 			Scanner readConfig = new Scanner(roomConfigFile);
-			readConfig.useDelimiter(",");
 			while(readConfig.hasNext()) {
-					Character key =  readConfig.next().charAt(0);
-					String roomName = readConfig.next();
-					String isCard = readConfig.next();
-					legend.put(key, roomName);
+				readConfig.useDelimiter(",");
+				Character key =  readConfig.next().charAt(0);
+				String roomName = readConfig.next();
+				readConfig.useDelimiter("\n");
+				String isCard = readConfig.next();
+				legend.put(key, roomName);
 			}
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Room Config File not found");
@@ -122,6 +124,8 @@ public class Board {
 					}
 				}
 			}
+			numRows = i;
+			numColumns = gameBoard[i].length;
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Board Config File not found");
 		}catch(Exception e) {
