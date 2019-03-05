@@ -47,10 +47,7 @@ public class BoardCell {
 	}
 	
 	public boolean isDoorway() {
-		if(this.doorDirection != DoorDirection.NONE) {
-			return true;
-		}
-		return false;
+		return (this.doorDirection != DoorDirection.NONE); 
 	}
 	
 	public boolean isRoom() {
