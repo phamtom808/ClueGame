@@ -26,15 +26,16 @@ public class Board {
 	}
 	
 	public void initialize() {
-		gameBoard = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
-		legend = new HashMap<Character, String>();
+		this.gameBoard = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+		this.legend = new HashMap<Character, String>();
 		try {
 			this.loadBoardConfig();
 		}catch(BadConfigFormatException e) {
 			System.out.println(e);
 			for(int i = 0; i<MAX_BOARD_SIZE; i++) {
 				for(int j = 0; j<MAX_BOARD_SIZE; j++) {
-					gameBoard[i][j] = new BoardCell(i,j,' ');
+					BoardCell b = new BoardCell(i,j,' ');
+					this.gameBoard[i][j] = b;
 				}
 			}
 		}
@@ -107,7 +108,7 @@ public class Board {
 					if(a != ',') {
 						BoardCell b = new BoardCell(i,k,a);
 						k++;
-						if(a == 'D') {
+						if(nline.charAt(j+1) != ',') {
 							j++;
 							Character direction = nline.charAt(j);
 							if(direction == 'R') {
@@ -118,6 +119,8 @@ public class Board {
 								b.setDoorDirection(DoorDirection.UP);
 							}else if(direction == 'D') {
 								b.setDoorDirection(DoorDirection.DOWN);
+							}else {
+								b.setDoorDirection(DoorDirection.NONE);
 							}
 						}
 						gameBoard[i][k] = b;

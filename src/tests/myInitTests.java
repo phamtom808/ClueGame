@@ -81,8 +81,8 @@ public class myInitTests {
 	@Test
 	public void testNumberOfDoors() {
 		int doors = 0;
-		for(int i = 0; i < board.numRows; i++) {
-			for(int j = 0; j < board.numColumns; j++) {
+		for(int i = 0; i < board.getNumRows(); i++) {
+			for(int j = 0; j < board.getNumColumns(); j++) {
 				BoardCell cell = board.getCellAt(i, j);
 				if(cell.isDoorway()) {
 					doors++;
