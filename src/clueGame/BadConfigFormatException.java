@@ -1,3 +1,8 @@
+/**
+ * @author Emily Christensen
+ * @author Dane Pham
+ * BadConficFormatException Class: throws a custom error when the config files aren't loaded in correctly
+ */
 package clueGame;
 
 public class BadConfigFormatException extends Exception {

@@ -1,3 +1,8 @@
+/**
+ * @author Emily Christensen
+ * @author Dane Pham
+ * Board Class: handles creating the gameboard and interacting with it
+ */
 package clueGame;
 
 import java.util.Scanner;
