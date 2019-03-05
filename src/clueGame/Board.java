@@ -3,6 +3,7 @@ package clueGame;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,11 +13,11 @@ public class Board {
 	private int numRows; //Corresponds to y
 	private int numColumns; //Corresponds to x
 	private BoardCell[][] gameBoard;
-	private Map<Character, String> legend;
+	private HashMap<Character, String> legend;
 	private Set<BoardCell> targets;
 	private String roomConfigFile;
 	private String boardConfigFile;
-	private static Board theInstance;
+	private static Board theInstance = new Board();
 	
 	private Board() {}
 	
@@ -25,11 +26,20 @@ public class Board {
 	}
 	
 	public void initialize() {
-		theInstance = new Board();
-		gameBoard = new BoardCell[numColumns][numRows];
+		gameBoard = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
+		legend = new HashMap<Character, String>();
+		try {
+			this.loadBoardConfig();
+		}catch(BadConfigFormatException e) {
+			System.out.println(e);
+			for(int i = 0; i<MAX_BOARD_SIZE; i++) {
+				for(int j = 0; j<MAX_BOARD_SIZE; j++) {
+					gameBoard[i][j] = new BoardCell(i,j,' ');
+				}
+			}
+		}
 		try {
 			this.loadRoomConfig();
-			this.loadBoardConfig();
 		}catch(BadConfigFormatException e) {
 			System.out.println(e);
 		}
