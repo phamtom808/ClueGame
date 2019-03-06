@@ -90,4 +90,8 @@ public class BoardCell {
 		this.doorDirection = doorDirection;
 	}
 	
+	public void setInitial(Character i) {
+		this.initial = i;
+	}
+	
 }

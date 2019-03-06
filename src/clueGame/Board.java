@@ -32,17 +32,17 @@ public class Board {
 	
 	public void initialize() {
 		this.gameBoard = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
-		this.legend = new HashMap<Character, String>();
+		legend = new HashMap<Character, String>();
+		for(int i = 0; i<MAX_BOARD_SIZE; i++) {
+			for(int j = 0; j<MAX_BOARD_SIZE; j++) {
+				BoardCell b = new BoardCell(i,j,' ');
+				this.gameBoard[i][j] = b;
+			}
+		}
 		try {
 			this.loadBoardConfig();
 		}catch(BadConfigFormatException e) {
 			System.out.println(e);
-			for(int i = 0; i<MAX_BOARD_SIZE; i++) {
-				for(int j = 0; j<MAX_BOARD_SIZE; j++) {
-					BoardCell b = new BoardCell(i,j,' ');
-					this.gameBoard[i][j] = b;
-				}
-			}
 		}
 		try {
 			this.loadRoomConfig();
@@ -77,16 +77,16 @@ public class Board {
 			File roomConfigFile = new File(this.roomConfigFile);
 			Scanner readConfig = new Scanner(roomConfigFile);
 			while(readConfig.hasNext()) {
-				readConfig.useDelimiter(",");
-				Character key =  readConfig.next().charAt(0);
-				String roomName = readConfig.next();
-				readConfig.useDelimiter("\n");
-				String isCard = readConfig.next();
-				legend.put(key, roomName);
+				String data = readConfig.nextLine();
+				String[] lineComponents = data.split(", ");
+				Character key = lineComponents[0].charAt(0);
+				String value = lineComponents[1];
+				this.legend.put(key, value);
 			}
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Room Config File not found");
 		}catch(Exception e) {
+			System.out.println(e);
 			throw new BadConfigFormatException("Error: Room config file formatted incorrectly.");
 		}
 	}
@@ -104,36 +104,37 @@ public class Board {
 			File boardConfigFile = new File(this.boardConfigFile);
 			Scanner readConfig = new Scanner(boardConfigFile);
 			int i = 0;
+			int j = 0;
 			while(readConfig.hasNext()) {
 				String data = readConfig.nextLine();
 				String[] cells = data.split(",");
-				for(int j = 0; j<cells.length; j++) {
+				for(j = 0; j<cells.length; j++) {
 					String cellData = cells[j];
 					Character initial = cellData.charAt(0);
-					BoardCell b = new BoardCell(i,j,initial);
+					gameBoard[i][j].setInitial(initial);
 					if(initial == 'D') {
 						Character direction = data.charAt(1);
 						if(direction == 'R') {
-							b.setDoorDirection(DoorDirection.RIGHT);
+							gameBoard[i][j].setDoorDirection(DoorDirection.RIGHT);
 						}else if(direction == 'L') {
-							b.setDoorDirection(DoorDirection.LEFT);
+							gameBoard[i][j].setDoorDirection(DoorDirection.LEFT);
 						}else if(direction == 'D') {
-							b.setDoorDirection(DoorDirection.DOWN);
+							gameBoard[i][j].setDoorDirection(DoorDirection.DOWN);
 						}else if(direction == 'U') {
-							b.setDoorDirection(DoorDirection.UP);
+							gameBoard[i][j].setDoorDirection(DoorDirection.UP);
 						}else {
-							b.setDoorDirection(DoorDirection.NONE);
+							gameBoard[i][j].setDoorDirection(DoorDirection.NONE);
 						}
 					}
-					gameBoard[i][j] = b;
 				}
 				i++;
 			}
-			numRows = i;
-			numColumns = gameBoard[0].length-1;
+			this.numRows = i;
+			this.numColumns = j;
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Board Config File not found");
 		}catch(Exception e) {
+			System.out.println(e);
 			throw new BadConfigFormatException("Error: Board config file formatted incorrectly.");
 		}
 		return;
