@@ -120,23 +120,7 @@ public class Board {
 						throw new BadConfigFormatException("Error: incorrect number of cells per row\n Row Number: " + i);
 					}
 				}
-				for(j = 0; j<cells.length; j++) {
-					String cellData = cells[j];
-					Character initial = cellData.charAt(0);
-					gameBoard[i][j].setInitial(initial);
-					if(cellData.length() > 1) {
-						Character direction = cellData.charAt(1);
-						if(direction == 'R') {
-							gameBoard[i][j].setDoorDirection(DoorDirection.RIGHT);
-						}else if(direction == 'L') {
-							gameBoard[i][j].setDoorDirection(DoorDirection.LEFT);
-						}else if(direction == 'D') {
-							gameBoard[i][j].setDoorDirection(DoorDirection.DOWN);
-						}else if(direction == 'U') {
-							gameBoard[i][j].setDoorDirection(DoorDirection.UP);
-						}
-					}
-				}
+				
 				i++;
 			}
 			this.numRows = i;
@@ -150,11 +134,11 @@ public class Board {
 	}
 	
 	public int getNumRows() {
-		return this.numRows;
+		return 0;
 	}
 	
 	public int getNumColumns() {
-		return this.numColumns;
+		return 0;
 	}
 	
 	public Map<Character,String> getLegend(){
