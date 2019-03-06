@@ -69,29 +69,29 @@ public class myInitTests {
 	 * tests if specific door cells are intialized with the correct door direction
 	 */
 	public void doorDirection() {
-		BoardCell cell = board.getCellAt(9,4);
+		BoardCell cell = board.getCellAt(3, 9);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.DOWN, cell.getDoorDirection());
 		
-		cell = board.getCellAt(16,8);
+		cell = board.getCellAt(7, 15);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.LEFT, cell.getDoorDirection());
 		
-		cell = board.getCellAt(11, 18);
+		cell = board.getCellAt(17, 10);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.RIGHT, cell.getDoorDirection());
 		
-		cell = board.getCellAt(2, 15);
+		cell = board.getCellAt(14, 1);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.UP, cell.getDoorDirection());
 		
-		cell = board.getCellAt(11, 9);
+		cell = board.getCellAt(8, 10);
 		assertFalse(cell.isDoorway());
 		
-		cell = board.getCellAt(17, 17);
+		cell = board.getCellAt(16, 16);
 		assertFalse(cell.isDoorway());
 		
-		cell = board.getCellAt(20, 6);
+		cell = board.getCellAt(5, 19);
 		assertFalse(cell.isDoorway());
 	}
 	
@@ -117,13 +117,17 @@ public class myInitTests {
 	 * tests if the various cell initials match the cell type
 	 */
 	public void testInitials() {
-		assertEquals('C', board.getCellAt(4, 3).getInitial());
-		assertEquals('L', board.getCellAt(6, 9).getInitial());
-		assertEquals('S', board.getCellAt(9,19).getInitial());
-		
-		assertEquals('W', board.getCellAt(13, 14).getInitial());
-		
-		assertEquals('X', board.getCellAt(11, 11).getInitial());
+		assertEquals('C', board.getCellAt(2, 3).getInitial());
+		assertEquals('L', board.getCellAt(8, 5).getInitial());
+		assertEquals('S', board.getCellAt(18, 8).getInitial());
+		assertEquals('G', board.getCellAt(3, 8).getInitial());
+		assertEquals('W', board.getCellAt(13, 12).getInitial());
+		assertEquals('A', board.getCellAt(9, 15).getInitial());
+		assertEquals('T', board.getCellAt(19, 18).getInitial());
+		assertEquals('K', board.getCellAt(0, 23).getInitial());
+		assertEquals('P', board.getCellAt(19, 0).getInitial());
+		assertEquals('B', board.getCellAt(19, 23).getInitial());
+		assertEquals('X', board.getCellAt(10, 10).getInitial());
 	}
 
 }

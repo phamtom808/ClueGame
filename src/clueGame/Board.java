@@ -6,6 +6,9 @@
 package clueGame;
 
 import java.util.Scanner;
+
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -54,9 +57,9 @@ public class Board {
 	
 	//Function to calculate adjacent cells stored in BoardCell class, so is adjacency data
 	public void calcAdjacencies() {
-		for(int i = 0; i<this.numColumns; i++) {
-			for(int j = 0; j<this.numRows; j++) {
-				this.gameBoard[i][j].calcAdjCells(getInstance());
+		for(int i = 0; i<this.numRows; i++) {
+			for(int j = 0; j<this.numColumns; j++) {
+				this.gameBoard[j][i].calcAdjCells(getInstance());
 			}
 		}
 		return;
@@ -98,6 +101,7 @@ public class Board {
 	 * If it can't open the file, throws specific BadConfigFormatException that matches roomConfigFile
 	 * Assuming nothing causes an error, read in each new line from readConfig, if the character is a D, read in next char for direction, then set direction on cell
 	 * After creating cell, add it to gameboard in proper index
+	 * If cell has 2 characters, determine if it is a door, and, if so, what direction it should go
 	 */
 	public void loadBoardConfig() throws BadConfigFormatException {
 		try {
@@ -105,15 +109,23 @@ public class Board {
 			Scanner readConfig = new Scanner(boardConfigFile);
 			int i = 0;
 			int j = 0;
+			int maxRowSize = 0;
 			while(readConfig.hasNext()) {
 				String data = readConfig.nextLine();
 				String[] cells = data.split(",");
+				if(maxRowSize == 0) {
+					maxRowSize = cells.length;
+				}else {
+					if(maxRowSize != cells.length) {
+						throw new BadConfigFormatException("Error: incorrect number of cells per row\n Row Number: " + i);
+					}
+				}
 				for(j = 0; j<cells.length; j++) {
 					String cellData = cells[j];
 					Character initial = cellData.charAt(0);
 					gameBoard[i][j].setInitial(initial);
-					if(initial == 'D') {
-						Character direction = data.charAt(1);
+					if(cellData.length() > 1) {
+						Character direction = cellData.charAt(1);
 						if(direction == 'R') {
 							gameBoard[i][j].setDoorDirection(DoorDirection.RIGHT);
 						}else if(direction == 'L') {
@@ -122,8 +134,6 @@ public class Board {
 							gameBoard[i][j].setDoorDirection(DoorDirection.DOWN);
 						}else if(direction == 'U') {
 							gameBoard[i][j].setDoorDirection(DoorDirection.UP);
-						}else {
-							gameBoard[i][j].setDoorDirection(DoorDirection.NONE);
 						}
 					}
 				}
@@ -134,8 +144,7 @@ public class Board {
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Board Config File not found");
 		}catch(Exception e) {
-			System.out.println(e);
-			throw new BadConfigFormatException("Error: Board config file formatted incorrectly.");
+			throw new BadConfigFormatException(e.getMessage());
 		}
 		return;
 	}
@@ -152,6 +161,9 @@ public class Board {
 		return this.legend;
 	}
 	
+	/*
+	 * Takes in config files, sets the current instance's config files to the given ones
+	 */
 	public void setConfigFiles(String bdCfgFile, String rmCfgFile) {
 		boardConfigFile = bdCfgFile;
 		roomConfigFile = rmCfgFile;
