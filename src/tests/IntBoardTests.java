@@ -13,9 +13,7 @@ import java.util.Set;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import clueGame.Board;
-import clueGame.BoardCell;
-import clueGame.DoorDirection;
+import experiments.BoardCell;
 import experiments.IntBoard;
 
 class IntBoardTests {

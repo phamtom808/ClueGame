@@ -93,8 +93,9 @@ public class CTest_FileInitTests {
 		for (int row=0; row<board.getNumRows(); row++)
 			for (int col=0; col<board.getNumColumns(); col++) {
 				BoardCell cell = board.getCellAt(row, col);
-				if (cell.isDoorway())
+				if (cell.isDoorway()) {
 					numDoors++;
+				}
 			}
 		Assert.assertEquals(16, numDoors);
 	}
