@@ -70,6 +70,7 @@ public class Board {
 		}
 	}
 	
+	
 	public BoardCell getCellAt(int x, int y) {
 		return this.gameBoard[x][y];
 	}
@@ -91,6 +92,7 @@ public class Board {
 				String value = lineComponents[1];
 				this.legend.put(key, value);
 			}
+			readConfig.close();
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Room Config File not found");
 		}catch(Exception e) {
@@ -148,6 +150,7 @@ public class Board {
 				}
 				i++;
 			}
+			readConfig.close();
 			this.numRows = i;
 			this.numColumns = j;
 		}catch(FileNotFoundException e) {
