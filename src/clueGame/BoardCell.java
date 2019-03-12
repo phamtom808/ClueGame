@@ -83,6 +83,7 @@ public class BoardCell {
 					this.adjCells.add(i);
 				}
 			}
+			return;
 		}
 		if(this.x > 0) {
 			this.adjCells.add(thisBoard.getCellAt(x-1, y));
@@ -98,7 +99,7 @@ public class BoardCell {
 		}
 	}
 	
-	public HashSet<BoardCell> getAdjCells() {
+	public Set<BoardCell> getAdjCells() {
 		return this.adjCells;
 	}
 	

@@ -177,4 +177,8 @@ public class Board {
 	public Set<BoardCell> getDoorList(){
 		return this.doorList;
 	}
+	
+	public Set<BoardCell> getAdjList(int x, int y){
+		return this.gameBoard[y][x].getAdjCells();
+	}
 }
