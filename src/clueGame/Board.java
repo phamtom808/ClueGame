@@ -25,6 +25,7 @@ public class Board {
 	private BoardCell[][] gameBoard;
 	private Map<Character, String> legend;
 	private Set<BoardCell> doorList;
+	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
 	private String roomConfigFile;
 	private String boardConfigFile;
@@ -181,4 +182,31 @@ public class Board {
 	public Set<BoardCell> getAdjList(int x, int y){
 		return this.gameBoard[y][x].getAdjCells();
 	}
+
+	public Set<BoardCell> getTargets(){
+		return this.targets;
+	}
+	
+	public void calcTargets(int x, int y, int pathLength) {
+		BoardCell startCell = this.getCellAt(x, y);
+		this.visited = new HashSet<BoardCell>();
+		this.visited.add(startCell);
+		findAllTargets(startCell, pathLength);
+		visited.clear();
+	}
+	
+	public void findAllTargets(BoardCell b, int pathLength) {
+		for(BoardCell adj: b.getAdjCells()) {
+			if(!this.visited.contains(adj)) {
+				visited.add(adj);
+				if(pathLength == 1 && adj.getInitial() == 'W'|| adj.isDoorway()) {
+					this.targets.add(adj);
+				}else {
+					findAllTargets(adj, pathLength-1);
+				}
+				visited.remove(adj);
+			}
+		}
+	}
+	
 }

@@ -80,7 +80,15 @@ public class BoardCell {
 		if(this.initial != 'W') {
 			for(BoardCell i: thisBoard.getDoorList()) {
 				if(i.getInitial() == this.initial) {
-					this.adjCells.add(i);
+					if(i.getDoorDirection() == DoorDirection.RIGHT) {
+						this.adjCells.add(thisBoard.getCellAt(i.getX()+1, i.getY()));
+					}else if(i.getDoorDirection() == DoorDirection.LEFT) {
+						this.adjCells.add(thisBoard.getCellAt(i.getX()-1,  i.getY()));
+					}else if(i.getDoorDirection() == DoorDirection.UP) {
+						this.adjCells.add(thisBoard.getCellAt(i.getX(),  i.getY()-1));
+					}else if(i.getDoorDirection() == DoorDirection.DOWN) {
+						this.adjCells.add(thisBoard.getCellAt(i.getX(),  i.getY()+1));
+					}
 				}
 			}
 			return;
