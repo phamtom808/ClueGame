@@ -38,6 +38,8 @@ public class Board {
 	}
 	
 	public void initialize() {
+		this.visited = new HashSet<BoardCell>();
+		this.targets = new HashSet<BoardCell>();
 		this.gameBoard = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		this.legend = new HashMap<Character, String>();
 		this.doorList = new HashSet<BoardCell>();
@@ -192,22 +194,21 @@ public class Board {
 	
 	public void calcTargets(int x, int y, int pathLength) {
 		BoardCell startCell = this.getCellAt(x, y);
-		this.visited = new HashSet<BoardCell>();
 		this.visited.add(startCell);
 		findAllTargets(startCell, pathLength);
-		visited.clear();
+		this.visited.clear();
 	}
 	
 	public void findAllTargets(BoardCell b, int pathLength) {
 		for(BoardCell adj: b.getAdjCells()) {
 			if(!this.visited.contains(adj)) {
 				visited.add(adj);
-				if(pathLength == 1 && adj.getInitial() == 'W'|| adj.isDoorway()) {
+				if(pathLength == 1 || adj.isDoorway()) {
 					this.targets.add(adj);
 				}else {
 					findAllTargets(adj, pathLength-1);
+					visited.remove(adj);
 				}
-				visited.remove(adj);
 			}
 		}
 	}

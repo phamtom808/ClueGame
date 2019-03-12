@@ -55,7 +55,7 @@ public class BoardCell {
 	}
 	
 	public boolean isRoom() {
-		if(this.initial != 'W') {
+		if(this.initial != 'W' && !this.isDoorway()) {
 			return true;
 		}
 		return false;
@@ -93,16 +93,16 @@ public class BoardCell {
 			}
 			return;
 		}
-		if(this.x > 0) {
+		if(this.x > 0 && !thisBoard.getCellAt(x-1, y).isRoom()) {
 			this.adjCells.add(thisBoard.getCellAt(x-1, y));
 		}
-		if(this.y > 0) {
+		if(this.y > 0 && !thisBoard.getCellAt(x, y-1).isRoom()) {
 			this.adjCells.add(thisBoard.getCellAt(x, y-1));
 		}
-		if(this.x < thisBoard.getNumRows()) {
+		if(this.x < thisBoard.getNumRows() && !thisBoard.getCellAt(x+1, y).isRoom()) {
 			this.adjCells.add(thisBoard.getCellAt(x+1, y));
 		}
-		if(this.y < thisBoard.getNumColumns()) {
+		if(this.y < thisBoard.getNumColumns() && !thisBoard.getCellAt(x, y+1).isRoom()) {
 			this.adjCells.add(thisBoard.getCellAt(x, y+1));
 		}
 	}
