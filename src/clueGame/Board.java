@@ -11,7 +11,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,7 +23,8 @@ public class Board {
 	private int numRows; //Corresponds to y
 	private int numColumns; //Corresponds to x
 	private BoardCell[][] gameBoard;
-	private HashMap<Character, String> legend;
+	private Map<Character, String> legend;
+	private Set<BoardCell> doorList;
 	private Set<BoardCell> targets;
 	private String roomConfigFile;
 	private String boardConfigFile;
@@ -35,7 +38,8 @@ public class Board {
 	
 	public void initialize() {
 		this.gameBoard = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
-		legend = new HashMap<Character, String>();
+		this.legend = new HashMap<Character, String>();
+		this.doorList = new HashSet<BoardCell>();
 		for(int i = 0; i<MAX_BOARD_SIZE; i++) {
 			for(int j = 0; j<MAX_BOARD_SIZE; j++) {
 				BoardCell b = new BoardCell(i,j,' ');
@@ -53,16 +57,16 @@ public class Board {
 			System.out.println(e);
 			legend.put(' ', "FailedConfig");
 		}
+		this.calcAdjacencies();
 	}
 	
 	//Function to calculate adjacent cells stored in BoardCell class, so is adjacency data
 	public void calcAdjacencies() {
 		for(int i = 0; i<this.numRows; i++) {
 			for(int j = 0; j<this.numColumns; j++) {
-				this.gameBoard[j][i].calcAdjCells(getInstance());
+				this.gameBoard[j][i].calcAdjCells(this);
 			}
 		}
-		return;
 	}
 	
 	public BoardCell getCellAt(int x, int y) {
@@ -128,12 +132,16 @@ public class Board {
 						Character direction = cellData.charAt(1);
 						if(direction == 'R') {
 							gameBoard[i][j].setDoorDirection(DoorDirection.RIGHT);
+							doorList.add(gameBoard[i][j]);
 						}else if(direction == 'L') {
 							gameBoard[i][j].setDoorDirection(DoorDirection.LEFT);
+							doorList.add(gameBoard[i][j]);
 						}else if(direction == 'D') {
 							gameBoard[i][j].setDoorDirection(DoorDirection.DOWN);
+							doorList.add(gameBoard[i][j]);
 						}else if(direction == 'U') {
 							gameBoard[i][j].setDoorDirection(DoorDirection.UP);
+							doorList.add(gameBoard[i][j]);
 						}
 					}
 				}
@@ -161,11 +169,12 @@ public class Board {
 		return this.legend;
 	}
 	
-	/*
-	 * Takes in config files, sets the current instance's config files to the given ones
-	 */
 	public void setConfigFiles(String bdCfgFile, String rmCfgFile) {
 		boardConfigFile = bdCfgFile;
 		roomConfigFile = rmCfgFile;
+	}
+	
+	public Set<BoardCell> getDoorList(){
+		return this.doorList;
 	}
 }

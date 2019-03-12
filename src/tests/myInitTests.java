@@ -1,5 +1,6 @@
 /**
  * @author Dane Pham
+
  * @author Emily Christensen
  * myInitTests Class: tests the various aspects of creating the gameboard are being conducted correctly
  */

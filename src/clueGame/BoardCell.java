@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Emily Christensen
@@ -47,7 +48,10 @@ public class BoardCell {
 	}
 	
 	public boolean isDoorway() {
-		return (this.doorDirection != DoorDirection.NONE); 
+		if(this.doorDirection != DoorDirection.NONE) {
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean isRoom() {
@@ -64,18 +68,33 @@ public class BoardCell {
 		return false;
 	}
 	
+	/*
+	 * calcAdjCells(Board thisBoard)
+	 * takes in board parameter in order to get the list of doors, size of board
+	 * if the cell is a walkway, determine the cells that are adjacent to it
+	 * otherwise, determine what, if any, doors are available
+	 * this is called on all cells within board class
+	 * 
+	 */
 	public void calcAdjCells(Board thisBoard) {
+		if(this.initial != 'W') {
+			for(BoardCell i: thisBoard.getDoorList()) {
+				if(i.getInitial() == this.initial) {
+					this.adjCells.add(i);
+				}
+			}
+		}
 		if(this.x > 0) {
-			adjCells.add(thisBoard.getCellAt(x-1, y));
+			this.adjCells.add(thisBoard.getCellAt(x-1, y));
 		}
 		if(this.y > 0) {
-			adjCells.add(thisBoard.getCellAt(x, y-1));
+			this.adjCells.add(thisBoard.getCellAt(x, y-1));
 		}
 		if(this.x < thisBoard.getNumRows()) {
-			adjCells.add(thisBoard.getCellAt(x+1, y));
+			this.adjCells.add(thisBoard.getCellAt(x+1, y));
 		}
 		if(this.y < thisBoard.getNumColumns()) {
-			adjCells.add(thisBoard.getCellAt(x, y+1));
+			this.adjCells.add(thisBoard.getCellAt(x, y+1));
 		}
 	}
 	
