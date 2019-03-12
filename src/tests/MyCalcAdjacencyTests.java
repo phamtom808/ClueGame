@@ -57,6 +57,53 @@ public class MyCalcAdjacencyTests {
 		assertTrue(testList.contains(board.getCellAt(2, 6)));
 		assertEquals(3, testList.size());
 	}
+	
+	@Test
+	public void testAdjacenciesInsideRooms() {
+		// Test corner
+		Set<BoardCell> testList = board.getAdjList(0, 0);
+		assertEquals(0, testList.size());
+		//Test room cell with a walkway to the right
+		testList = board.getAdjList(4, 2);
+		assertEquals(0, testList.size());
+		//Test room cell with a walkway above
+		testList = board.getAdjList(5, 6);
+		assertEquals(0, testList.size());
+		//Test room cell in the middle of a room
+		testList = board.getAdjList(21, 1);
+		assertEquals(0, testList.size());
+		//Test a corner a room in the middle
+		testList = board.getAdjList(18, 6);
+		assertEquals(0, testList.size());
+		//Test a room cell beside a door
+		testList = board.getAdjList(10, 18);
+		assertEquals(0, testList.size());
+	}
+	
+	@Test
+	public void testAdjacencyRoomExit() {
+		//Test doorway right
+		Set<BoardCell> testList = board.getAdjList(10, 16);
+		assertEquals(1, testList.size());
+		assertTrue(testList.contains(board.getCellAt(11, 16)));
+		//Test doorway left
+		testList = board.getAdjList(2, 9);
+		assertEquals(1, testList.size());
+		assertTrue(testList.contains(board.getCellAt(1, 9)));
+		//Test doorway down
+		testList = board.getAdjList(0, 5);
+		assertEquals(1, testList.size());
+		assertTrue(testList.contains(board.getCellAt(0, 6)));
+		//test doorway up
+		testList = board.getAdjList(1, 14);
+		assertEquals(1, testList.size());
+		assertTrue(testList.contains(board.getCellAt(1, 13)));
+		//test doorway up where there's a walkway to the left
+		testList = board.getAdjList(13, 12);
+		assertEquals(1, testList.size());
+		assertTrue(testList.contains(board.getCellAt(13, 11)));
+	}
+	
 	@Test
 	public void test() {
 		fail("Not yet implemented");
