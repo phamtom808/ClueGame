@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -65,6 +66,11 @@ public class Board {
 		return;
 	}
 	
+	//Function to return adjacent cells stored in BoardCell class
+	public HashSet<BoardCell> getAdjList(int x, int y){
+		return this.gameBoard[x][y].getAdjCells();
+	}
+	
 	public BoardCell getCellAt(int x, int y) {
 		return this.gameBoard[x][y];
 	}
@@ -86,6 +92,7 @@ public class Board {
 				String value = lineComponents[1];
 				this.legend.put(key, value);
 			}
+			readConfig.close();
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Room Config File not found");
 		}catch(Exception e) {
@@ -139,6 +146,7 @@ public class Board {
 				}
 				i++;
 			}
+			readConfig.close();
 			this.numRows = i;
 			this.numColumns = j;
 		}catch(FileNotFoundException e) {
