@@ -69,10 +69,6 @@ public class Board {
 		}
 	}
 	
-	//Function to return adjacent cells stored in BoardCell class
-	public HashSet<BoardCell> getAdjList(int x, int y){
-		return this.gameBoard[x][y].getAdjCells();
-	}
 	
 	public BoardCell getCellAt(int x, int y) {
 		return this.gameBoard[x][y];
