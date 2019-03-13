@@ -193,6 +193,7 @@ public class Board {
 	}
 	
 	public void calcTargets(int x, int y, int pathLength) {
+		this.targets.clear();
 		BoardCell startCell = this.getCellAt(x, y);
 		this.visited.add(startCell);
 		findAllTargets(startCell, pathLength);
