@@ -20,11 +20,11 @@ import java.util.Set;
 public class Board {
 	
 	public static final int MAX_BOARD_SIZE = 50;
-	private int numRows; //Corresponds to y
-	private int numColumns; //Corresponds to x
+	private int numRows; 
+	private int numColumns; 
 	private BoardCell[][] gameBoard;
 	private Map<Character, String> legend;
-	private Set<BoardCell> doorList;
+	private Set<BoardCell> doorList; //may have become irrelevant for now, but may have use later
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
 	private String roomConfigFile;
