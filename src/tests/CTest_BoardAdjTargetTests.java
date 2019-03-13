@@ -156,9 +156,10 @@ public class CTest_BoardAdjTargetTests {
 		
 		// Test on right edge of board, next to 1 room piece
 		testList = board.getAdjList(14, 22);
+		assertEquals(2, testList.size());
 		assertTrue(testList.contains(board.getCellAt(14, 21)));
 		assertTrue(testList.contains(board.getCellAt(13, 22)));
-		assertEquals(2, testList.size());
+
 
 		// Test on walkway next to  door that is not in the needed
 		// direction to enter

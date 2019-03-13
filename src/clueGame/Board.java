@@ -43,12 +43,6 @@ public class Board {
 		this.gameBoard = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		this.legend = new HashMap<Character, String>();
 		this.doorList = new HashSet<BoardCell>();
-		for(int i = 0; i<MAX_BOARD_SIZE; i++) {
-			for(int j = 0; j<MAX_BOARD_SIZE; j++) {
-				BoardCell b = new BoardCell(i,j,' ');
-				this.gameBoard[i][j] = b;
-			}
-		}
 		try {
 			this.loadBoardConfig();
 		}catch(BadConfigFormatException e) {
@@ -65,16 +59,16 @@ public class Board {
 	
 	//Function to calculate adjacent cells stored in BoardCell class, so is adjacency data
 	public void calcAdjacencies() {
-		for(int i = 0; i<this.numRows; i++) {
-			for(int j = 0; j<this.numColumns; j++) {
-				this.gameBoard[j][i].calcAdjCells(this);
+		for(int row = 0; row<this.numRows; row++) {
+			for(int columns = 0; columns<this.numColumns; columns++) {
+				this.gameBoard[row][columns].calcAdjCells(this);
 			}
 		}
 	}
 	
 	
-	public BoardCell getCellAt(int x, int y) {
-		return this.gameBoard[x][y];
+	public BoardCell getCellAt(int column, int row) {
+		return this.gameBoard[row][column];
 	}
 	
 	/*
@@ -116,8 +110,8 @@ public class Board {
 		try {
 			File boardConfigFile = new File(this.boardConfigFile);
 			Scanner readConfig = new Scanner(boardConfigFile);
-			int i = 0;
-			int j = 0;
+			int row = 0;
+			int column = 0;
 			int maxRowSize = 0;
 			while(readConfig.hasNext()) {
 				String data = readConfig.nextLine();
@@ -126,35 +120,36 @@ public class Board {
 					maxRowSize = cells.length;
 				}else {
 					if(maxRowSize != cells.length) {
-						throw new BadConfigFormatException("Error: incorrect number of cells per row\n Row Number: " + i);
+						throw new BadConfigFormatException("Error: incorrect number of cells per row\n Row Number: " + row);
 					}
 				}
-				for(j = 0; j<cells.length; j++) {
-					String cellData = cells[j];
+				for(column = 0; column<cells.length; column++) {
+					String cellData = cells[column];
 					Character initial = cellData.charAt(0);
-					gameBoard[i][j].setInitial(initial);
+					gameBoard[row][column] = new BoardCell(row,column, ' ');
+					gameBoard[row][column].setInitial(initial);
 					if(cellData.length() > 1) {
 						Character direction = cellData.charAt(1);
 						if(direction == 'R') {
-							gameBoard[i][j].setDoorDirection(DoorDirection.RIGHT);
-							doorList.add(gameBoard[i][j]);
+							gameBoard[row][column].setDoorDirection(DoorDirection.RIGHT);
+							doorList.add(gameBoard[row][column]);
 						}else if(direction == 'L') {
-							gameBoard[i][j].setDoorDirection(DoorDirection.LEFT);
-							doorList.add(gameBoard[i][j]);
+							gameBoard[row][column].setDoorDirection(DoorDirection.LEFT);
+							doorList.add(gameBoard[row][column]);
 						}else if(direction == 'D') {
-							gameBoard[i][j].setDoorDirection(DoorDirection.DOWN);
-							doorList.add(gameBoard[i][j]);
+							gameBoard[row][column].setDoorDirection(DoorDirection.DOWN);
+							doorList.add(gameBoard[row][column]);
 						}else if(direction == 'U') {
-							gameBoard[i][j].setDoorDirection(DoorDirection.UP);
-							doorList.add(gameBoard[i][j]);
+							gameBoard[row][column].setDoorDirection(DoorDirection.UP);
+							doorList.add(gameBoard[row][column]);
 						}
 					}
 				}
-				i++;
+				row++;
 			}
 			readConfig.close();
-			this.numRows = i;
-			this.numColumns = j;
+			this.numRows = row;
+			this.numColumns = column;
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Board Config File not found");
 		}catch(Exception e) {
@@ -184,17 +179,17 @@ public class Board {
 		return this.doorList;
 	}
 	
-	public Set<BoardCell> getAdjList(int x, int y){
-		return this.gameBoard[x][y].getAdjCells();
+	public Set<BoardCell> getAdjList(int column, int row){
+		return this.gameBoard[row][column].getAdjCells();
 	}
 
 	public Set<BoardCell> getTargets(){
 		return this.targets;
 	}
 	
-	public void calcTargets(int x, int y, int pathLength) {
+	public void calcTargets(int column, int row, int pathLength) {
 		this.targets.clear();
-		BoardCell startCell = this.getCellAt(x, y);
+		BoardCell startCell = this.getCellAt(column, row);
 		this.visited.add(startCell);
 		findAllTargets(startCell, pathLength);
 		this.visited.clear();
