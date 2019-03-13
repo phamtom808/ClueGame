@@ -67,7 +67,7 @@ public class Board {
 	}
 	
 	
-	public BoardCell getCellAt(int column, int row) {
+	public BoardCell getCellAt(int row, int column) {
 		return this.gameBoard[row][column];
 	}
 	
@@ -179,13 +179,14 @@ public class Board {
 		return this.doorList;
 	}
 	
-	public Set<BoardCell> getAdjList(int column, int row){
-		return this.gameBoard[row][column].getAdjCells();
+	public Set<BoardCell> getAdjList(int row, int column){
+		return this.getCellAt(row,column).getAdjCells();
 	}
 
 	public Set<BoardCell> getTargets(){
 		return this.targets;
 	}
+	
 	
 	public void calcTargets(int column, int row, int pathLength) {
 		this.targets.clear();

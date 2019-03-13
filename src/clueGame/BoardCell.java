@@ -82,34 +82,34 @@ public class BoardCell {
 		}
 		if(this.isDoorway()) {
 			if(this.doorDirection == DoorDirection.RIGHT) {
-				this.adjCells.add(thisBoard.getCellAt(column+1, row));
+				this.adjCells.add(thisBoard.getCellAt(row, column+1));
 			}else if(this.doorDirection == DoorDirection.LEFT) {
-				this.adjCells.add(thisBoard.getCellAt(column-1, row));
+				this.adjCells.add(thisBoard.getCellAt(row, column-1));
 			}else if(this.doorDirection == DoorDirection.UP) {
-				this.adjCells.add(thisBoard.getCellAt(column, row-1));
+				this.adjCells.add(thisBoard.getCellAt(row-1, column));
 			}else if(this.doorDirection == DoorDirection.DOWN) {
-				this.adjCells.add(thisBoard.getCellAt(column, row+1));
+				this.adjCells.add(thisBoard.getCellAt(row+1,column));
 			}
 			return;
 		}
 		if(this.row > 0) {
-			if(!thisBoard.getCellAt(column,row-1).isRoom()) {
-				this.adjCells.add(thisBoard.getCellAt(column, row-1));
+			if(!thisBoard.getCellAt(row-1,column).isRoom()) {
+				this.adjCells.add(thisBoard.getCellAt(row-1,column));
 			}
 		}
 		if(this.column > 0) {
-			if(!thisBoard.getCellAt(column-1, row).isRoom()) {
-				this.adjCells.add(thisBoard.getCellAt(column-1, row));
+			if(!thisBoard.getCellAt(row,column-1).isRoom()) {
+				this.adjCells.add(thisBoard.getCellAt(row,column-1));
 			}
 		}
 		if(this.row < thisBoard.getNumRows()-1) {
-			if(!thisBoard.getCellAt(column, row+1).isRoom()) {
-				this.adjCells.add(thisBoard.getCellAt(column, row+1));
+			if(!thisBoard.getCellAt(row+1,column).isRoom()) {
+				this.adjCells.add(thisBoard.getCellAt(row+1,column));
 			}
 		}
 		if(this.column < thisBoard.getNumColumns()-1) {
-			if(!thisBoard.getCellAt(column+1,row).isRoom()) {
-				this.adjCells.add(thisBoard.getCellAt(column+1, row));
+			if(!thisBoard.getCellAt(row,column+1).isRoom()) {
+				this.adjCells.add(thisBoard.getCellAt(row,column+1));
 			}
 		}
 	}
