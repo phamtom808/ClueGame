@@ -93,43 +93,23 @@ public class BoardCell {
 			return;
 		}
 		if(this.row > 0) {
-			BoardCell i = thisBoard.getCellAt(row-1, column);
-			if(i.isWalkway()) {
-				this.adjCells.add(i);
-			}else if(i.isDoorway()) {
-				if(i.getDoorDirection() == DoorDirection.RIGHT) {
-					this.adjCells.add(i);
-				}
+			if(!thisBoard.getCellAt(row-1,column).isRoom()) {
+				this.adjCells.add(thisBoard.getCellAt(row-1,column));
 			}
 		}
 		if(this.column > 0) {
-			BoardCell i = thisBoard.getCellAt(row, column-1);
-			if(i.isWalkway()) {
-				this.adjCells.add(i);
-			}else if(i.isDoorway()) {
-				if(i.getDoorDirection() == DoorDirection.DOWN) {
-					this.adjCells.add(i);
-				}
+			if(!thisBoard.getCellAt(row,column-1).isRoom()) {
+				this.adjCells.add(thisBoard.getCellAt(row,column-1));
 			}
 		}
 		if(this.row < thisBoard.getNumRows()-1) {
-			BoardCell i = thisBoard.getCellAt(row+1,column);
-			if(i.isWalkway()) {
-				this.adjCells.add(i);
-			}else if(i.isDoorway()) {
-				if(i.getDoorDirection() == DoorDirection.LEFT) {
-					this.adjCells.add(i);
-				}
+			if(!thisBoard.getCellAt(row+1,column).isRoom()) {
+				this.adjCells.add(thisBoard.getCellAt(row+1,column));
 			}
 		}
 		if(this.column < thisBoard.getNumColumns()-1) {
-			BoardCell i = thisBoard.getCellAt(row,column+1);
-			if(i.isWalkway()) {
-				this.adjCells.add(i);
-			}else if(i.isDoorway()) {
-				if(i.getDoorDirection() == DoorDirection.UP) {
-					this.adjCells.add(i);
-				}
+			if(!thisBoard.getCellAt(row,column+1).isRoom()) {
+				this.adjCells.add(thisBoard.getCellAt(row,column+1));
 			}
 		}
 	}
