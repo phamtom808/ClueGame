@@ -93,23 +93,43 @@ public class BoardCell {
 			return;
 		}
 		if(this.row > 0) {
-			if(!thisBoard.getCellAt(row-1,column).isRoom()) {
+			if(thisBoard.getCellAt(row-1,column).isWalkway()) {
 				this.adjCells.add(thisBoard.getCellAt(row-1,column));
+			}
+			if(thisBoard.getCellAt(row-1,column).isDoorway()) {
+				if(thisBoard.getCellAt(row-1, column).getDoorNeighbor(thisBoard).equals(this)) {
+					this.adjCells.add(thisBoard.getCellAt(row-1, column));
+				}
 			}
 		}
 		if(this.column > 0) {
-			if(!thisBoard.getCellAt(row,column-1).isRoom()) {
+			if(thisBoard.getCellAt(row,column-1).isWalkway()) {
 				this.adjCells.add(thisBoard.getCellAt(row,column-1));
+			}
+			if(thisBoard.getCellAt(row,column-1).isDoorway()) {
+				if(thisBoard.getCellAt(row, column-1).getDoorNeighbor(thisBoard).equals(this)) {
+					this.adjCells.add(thisBoard.getCellAt(row, column-1));
+				}
 			}
 		}
 		if(this.row < thisBoard.getNumRows()-1) {
-			if(!thisBoard.getCellAt(row+1,column).isRoom()) {
+			if(thisBoard.getCellAt(row+1,column).isWalkway()) {
 				this.adjCells.add(thisBoard.getCellAt(row+1,column));
+			}
+			if(thisBoard.getCellAt(row+1,column).isDoorway()) {
+				if(thisBoard.getCellAt(row+1, column).getDoorNeighbor(thisBoard).equals(this)) {
+					this.adjCells.add(thisBoard.getCellAt(row+1, column));
+				}
 			}
 		}
 		if(this.column < thisBoard.getNumColumns()-1) {
-			if(!thisBoard.getCellAt(row,column+1).isRoom()) {
+			if(thisBoard.getCellAt(row,column+1).isWalkway()) {
 				this.adjCells.add(thisBoard.getCellAt(row,column+1));
+			}
+			if(thisBoard.getCellAt(row,column+1).isDoorway()) {
+				if(thisBoard.getCellAt(row, column+1).getDoorNeighbor(thisBoard).equals(this)) {
+					this.adjCells.add(thisBoard.getCellAt(row, column+1));
+				}
 			}
 		}
 	}
@@ -126,4 +146,27 @@ public class BoardCell {
 		this.initial = i;
 	}
 	
+	public BoardCell getDoorNeighbor(Board thisBoard) {
+		if(this.doorDirection == DoorDirection.LEFT) {
+			return thisBoard.getCellAt(row, column-1);
+		}else if(this.doorDirection == DoorDirection.RIGHT) {
+			return thisBoard.getCellAt(row, column+1);
+		}else if(this.doorDirection == DoorDirection.DOWN) {
+			return thisBoard.getCellAt(row, column-1);
+		}else if(this.doorDirection == DoorDirection.UP) {
+			return thisBoard.getCellAt(row, column+1);
+		}else {
+			return null; //just in case a cell that is not a door is passed in
+		}
+	}
+	
+	public boolean equals(BoardCell other) {
+		if(this == null || other == null) {
+			return false;
+		}
+		if(this.row == other.getRow() && this.column == other.getColumn() && this.initial == other.getInitial() && this.doorDirection == other.getDoorDirection()) {
+			return true;
+		}
+		return false;
+	}
 }

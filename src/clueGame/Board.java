@@ -187,7 +187,6 @@ public class Board {
 		return this.targets;
 	}
 	
-	
 	public void calcTargets(int column, int row, int pathLength) {
 		this.targets.clear();
 		BoardCell startCell = this.getCellAt(column, row);
