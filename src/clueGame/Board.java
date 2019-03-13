@@ -185,7 +185,7 @@ public class Board {
 	}
 	
 	public Set<BoardCell> getAdjList(int x, int y){
-		return this.gameBoard[y][x].getAdjCells();
+		return this.gameBoard[x][y].getAdjCells();
 	}
 
 	public Set<BoardCell> getTargets(){
@@ -207,8 +207,8 @@ public class Board {
 					this.targets.add(adj);
 				}else {
 					findAllTargets(adj, pathLength-1);
-					visited.remove(adj);
 				}
+				visited.remove(adj);
 			}
 		}
 	}
