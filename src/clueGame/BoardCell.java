@@ -146,6 +146,9 @@ public class BoardCell {
 		this.initial = i;
 	}
 	
+	/*
+	 * for a given cell, if the cell is a door, return the cell that the door can enter/exit from
+	 */
 	public BoardCell getDoorNeighbor(Board thisBoard) {
 		if(this.doorDirection == DoorDirection.LEFT) {
 			return thisBoard.getCellAt(row, column-1);

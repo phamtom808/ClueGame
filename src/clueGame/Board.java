@@ -186,7 +186,10 @@ public class Board {
 	public Set<BoardCell> getTargets(){
 		return this.targets;
 	}
-	
+	/*
+	 * Set-up function for recursive findAllTargets that takes in path length and current row/column
+	 * Algorithm detailed in slides
+	 */
 	public void calcTargets(int column, int row, int pathLength) {
 		this.targets.clear();
 		BoardCell startCell = this.getCellAt(column, row);
@@ -195,6 +198,11 @@ public class Board {
 		this.visited.clear();
 	}
 	
+	/*
+	 * Recursive function for calcTargets
+	 * Algorithm detailed in slides
+	 * Determines correct targets for current cell recursively
+	 */
 	public void findAllTargets(BoardCell b, int pathLength) {
 		for(BoardCell adj: b.getAdjCells()) {
 			if(!this.visited.contains(adj)) {
