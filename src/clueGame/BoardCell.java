@@ -151,10 +151,10 @@ public class BoardCell {
 			return thisBoard.getCellAt(row, column-1);
 		}else if(this.doorDirection == DoorDirection.RIGHT) {
 			return thisBoard.getCellAt(row, column+1);
-		}else if(this.doorDirection == DoorDirection.DOWN) {
-			return thisBoard.getCellAt(row, column-1);
 		}else if(this.doorDirection == DoorDirection.UP) {
-			return thisBoard.getCellAt(row, column+1);
+			return thisBoard.getCellAt(row-1, column);
+		}else if(this.doorDirection == DoorDirection.DOWN) {
+			return thisBoard.getCellAt(row+1, column);
 		}else {
 			return null; //just in case a cell that is not a door is passed in
 		}

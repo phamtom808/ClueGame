@@ -97,10 +97,10 @@ public class CTest_BoardAdjTargetTests {
 		assertEquals(3, testList.size());
 		// Test beside a door direction DOWN
 		testList = board.getAdjList(6, 15);
+		assertEquals(3, testList.size());
 		assertTrue(testList.contains(board.getCellAt(5, 15)));
 		assertTrue(testList.contains(board.getCellAt(6, 14)));
 		assertTrue(testList.contains(board.getCellAt(6, 16)));
-		assertEquals(3, testList.size());
 		// Test beside a door direction LEFT
 		testList = board.getAdjList(15, 17);
 		assertTrue(testList.contains(board.getCellAt(15, 16)));
