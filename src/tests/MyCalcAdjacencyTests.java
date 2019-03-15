@@ -1,5 +1,9 @@
 package tests;
 //NOTE: format for getAdjLists, calcTargets parameters is row,column (y,x)
+/*
+ * @author Emily Christensen
+ * @author Dane Pham
+ */
 
 import static org.junit.Assert.*;
 

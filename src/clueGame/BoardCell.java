@@ -82,13 +82,13 @@ public class BoardCell {
 		}
 		if(this.isDoorway()) {
 			if(this.doorDirection == DoorDirection.RIGHT) {
-				this.adjCells.add(thisBoard.getCellAt(row, column+1));
+				this.adjCells.add(this.getDoorNeighbor(thisBoard));
 			}else if(this.doorDirection == DoorDirection.LEFT) {
-				this.adjCells.add(thisBoard.getCellAt(row, column-1));
+				this.adjCells.add(this.getDoorNeighbor(thisBoard));
 			}else if(this.doorDirection == DoorDirection.UP) {
-				this.adjCells.add(thisBoard.getCellAt(row-1, column));
+				this.adjCells.add(this.getDoorNeighbor(thisBoard));
 			}else if(this.doorDirection == DoorDirection.DOWN) {
-				this.adjCells.add(thisBoard.getCellAt(row+1,column));
+				this.adjCells.add(this.getDoorNeighbor(thisBoard));
 			}
 			return;
 		}
