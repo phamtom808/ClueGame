@@ -41,7 +41,7 @@ public class MyCalcAdjacencyTests {
 		assertTrue(testList.contains(board.getCellAt(1, 12)));
 		assertEquals(2, testList.size());
 		
-		//Test piece surrounded by 4 walkways
+		//Test piece inside room corner
 		testList = board.getAdjList(8, 20);
 		assertTrue(testList.contains(board.getCellAt(8, 21)));
 		assertTrue(testList.contains(board.getCellAt(7, 20)));
@@ -50,10 +50,12 @@ public class MyCalcAdjacencyTests {
 		assertEquals(4, testList.size());
 		
 		//Test on bottom side of board, next to 1 room piece
-		testList = board.getAdjList(19, 12);
-		assertTrue(testList.contains(board.getCellAt(18, 12)));
-		assertTrue(testList.contains(board.getCellAt(19, 11)));
-		assertEquals(2, testList.size());
+		testList = board.getAdjList(17, 11);
+		assertTrue(testList.contains(board.getCellAt(18, 11)));
+		assertTrue(testList.contains(board.getCellAt(16, 11)));
+		assertTrue(testList.contains(board.getCellAt(17, 10)));
+		assertTrue(testList.contains(board.getCellAt(17, 12)));
+		assertEquals(4, testList.size());
 		
 		//Test on walkway next to door that isn't the correct direction
 		testList = board.getAdjList(5, 2);
