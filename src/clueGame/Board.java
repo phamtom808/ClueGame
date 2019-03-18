@@ -145,8 +145,8 @@ public class Board {
 					}
 				}
 				row++;
+				readConfig.close();
 			}
-			readConfig.close();
 			this.numRows = row;
 			this.numColumns = column;
 		}catch(FileNotFoundException e) {
