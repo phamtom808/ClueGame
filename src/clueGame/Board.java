@@ -155,7 +155,6 @@ public class Board {
 		}catch(Exception e) {
 			throw new BadConfigFormatException(e.getMessage());
 		}
-		return;
 	}
 	
 	public int getNumRows() {
