@@ -53,14 +53,16 @@ public class Board {
 			this.loadBoardConfig();
 		}catch(BadConfigFormatException e) {
 			System.out.println(e);
+			System.exit(1); //if exit code is 1, then board failed
 		}
 		try {
 			this.loadRoomConfig();
 		}catch(BadConfigFormatException e) {
 			System.out.println(e);
 			legend.put(' ', "FailedConfig");
+			System.exit(2); //if exit code is 2, then room failed
 		}
-		this.calcAdjacencies();
+		this.calcAdjacencies(); 
 	}
 	
 	//Function to calculate adjacent cells stored in BoardCell class, so is adjacency data
