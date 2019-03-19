@@ -3,6 +3,7 @@
  * @author Dane Pham
  * Board Class: handles creating the gameboard and interacting with it
  */
+
 package clueGame;
 
 import java.util.Scanner;
@@ -23,6 +24,7 @@ public class Board {
 	private int numColumns; 
 	private BoardCell[][] gameBoard;
 	private Map<Character, String> legend;
+	private Set<Player> players;
 	private Set<BoardCell> doorList; //may have become irrelevant for now, but may have use later
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
@@ -38,6 +40,7 @@ public class Board {
 	public static Board getInstance() {
 		return theInstance;
 	}
+	
 	/*
 	 * initialize():
 	 * sets up various local variables and allocates memory for them
@@ -74,7 +77,7 @@ public class Board {
 		this.calcAdjacencies(); 
 	}
 	
-	//Function to calculate adjacent cells stored in BoardCell class, so is adjacency data
+	//Function called to calculate adjacent cells for all cells in BoardCell class
 	public void calcAdjacencies() {
 		for(int row = 0; row<this.numRows; row++) {
 			for(int columns = 0; columns<this.numColumns; columns++) {
@@ -83,10 +86,37 @@ public class Board {
 		}
 	}
 	
-	
-	public BoardCell getCellAt(int row, int column) {
-		return this.gameBoard[row][column];
+	/*
+	 * Set-up function for recursive findAllTargets that takes in path length and current row/column
+	 * Algorithm detailed in slides
+	 */
+	public void calcTargets(int column, int row, int pathLength) {
+		this.targets.clear();
+		BoardCell startCell = this.getCellAt(row, column);
+		this.visited.add(startCell);
+		findAllTargets(startCell, pathLength);
+		this.visited.clear();
 	}
+	
+	/*
+	 * Recursive function for calcTargets
+	 * Algorithm detailed in slides
+	 * Determines correct targets for current cell recursively
+	 */
+	public void findAllTargets(BoardCell b, int pathLength) {
+		for(BoardCell adj: b.getAdjCells()) {
+			if(!this.visited.contains(adj)) {
+				visited.add(adj);
+				if(pathLength == 1 || adj.isDoorway()) {
+					this.targets.add(adj);
+				}else {
+					findAllTargets(adj, pathLength-1);
+				}
+				visited.remove(adj);
+			}
+		}
+	}
+
 	
 	/*
 	 * loadRoomConfig
@@ -109,7 +139,8 @@ public class Board {
 					String value = lineComponents[1];
 					this.legend.put(key, value);
 					if(lineComponents[2] == "card") {
-						//create card
+						Card c = new Card(value,CardType.ROOM);
+						deck.add(c);
 					}
 				}catch(Exception e){
 					throw new BadConfigFormatException("Incorrect data format for room legend");
@@ -123,7 +154,6 @@ public class Board {
 		}
 	}
 
-	
 	/*
 	 * loadBoardConfig method
 	 * Reads in data from CSV file, using \n as delimiters. 
@@ -183,29 +213,63 @@ public class Board {
 		}
 	}
 	
+	public void loadPlayerConfig() throws BadConfigFormatException {
+		try {
+			File playerConfigFile = new File(this.playerConfigFile);
+			Scanner readConfig = new Scanner(playerConfigFile);
+			while(readConfig.hasNext()) {
+				try {
+					String data = readConfig.nextLine();
+					String[] lineComponents = data.split(", ");
+					if(lineComponents.length < 4) {
+						throw new BadConfigFormatException("Error: missing or incorrectly formatted data");
+					}
+					String name = lineComponents[0];
+					String color = lineComponents[1];
+					boolean isHuman = false;
+					if(lineComponents[2].charAt(0) == 'P') {
+						isHuman = true;
+					}
+					BoardCell thisCell;
+					try {
+						String[] a = lineComponents[3].split(" ");
+						int row = Integer.parseInt(a[0]);
+						int column = Integer.parseInt(a[1]);
+						thisCell = this.getCellAt(row, column);
+					}catch(Exception e) {
+						throw new BadConfigFormatException("Incorrect start location data");
+					}
+					Player p = new Player(name,color,thisCell);
+				}catch(Exception e){
+					throw new BadConfigFormatException("Incorrect data format for room legend");
+				}
+			}
+			readConfig.close();
+		}catch(FileNotFoundException e) {
+			throw new BadConfigFormatException("Error: Room Config File not found");
+		}catch(Exception e) {
+			throw new BadConfigFormatException("Error: Room config file formatted incorrectly.");
+		}
+	}
+	
 	public void dealDeck() {
 		
 	}
 	
-	public int getNumRows() {
-		return this.numRows;
+	public BoardCell getCellAt(int row, int column) {
+		return this.gameBoard[row][column];
 	}
 	
 	public int getNumColumns() {
 		return this.numColumns;
 	}
 	
-	public Map<Character,String> getLegend(){
-		return this.legend;
+	public int getNumRows() {
+		return this.numRows;
 	}
 	
-	public void setNewConfig(String plCfFile, String wpCfFile) {
-		playerConfigFile = plCfFile;
-		weaponConfigFile = wpCfFile;
-	}
-	public void setConfigFiles(String bdCfgFile, String rmCfgFile) {
-		boardConfigFile = bdCfgFile;
-		roomConfigFile = rmCfgFile;
+	public Map<Character,String> getLegend(){
+		return this.legend;
 	}
 	
 	public Set<BoardCell> getDoorList(){
@@ -219,34 +283,15 @@ public class Board {
 	public Set<BoardCell> getTargets(){
 		return this.targets;
 	}
-	/*
-	 * Set-up function for recursive findAllTargets that takes in path length and current row/column
-	 * Algorithm detailed in slides
-	 */
-	public void calcTargets(int column, int row, int pathLength) {
-		this.targets.clear();
-		BoardCell startCell = this.getCellAt(row, column);
-		this.visited.add(startCell);
-		findAllTargets(startCell, pathLength);
-		this.visited.clear();
+
+	public void setDeckConfigFiles(String plCfgFile, String wpCfgFile) {
+		playerConfigFile = plCfgFile;
+		weaponConfigFile = wpCfgFile;
 	}
 	
-	/*
-	 * Recursive function for calcTargets
-	 * Algorithm detailed in slides
-	 * Determines correct targets for current cell recursively
-	 */
-	public void findAllTargets(BoardCell b, int pathLength) {
-		for(BoardCell adj: b.getAdjCells()) {
-			if(!this.visited.contains(adj)) {
-				visited.add(adj);
-				if(pathLength == 1 || adj.isDoorway()) {
-					this.targets.add(adj);
-				}else {
-					findAllTargets(adj, pathLength-1);
-				}
-				visited.remove(adj);
-			}
-		}
+	public void setBoardConfigFiles(String bdCfgFile, String rmCfgFile) {
+		boardConfigFile = bdCfgFile;
+		roomConfigFile = rmCfgFile;
 	}
+
 }

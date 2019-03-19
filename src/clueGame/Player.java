@@ -12,14 +12,11 @@ public class Player {
 	private boolean isHumanPlayer;
 	private Set<Card> hand;
 	
-	public Player(String name, String color, int row, int column, Board thisBoard, Character playerType) throws BadConfigFormatException {
+	public Player(String name, String color, BoardCell thisCell) throws BadConfigFormatException {
 		this.hand = new HashSet<Card>();
 		this.name = name;
-		try {
-			this.setCell(row, column, thisBoard);
-		}catch(BadConfigFormatException e) {
-			throw e;
-		}
+		this.isHumanPlayer = false; //default to false since computer players more likely than human players
+		this.setCellFromCell(thisCell);
 		try {
 			this.setColor(color);
 		}catch (BadConfigFormatException e) {
@@ -43,6 +40,10 @@ public class Player {
 		}
 	}
 	
+	public void setIsHuman(boolean isHuman) {
+		this.isHumanPlayer = isHuman;
+	}
+	
 	public void setCellFromCell(BoardCell b) {
 		this.currentCell = b;
 	}
@@ -56,4 +57,30 @@ public class Player {
 			throw new BadConfigFormatException("Error: color not valid on player: " + this.name);
 		}
 	}
+	
+	public BoardCell getCurrentCell() {
+		return this.currentCell;
+	}
+	
+	public int getRow() {
+		return this.currentCell.getRow();
+	}
+	
+	public int getColumn() {
+		return this.currentCell.getColumn();
+	}
+	
+	public Card disproveSuggestion(Card player, Card weapon, Card room) {
+		if(this.hand.contains(player)) {
+			return player;
+		}else if(this.hand.contains(weapon)) {
+			return weapon;
+		}else if(this.hand.contains(room)) {
+			return room;
+		}else {
+			return null;
+		}
+	}
+	
 }
+
