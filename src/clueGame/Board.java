@@ -84,6 +84,9 @@ public class Board {
 				try {
 					String data = readConfig.nextLine();
 					String[] lineComponents = data.split(", ");
+					if(lineComponents.length < 3) {
+						throw new BadConfigFormatException("Error: missing or incorrectly formatted data");
+					}
 					Character key = lineComponents[0].charAt(0);
 					String value = lineComponents[1];
 					this.legend.put(key, value);
