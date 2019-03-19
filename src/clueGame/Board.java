@@ -199,6 +199,10 @@ public class Board {
 		return this.legend;
 	}
 	
+	public void setNewConfig(String plCfFile, String wpCfFile) {
+		playerConfigFile = plCfFile;
+		weaponConfigFile = wpCfFile;
+	}
 	public void setConfigFiles(String bdCfgFile, String rmCfgFile) {
 		boardConfigFile = bdCfgFile;
 		roomConfigFile = rmCfgFile;
