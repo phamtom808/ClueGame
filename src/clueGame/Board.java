@@ -81,11 +81,15 @@ public class Board {
 			File roomConfigFile = new File(this.roomConfigFile);
 			Scanner readConfig = new Scanner(roomConfigFile);
 			while(readConfig.hasNext()) {
-				String data = readConfig.nextLine();
-				String[] lineComponents = data.split(", ");
-				Character key = lineComponents[0].charAt(0);
-				String value = lineComponents[1];
-				this.legend.put(key, value);
+				try {
+					String data = readConfig.nextLine();
+					String[] lineComponents = data.split(", ");
+					Character key = lineComponents[0].charAt(0);
+					String value = lineComponents[1];
+					this.legend.put(key, value);
+				}catch(Exception e){
+					throw new BadConfigFormatException("Incorrect data format for room legend");
+				}
 			}
 			readConfig.close();
 		}catch(FileNotFoundException e) {
@@ -214,5 +218,4 @@ public class Board {
 			}
 		}
 	}
-	
 }
