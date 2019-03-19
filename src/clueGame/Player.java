@@ -12,15 +12,11 @@ public class Player {
 	private boolean isHumanPlayer;
 	private Set<Card> hand;
 	
-	public Player(String name, String color, int row, int column, Board thisBoard) throws BadConfigFormatException {
+	public Player(String name, String color, BoardCell thisCell) throws BadConfigFormatException {
 		this.hand = new HashSet<Card>();
 		this.name = name;
 		this.isHumanPlayer = false; //default to false since computer players more likely than human players
-		try {
-			this.setCell(row, column, thisBoard);
-		}catch(BadConfigFormatException e) {
-			throw e;
-		}
+		this.setCellFromCell(thisCell);
 		try {
 			this.setColor(color);
 		}catch (BadConfigFormatException e) {
