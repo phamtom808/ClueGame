@@ -92,7 +92,6 @@ public class Board {
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Room Config File not found");
 		}catch(Exception e) {
-			System.out.println(e);
 			throw new BadConfigFormatException("Error: Room config file formatted incorrectly.");
 		}
 	}
