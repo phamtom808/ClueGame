@@ -26,8 +26,11 @@ public class Board {
 	private Set<BoardCell> doorList; //may have become irrelevant for now, but may have use later
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
+	private Set<Card> deck;
 	private String roomConfigFile;
 	private String boardConfigFile;
+	private String playerConfigFile;
+	private String weaponConfigFile;
 	private static Board theInstance = new Board();
 	
 	private Board() {}
@@ -49,6 +52,7 @@ public class Board {
 		this.gameBoard = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		this.legend = new HashMap<Character, String>();
 		this.doorList = new HashSet<BoardCell>();
+		this.deck = new HashSet<Card>();
 		try {
 			this.loadBoardConfig();
 		}catch(BadConfigFormatException e) {
@@ -61,6 +65,11 @@ public class Board {
 			System.out.println(e);
 			legend.put(' ', "FailedConfig");
 			System.exit(2); //if exit code is 2, then room failed
+		}
+		try {
+			this.dealDeck();
+		}catch(BadConfigFormatException e) {
+			System.out.println(e);
 		}
 		this.calcAdjacencies(); 
 	}
@@ -99,6 +108,9 @@ public class Board {
 					Character key = lineComponents[0].charAt(0);
 					String value = lineComponents[1];
 					this.legend.put(key, value);
+					if(lineComponents[2] == "card") {
+						//create card
+					}
 				}catch(Exception e){
 					throw new BadConfigFormatException("Incorrect data format for room legend");
 				}
@@ -107,7 +119,6 @@ public class Board {
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Room Config File not found");
 		}catch(Exception e) {
-			System.out.println(e);
 			throw new BadConfigFormatException("Error: Room config file formatted incorrectly.");
 		}
 	}
@@ -170,6 +181,10 @@ public class Board {
 		}catch(Exception e) {
 			throw new BadConfigFormatException(e.getMessage());
 		}
+	}
+	
+	public void dealDeck() {
+		
 	}
 	
 	public int getNumRows() {
