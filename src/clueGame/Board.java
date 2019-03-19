@@ -35,9 +35,16 @@ public class Board {
 	public static Board getInstance() {
 		return theInstance;
 	}
-	
+	/*
+	 * initialize():
+	 * sets up various local variables and allocates memory for them
+	 * initializes visited, target, gameBoard, legend so that even if there is an issue with
+	 * the input files, the memory is still there and available
+	 * Added instance variable doorList is meant to track the doors in the board as a set so 
+	 * that functions that need to know where there are doors can do so easily
+	 */
 	public void initialize() {
-		this.visited = new HashSet<BoardCell>();
+		this.visited = new HashSet<BoardCell>(); 
 		this.targets = new HashSet<BoardCell>();
 		this.gameBoard = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		this.legend = new HashMap<Character, String>();
