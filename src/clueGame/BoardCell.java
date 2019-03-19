@@ -166,8 +166,7 @@ public class BoardCell {
 	public boolean equals(BoardCell other) {
 		if(this == null || other == null) {
 			return false;
-		}
-		if(this.row == other.getRow() && this.column == other.getColumn() && this.initial == other.getInitial() && this.doorDirection == other.getDoorDirection()) {
+		}else if(this.row == other.getRow() && this.column == other.getColumn() && this.initial == other.getInitial() && this.doorDirection == other.getDoorDirection()) {
 			return true;
 		}
 		return false;

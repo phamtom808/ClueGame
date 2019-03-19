@@ -11,7 +11,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -36,9 +35,16 @@ public class Board {
 	public static Board getInstance() {
 		return theInstance;
 	}
-	
+	/*
+	 * initialize():
+	 * sets up various local variables and allocates memory for them
+	 * initializes visited, target, gameBoard, legend so that even if there is an issue with
+	 * the input files, the memory is still there and available
+	 * Added instance variable doorList is meant to track the doors in the board as a set so 
+	 * that functions that need to know where there are doors can do so easily
+	 */
 	public void initialize() {
-		this.visited = new HashSet<BoardCell>();
+		this.visited = new HashSet<BoardCell>(); 
 		this.targets = new HashSet<BoardCell>();
 		this.gameBoard = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
 		this.legend = new HashMap<Character, String>();
@@ -47,14 +53,16 @@ public class Board {
 			this.loadBoardConfig();
 		}catch(BadConfigFormatException e) {
 			System.out.println(e);
+			System.exit(1); //if exit code is 1, then board failed
 		}
 		try {
 			this.loadRoomConfig();
 		}catch(BadConfigFormatException e) {
 			System.out.println(e);
 			legend.put(' ', "FailedConfig");
+			System.exit(2); //if exit code is 2, then room failed
 		}
-		this.calcAdjacencies();
+		this.calcAdjacencies(); 
 	}
 	
 	//Function to calculate adjacent cells stored in BoardCell class, so is adjacency data
@@ -82,11 +90,18 @@ public class Board {
 			File roomConfigFile = new File(this.roomConfigFile);
 			Scanner readConfig = new Scanner(roomConfigFile);
 			while(readConfig.hasNext()) {
-				String data = readConfig.nextLine();
-				String[] lineComponents = data.split(", ");
-				Character key = lineComponents[0].charAt(0);
-				String value = lineComponents[1];
-				this.legend.put(key, value);
+				try {
+					String data = readConfig.nextLine();
+					String[] lineComponents = data.split(", ");
+					if(lineComponents.length < 3) {
+						throw new BadConfigFormatException("Error: missing or incorrectly formatted data");
+					}
+					Character key = lineComponents[0].charAt(0);
+					String value = lineComponents[1];
+					this.legend.put(key, value);
+				}catch(Exception e){
+					throw new BadConfigFormatException("Incorrect data format for room legend");
+				}
 			}
 			readConfig.close();
 		}catch(FileNotFoundException e) {
@@ -145,8 +160,8 @@ public class Board {
 					}
 				}
 				row++;
+				readConfig.close();
 			}
-			readConfig.close();
 			this.numRows = row;
 			this.numColumns = column;
 		}catch(FileNotFoundException e) {
@@ -154,7 +169,6 @@ public class Board {
 		}catch(Exception e) {
 			throw new BadConfigFormatException(e.getMessage());
 		}
-		return;
 	}
 	
 	public int getNumRows() {
@@ -191,7 +205,7 @@ public class Board {
 	 */
 	public void calcTargets(int column, int row, int pathLength) {
 		this.targets.clear();
-		BoardCell startCell = this.getCellAt(column, row);
+		BoardCell startCell = this.getCellAt(row, column);
 		this.visited.add(startCell);
 		findAllTargets(startCell, pathLength);
 		this.visited.clear();
@@ -215,5 +229,4 @@ public class Board {
 			}
 		}
 	}
-	
 }
