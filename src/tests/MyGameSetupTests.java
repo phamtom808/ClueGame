@@ -72,6 +72,34 @@ public class MyGameSetupTests {
 	}
 	
 	@Test
+	public void testStartingLocation() {
+		Set<Player> players = board.getPlayers();
+		for(Player x: players) {
+			String playerName = x.getName();
+			switch(playerName) {
+			case "Miss Scarlett":
+				assertEquals(0, x.getRow());
+				assertEquals(5, x.getColumn());
+			case "Colonel Mustard":
+				assertEquals(19, x.getRow());
+				assertEquals(5, x.getColumn());
+			case "Mrs. White":
+				assertEquals(19, x.getRow());
+				assertEquals(12, x.getColumn());
+			case "Mr.Green":
+				assertEquals(15, x.getRow());
+				assertEquals(20, x.getColumn());
+			case "Professor Plum":
+				assertEquals(8, x.getRow());
+				assertEquals(19, x.getColumn());
+			default:
+				assertEquals(0, x.getRow());
+				assertEquals(11, x.getColumn());
+			}
+		}
+	}
+	
+	@Test
 	public void testDeck() {
 		Set<Card> deck = board.getDeck();
 		int numberOfWeapons = 0;
