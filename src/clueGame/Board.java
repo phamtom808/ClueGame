@@ -147,6 +147,8 @@ public class Board {
 			readConfig.close();
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Room Config File not found");
+		}catch(BadConfigFormatException e) {
+			throw e;
 		}catch(Exception e) {
 			throw new BadConfigFormatException("Error: Room config file formatted incorrectly.");
 		}
@@ -219,7 +221,7 @@ public class Board {
 				try {
 					String data = readConfig.nextLine();
 					String[] lineComponents = data.split(", ");
-					if(lineComponents.length < 4) {
+					if(lineComponents.length < 3) {
 						throw new BadConfigFormatException("Error: missing or incorrectly formatted data");
 					}
 					String name = lineComponents[0];
@@ -241,15 +243,20 @@ public class Board {
 					this.players.add(p);
 					Card c = new Card(name, CardType.PLAYER);
 					this.deck.add(c);
+				}catch (BadConfigFormatException e) {
+					throw e;
 				}catch(Exception e){
-					throw new BadConfigFormatException("Incorrect data format for room legend");
+					throw new BadConfigFormatException("Incorrect data format for player legend");
 				}
 			}
 			readConfig.close();
 		}catch(FileNotFoundException e) {
-			throw new BadConfigFormatException("Error: Room Config File not found");
-		}catch(Exception e) {
-			throw new BadConfigFormatException("Error: Room config file formatted incorrectly.");
+			throw new BadConfigFormatException("Error: Player Config File not found");
+		}catch(BadConfigFormatException e){
+			throw e;
+		}
+		catch(Exception e) {
+			throw new BadConfigFormatException("Error: Player config file formatted incorrectly.");
 		}
 	}
 	
@@ -264,13 +271,16 @@ public class Board {
 					Card c = new Card(data, CardType.WEAPON);
 					this.deck.add(c);
 				}catch(Exception e){
-					throw new BadConfigFormatException("Incorrect data format for room legend");
+					throw new BadConfigFormatException("Incorrect data format for weapon legend");
 				}
 			}
 			readConfig.close();
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Weapon Config File not found");
-		}catch(Exception e) {
+		}catch(BadConfigFormatException e) {
+			throw e;
+		}
+		catch(Exception e) {
 			throw new BadConfigFormatException("Error: Weapon config file formatted incorrectly.");
 		}
 	}
