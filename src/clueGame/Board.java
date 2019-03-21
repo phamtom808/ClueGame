@@ -70,6 +70,7 @@ public class Board {
 			this.dealDeck();
 		}catch(BadConfigFormatException e) {
 			System.out.println(e);
+			System.exit(2);
 		}
 		this.calcAdjacencies(); 
 	}
@@ -199,10 +200,10 @@ public class Board {
 					}
 				}
 				row++;
-				readConfig.close();
 			}
 			this.numRows = row;
 			this.numColumns = column;
+			readConfig.close();
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Board Config File not found");
 		}catch(Exception e) {
