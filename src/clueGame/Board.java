@@ -200,10 +200,10 @@ public class Board {
 					}
 				}
 				row++;
-				readConfig.close();
 			}
 			this.numRows = row;
 			this.numColumns = column;
+			readConfig.close();
 		}catch(FileNotFoundException e) {
 			throw new BadConfigFormatException("Error: Board Config File not found");
 		}catch(Exception e) {
