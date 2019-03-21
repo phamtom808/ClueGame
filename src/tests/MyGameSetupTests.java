@@ -21,6 +21,8 @@ public class MyGameSetupTests {
 	public static final int NUM_WEAPONS = 6;
 	public static final int NUM_ROOMS = 9;
 	public static final int TOTAL_NUM_CARDS = 21;
+	public static final int NUM_HUMAN_PLAYERS = 1;
+	public static final int NUM_COMP_PLAYERS = 5;
 	
 	@BeforeClass
 	public static void setUp() {
@@ -31,25 +33,42 @@ public class MyGameSetupTests {
 	}
 	
 	@Test
-	public void testPlayers() {
-		//arrayList or Set players
+	public void testPlayerType() {
 		Set<Player> players = board.getPlayers();
-		Player arrayOfPlayers[] = new Player[6];
-		arrayOfPlayers = players.toArray(arrayOfPlayers);
-		//tests if the correct number of players are loaded
-		assertEquals(NUM_PLAYERS, players.size());
-		//test if set contains a human player
-		assertTrue(players.contains());
-		//test if set contains all computer players
-		assertTrue(players.contains(Colonel Mustard));
-		assertTrue(players.contains(Mrs. White));
-		assertTrue(players.contains(Mr. Green));
-		assertTrue(players.contains(Professor Plum));
-		assertTrue(players.contains(Miss Peach));
-		//test if first player is correct
-		assertEquals("Miss Scarlet", arrayOfPlayers[0].name);
-		assertEquals(Color.RED, arrayOfPlayers[0].getColor());
-		assertTrue(arrayOfPlayers[0].getHumanPlayer());
+		int humanPlayers = 0;
+		int computerPlayers = 0;
+		for(Player x: players) {
+			if(x.getIsHumanPlayer() == true) {
+				humanPlayers++;
+			}
+			else if(x.getIsHumanPlayer() == false) {
+				computerPlayers++;
+			}
+		}
+		assertEquals(NUM_HUMAN_PLAYERS, humanPlayers);
+		assertEquals(NUM_COMP_PLAYERS, computerPlayers);
+	}
+	
+	@Test
+	public void testPlayerColor() {
+		Set<Player> players = board.getPlayers();
+		for(Player x: players) {
+			String playerName = x.getName();
+			switch(playerName) {
+			case "Miss Scarlett":
+				assertEquals(Color.RED, x.getColor());
+			case "Colonel Mustard":
+				assertEquals(Color.YELLOW, x.getColor());
+			case "Mrs. White":
+				assertEquals(Color.GRAY, x.getColor());
+			case "Mr.Green":
+				assertEquals(Color.GREEN, x.getColor());
+			case "Professor Plum":
+				assertEquals(Color.MAGENTA, x.getColor());
+			default:
+				assertEquals(Color.PINK, x.getColor());
+			}
+		}
 	}
 	
 	@Test
@@ -123,7 +142,9 @@ public class MyGameSetupTests {
 		assertEquals(NUM_ROOMS, numberOfRooms);
 	}
 	
-	
-
+	@Test
+	public void testNumberOfCardsDealt() {
+		
+	}
 
 }
