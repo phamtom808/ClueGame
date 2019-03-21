@@ -28,8 +28,8 @@ public class Player {
 		this.hand.addAll(dealtCards);
 	}
 	
-	public void dealCard(Card c) {
-		this.hand.add(c);
+	public Set<Card> getHand(){
+		return this.hand;
 	}
 	
 	public void setCell(int row, int column, Board thisBoard) throws BadConfigFormatException {
@@ -70,6 +70,14 @@ public class Player {
 		return this.currentCell.getColumn();
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
+	public boolean getIsHumanPlayer() {
+		return this.isHumanPlayer;
+	}
+	
 	public Card disproveSuggestion(Card player, Card weapon, Card room) {
 		if(this.hand.contains(player)) {
 			return player;
@@ -82,5 +90,8 @@ public class Player {
 		}
 	}
 	
+	public Color getColor() {
+		return this.color;
+	}
 }
 

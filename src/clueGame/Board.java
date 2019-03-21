@@ -389,4 +389,12 @@ public class Board {
 		roomConfigFile = rmCfgFile;
 	}
 
+	public Set<Card> getDeck(){
+		return this.deck;
+	}
+	
+	public Set<Player> getPlayers(){
+		return this.players;
+	}
+	
 }
