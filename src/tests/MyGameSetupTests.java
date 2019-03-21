@@ -57,16 +57,55 @@ public class MyGameSetupTests {
 			switch(playerName) {
 			case "Miss Scarlett":
 				assertEquals(Color.RED, x.getColor());
+				continue;
 			case "Colonel Mustard":
 				assertEquals(Color.YELLOW, x.getColor());
+				continue;
 			case "Mrs. White":
 				assertEquals(Color.GRAY, x.getColor());
+				continue;
 			case "Mr.Green":
 				assertEquals(Color.GREEN, x.getColor());
+				continue;
 			case "Professor Plum":
 				assertEquals(Color.MAGENTA, x.getColor());
+				continue;
 			default:
 				assertEquals(Color.PINK, x.getColor());
+			}
+		}
+	}
+	
+	@Test
+	public void testStartingLocation() {
+		Set<Player> players = board.getPlayers();
+		for(Player x: players) {
+			String playerName = x.getName();
+			switch(playerName) {
+			case "Miss Scarlett":
+				assertEquals(0, x.getRow());
+				assertEquals(5, x.getColumn());
+				continue;
+			case "Colonel Mustard":
+				assertEquals(19, x.getRow());
+				assertEquals(5, x.getColumn());
+				continue;
+			case "Mrs. White":
+				assertEquals(19, x.getRow());
+				assertEquals(12, x.getColumn());
+				continue;
+			case "Mr.Green":
+				assertEquals(15, x.getRow());
+				assertEquals(20, x.getColumn());
+				continue;
+			case "Professor Plum":
+				assertEquals(8, x.getRow());
+				assertEquals(19, x.getColumn());
+				continue;
+			default:
+				assertEquals(0, x.getRow());
+				assertEquals(11, x.getColumn());
+				continue;
 			}
 		}
 	}
