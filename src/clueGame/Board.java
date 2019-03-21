@@ -29,6 +29,9 @@ public class Board {
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
 	private Set<Card> deck;
+	private Card playerCard;
+	private Card weaponCard;
+	private Card roomCard;
 	private String roomConfigFile;
 	private String boardConfigFile;
 	private String playerConfigFile;
@@ -60,14 +63,7 @@ public class Board {
 			this.loadBoardConfig();
 		}catch(BadConfigFormatException e) {
 			System.out.println(e);
-			System.exit(1); //if exit code is 1, then board failed
-		}
-		try {
-			this.loadRoomConfig();
-		}catch(BadConfigFormatException e) {
-			System.out.println(e);
-			legend.put(' ', "FailedConfig");
-			System.exit(2); //if exit code is 2, then room failed
+			System.exit(1); 
 		}
 		try {
 			this.dealDeck();
@@ -240,6 +236,9 @@ public class Board {
 						throw new BadConfigFormatException("Incorrect start location data");
 					}
 					Player p = new Player(name,color,thisCell);
+					this.players.add(p);
+					Card c = new Card(name, CardType.PLAYER);
+					this.deck.add(c);
 				}catch(Exception e){
 					throw new BadConfigFormatException("Incorrect data format for room legend");
 				}
@@ -252,8 +251,49 @@ public class Board {
 		}
 	}
 	
-	public void dealDeck() {
-		
+	public void loadWeaponConfig() throws BadConfigFormatException {
+		try {
+			File weaponConfigFile = new File(this.weaponConfigFile);
+			Scanner readConfig = new Scanner(weaponConfigFile);
+			readConfig.useDelimiter("\n");
+			while(readConfig.hasNext()) {
+				try {
+					String data = readConfig.nextLine();
+					Card c = new Card(data, CardType.WEAPON);
+					this.deck.add(c);
+				}catch(Exception e){
+					throw new BadConfigFormatException("Incorrect data format for room legend");
+				}
+			}
+			readConfig.close();
+		}catch(FileNotFoundException e) {
+			throw new BadConfigFormatException("Error: Weapon Config File not found");
+		}catch(Exception e) {
+			throw new BadConfigFormatException("Error: Weapon config file formatted incorrectly.");
+		}
+	}
+	
+	public void dealDeck() throws BadConfigFormatException {
+		try {
+			this.loadRoomConfig();
+			this.loadPlayerConfig();
+			this.loadWeaponConfig();
+		} catch(Exception e) {
+			throw new BadConfigFormatException(e.getMessage());
+		}
+		int deckSize = deck.size();
+		Set<Card> playerCards = new HashSet<Card>();
+		Set<Card> weaponCards = new HashSet<Card>();
+		Set<Card> roomCards = new HashSet<Card>();
+		for(Card i: deck) {
+			if(i.getCardType() == CardType.PLAYER) {
+				playerCards.add(i);
+			}else if(i.getCardType() == CardType.ROOM) {
+				roomCards.add(i);
+			}else if(i.getCardType() == CardType.WEAPON) {
+				weaponCards.add(i);
+			}
+		}
 	}
 	
 	public BoardCell getCellAt(int row, int column) {
