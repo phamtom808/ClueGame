@@ -70,6 +70,7 @@ public class Board {
 			this.dealDeck();
 		}catch(BadConfigFormatException e) {
 			System.out.println(e);
+			System.exit(2);
 		}
 		this.calcAdjacencies(); 
 	}
