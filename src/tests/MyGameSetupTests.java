@@ -58,6 +58,7 @@ public class MyGameSetupTests {
 		int numberOfWeapons = 0;
 		int numberOfPlayers = 0;
 		int numberOfRooms = 0;
+		int numberOfCorrectNames = 0;
 		//check the deck contains the correct number of cards
 		assertEquals(TOTAL_NUM_CARDS, deck.size());
 		//check the deck contains the correct number of each card
@@ -77,6 +78,12 @@ public class MyGameSetupTests {
 		assertEquals(NUM_PLAYERS, numberOfPlayers);
 		assertEquals(NUM_ROOMS, numberOfRooms);
 		//check the deck to see it contains specific cards
+		for (Card y: deck) {
+			if((y.getName() == "Pool") || (y.getName() == "Knife") || (y.getName() == "Professor Plum")) {
+				numberOfCorrectNames++;
+			}
+		}
+		assertEquals(3, numberOfCorrectNames);
 	}
 	
 	@Test
