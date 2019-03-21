@@ -289,7 +289,7 @@ public class Board {
 		weaponConfigFile = wpCfgFile;
 	}
 	
-	public void setBoardConfigFiles(String bdCfgFile, String rmCfgFile) {
+	public void setConfigFiles(String bdCfgFile, String rmCfgFile) {
 		boardConfigFile = bdCfgFile;
 		roomConfigFile = rmCfgFile;
 	}
