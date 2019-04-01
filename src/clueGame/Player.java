@@ -24,8 +24,8 @@ public class Player {
 		}
 	}
 	
-	public void dealHand(Set<Card> dealtCards) {
-		this.hand.addAll(dealtCards);
+	public void dealCard(Card c) {
+		this.hand.add(c);
 	}
 	
 	public Set<Card> getHand(){

@@ -285,6 +285,14 @@ public class Board {
 		}
 	}
 	
+	/*
+	 * deadDeck() function
+	 * reads in config files (except board config) and then uses them to build the decks
+	 * Randomly chooses a card from player cards, weapon cards, room cards
+	 * Removes those cards from the deck, then deals the remaining cards to the players
+	 * Iterates through list of players and pulls random card to ensure that player hands are approximately equal in size
+	 * This means, however, that the first few players will ALWAYS have the extra cards, including the human player
+	 */
 	public void dealDeck() throws BadConfigFormatException {
 		try {
 			this.loadRoomConfig();
@@ -309,46 +317,23 @@ public class Board {
 		Random rand = new Random();
 		this.playerCard = getRandomCard(rand.nextInt(playerCards.size()), playerCards);
 		playerCards.remove(this.playerCard);
+		deck.remove(this.playerCard);
 		this.roomCard = getRandomCard(rand.nextInt(roomCards.size()), roomCards);
 		roomCards.remove(this.roomCard);
+		deck.remove(this.roomCard);
 		this.weaponCard = getRandomCard(rand.nextInt(weaponCards.size()), weaponCards);
 		weaponCards.remove(this.weaponCard);
-		int handSize = Math.floorDiv(deck.size(), players.size());
-		for(Player p: players) {
-			Set<Card> playerHand = dealCards(playerCards, roomCards, weaponCards, handSize);
-			p.dealHand(playerHand);
-			for(Card c: playerHand) {
-				if(c.getCardType() == CardType.PLAYER) {
-					playerCards.remove(c);
-				}else if(c.getCardType() == CardType.ROOM) {
-					roomCards.remove(c);
-				}else if(c.getCardType() == CardType.WEAPON) {
-					weaponCards.remove(c);
+		deck.remove(this.weaponCard);
+		int i = 0;
+		while(deck.size() > 0) {
+			for(Player p: players) {
+				if(deck.size() > 0) {
+					Card nextCard = getRandomCard(rand.nextInt(deck.size()), deck);
+					p.dealCard(nextCard);
+					deck.remove(nextCard);
 				}
 			}
 		}
-	}
-	
-	public Set<Card> dealCards(Set<Card> playerCards, Set<Card> roomCards, Set<Card> weaponCards, int handSize){
-		Set<Card> hand = new HashSet<Card>();
-		Random dealer = new Random();
-		while(hand.size() < handSize) {
-			int deckToDrawFrom = dealer.nextInt(3);
-			if(deckToDrawFrom == 0) {
-				if(playerCards.size() > 0) {
-					hand.add(getRandomCard(dealer.nextInt(playerCards.size()), playerCards));
-				}
-			}else if(deckToDrawFrom == 1) {
-				if(roomCards.size() > 0) {
-					hand.add(getRandomCard(dealer.nextInt(roomCards.size()), roomCards));
-				}
-			}else {
-				if(weaponCards.size() > 0) {
-				hand.add(getRandomCard(dealer.nextInt(weaponCards.size()),weaponCards));
-				}
-			}
-		}
-		return hand;
 	}
 	
 	private Card getRandomCard(int cardNum, Set<Card> cards) {
