@@ -1,6 +1,6 @@
-Miss Scarlett, Red, P, 0 5 
-Colonel Mustard, Yellow, C, 19 5
-Mrs. White, Gray, C, 19 12 
-Mr. Green, Green, C, 15 20
-Professor Plum, Purple, C, 8 19
-Miss Peach, Pink, C, 0 11
+Miss Scarlett, Red, P, 0, 5 
+Colonel Mustard, Yellow, C, 19, 5
+Mrs. White, Gray, C, 19, 12
+Mr. Green, Green, C, 15, 20
+Professor Plum, Magenta, C, 8, 19
+Miss Peach, Pink, C, 0, 11

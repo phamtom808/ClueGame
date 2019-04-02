@@ -3,6 +3,8 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.BeforeClass;
@@ -23,6 +25,8 @@ public class MyGameSetupTests {
 	public static final int TOTAL_NUM_CARDS = 21;
 	public static final int NUM_HUMAN_PLAYERS = 1;
 	public static final int NUM_COMP_PLAYERS = 5;
+	public static final int MAX_HAND_SIZE = 4;
+	public static final int MIN_HAND_SIZE = 3;
 	
 	@BeforeClass
 	public static void setUp() {
@@ -34,7 +38,7 @@ public class MyGameSetupTests {
 	
 	@Test
 	public void testPlayerType() {
-		Set<Player> players = board.getPlayers();
+		ArrayList<Player> players = board.getPlayers();
 		int humanPlayers = 0;
 		int computerPlayers = 0;
 		for(Player x: players) {
@@ -51,7 +55,7 @@ public class MyGameSetupTests {
 	
 	@Test
 	public void testPlayerColor() {
-		Set<Player> players = board.getPlayers();
+		ArrayList<Player> players = board.getPlayers();
 		for(Player x: players) {
 			String playerName = x.getName();
 			switch(playerName) {
@@ -78,7 +82,7 @@ public class MyGameSetupTests {
 	
 	@Test
 	public void testStartingLocation() {
-		Set<Player> players = board.getPlayers();
+		ArrayList<Player> players = board.getPlayers();
 		for(Player x: players) {
 			String playerName = x.getName();
 			switch(playerName) {
@@ -127,8 +131,7 @@ public class MyGameSetupTests {
 			else if(x.getCardType() == CardType.PLAYER) {
 				numberOfPlayers++;
 			}
-			else
-			{
+			else if(x.getCardType() == CardType.ROOM) {
 				numberOfRooms++;
 			}
 		}
@@ -146,7 +149,7 @@ public class MyGameSetupTests {
 	
 	@Test
 	public void testNumberOfPlayerCards() {
-		Set<Player> players = board.getPlayers();
+		ArrayList<Player> players = board.getPlayers();
 		//check if the correct number of player cards dealt
 		assertEquals(NUM_PLAYERS, players.size());
 	}
@@ -154,7 +157,7 @@ public class MyGameSetupTests {
 	@Test
 	public void testNumberOfWeaponCards() {
 	//check if the number of weapons dealt are correct
-		Set<Player> players = board.getPlayers();
+		ArrayList<Player> players = board.getPlayers();
 		int numberOfWeapons = 0;
 		for(Player x: players) {
 			for(Card y: x.getHand()) {
@@ -169,7 +172,7 @@ public class MyGameSetupTests {
 	@Test
 	public void testNumberOfRoomCards() {
 	//check if the number of rooms dealt are correct
-		Set<Player> players = board.getPlayers();
+		ArrayList<Player> players = board.getPlayers();
 		int numberOfRooms = 0;
 		for(Player x: players) {
 			for(Card y: x.getHand()) {
@@ -181,9 +184,19 @@ public class MyGameSetupTests {
 		assertEquals(NUM_ROOMS, numberOfRooms);
 	}
 	
+	//ensure that a) player hands are all between min and max hand sizes and b) all of the cards were dealt and c) no cards were dealt twice
 	@Test
 	public void testNumberOfCardsDealt() {
-		
+		int totalDeckSize = 0;
+		Set<Card> deck = board.getDeck();
+		Set<Card> testDeck = new HashSet<Card>();
+		for(Player p: board.getPlayers()) {
+			assertTrue(p.getHand().size() <= MAX_HAND_SIZE && p.getHand().size() >= MIN_HAND_SIZE);
+			totalDeckSize += p.getHand().size();
+			testDeck.addAll(p.getHand());
+		}
+		assertEquals(totalDeckSize, deck.size());
+		assertEquals(testDeck,deck);
 	}
 
 }

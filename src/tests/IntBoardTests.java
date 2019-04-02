@@ -18,10 +18,10 @@ import experiments.IntBoard;
 
 class IntBoardTests {
 	
-	public IntBoard board;
+	public static IntBoard board;
 	
-	@Before
-	public void beforeAll() {
+	@BeforeClass
+	public static void setUp() {
 		 board = new IntBoard(); // constructor should call calcAdjacencies()
 	}
 	

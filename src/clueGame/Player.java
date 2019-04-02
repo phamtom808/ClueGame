@@ -15,12 +15,13 @@ public class Player {
 	public Player(String name, String color, BoardCell thisCell) throws BadConfigFormatException {
 		this.hand = new HashSet<Card>();
 		this.name = name;
+		this.setCellFromCell(thisCell);
 		this.isHumanPlayer = false; //default to false since computer players more likely than human players
 		this.setCellFromCell(thisCell);
 		try {
 			this.setColor(color);
 		}catch (BadConfigFormatException e) {
-			throw e;
+			this.color = Color.white; //uses white as a default color in case color fails to be read properly
 		}
 	}
 	
@@ -48,12 +49,15 @@ public class Player {
 		this.currentCell = b;
 	}
 	
-	public void setColor(String color) throws BadConfigFormatException {
+	
+	public void setColor(String c) throws BadConfigFormatException {
+		c = c.trim().toLowerCase();
 		try {
-			Field field = Class.forName("java.awt.Color").getField(color.trim());;
+			Field field = Class.forName("java.awt.Color").getField(c);
 			this.color = (Color) field.get(null);
 		}catch(Exception e) {
 			this.color = null;
+			e.printStackTrace();
 			throw new BadConfigFormatException("Error: color not valid on player: " + this.name);
 		}
 	}

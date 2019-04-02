@@ -35,6 +35,7 @@ public class CTest_FileInitTests {
 		// set the file names to use my config files
 		board.setConfigFiles("CTest_ClueLayout.csv", "CTest_ClueLegend.txt");		
 		// Initialize will load BOTH config files 
+		board.setDeckConfigFiles("CluePlayers.txt", "ClueWeapons.txt");
 		board.initialize();
 	}
 	@Test

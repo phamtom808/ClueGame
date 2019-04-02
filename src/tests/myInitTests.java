@@ -32,6 +32,7 @@ public class myInitTests {
 	public static void setUp() {
 		board = Board.getInstance();
 		board.setConfigFiles("BoardLayout.csv", "ClueRooms.txt");
+		board.setDeckConfigFiles("CluePlayers.txt", "ClueWeapons.txt");
 		board.initialize();
 	}
 	
@@ -42,7 +43,6 @@ public class myInitTests {
 	public void testLegend() {
 		Map<Character, String> legend = board.getLegend();
 		assertEquals(LEGEND_SIZE, legend.size());
-		
 		assertEquals("Conservatory", legend.get('C'));
 		assertEquals("Kitchen", legend.get('K'));
 		assertEquals("Bedroom", legend.get('B'));

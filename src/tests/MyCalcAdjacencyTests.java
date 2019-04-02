@@ -22,6 +22,7 @@ public class MyCalcAdjacencyTests {
 	public static void setUp() {
 		board = Board.getInstance();
 		board.setConfigFiles("BoardLayout.csv", "ClueRooms.txt");
+		board.setDeckConfigFiles("CluePlayers.txt","ClueWeapons.txt");
 		board.initialize();
 	}
 	

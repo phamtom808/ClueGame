@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class Board {
 	private int numColumns; 
 	private BoardCell[][] gameBoard;
 	private Map<Character, String> legend;
-	private Set<Player> players;
+	private ArrayList<Player> players;
 	private Set<BoardCell> doorList; //may have become irrelevant for now, but may have use later
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
@@ -60,16 +61,17 @@ public class Board {
 		this.legend = new HashMap<Character, String>();
 		this.doorList = new HashSet<BoardCell>();
 		this.deck = new HashSet<Card>();
+		this.players = new ArrayList<Player>();
 		try {
 			this.loadBoardConfig();
 		}catch(BadConfigFormatException e) {
-			System.out.println(e);
+			e.printStackTrace();
 			System.exit(1); 
 		}
 		try {
 			this.dealDeck();
 		}catch(BadConfigFormatException e) {
-			System.out.println(e);
+			e.printStackTrace();
 			System.exit(2);
 		}
 		this.calcAdjacencies(); 
@@ -88,7 +90,7 @@ public class Board {
 	 * Set-up function for recursive findAllTargets that takes in path length and current row/column
 	 * Algorithm detailed in slides
 	 */
-	public void calcTargets(int column, int row, int pathLength) {
+	public void calcTargets(int row, int column, int pathLength) {
 		this.targets.clear();
 		BoardCell startCell = this.getCellAt(row, column);
 		this.visited.add(startCell);
@@ -129,16 +131,19 @@ public class Board {
 			while(readConfig.hasNext()) {
 				try {
 					String data = readConfig.nextLine();
-					String[] lineComponents = data.split(", ");
+					String[] lineComponents = data.split(",");
+					for(String s: lineComponents) {
+						s.trim();
+					}
 					if(lineComponents.length < 3) {
 						throw new BadConfigFormatException("Error: missing or incorrectly formatted data");
 					}
 					Character key = lineComponents[0].charAt(0);
-					String value = lineComponents[1];
+					String value = lineComponents[1].trim();
 					this.legend.put(key, value);
-					if(lineComponents[2] == "card") {
-						Card c = new Card(value,CardType.ROOM);
-						deck.add(c);
+					if(lineComponents[2] != "Other") {
+						Card c = new Card(value, CardType.ROOM);
+						this.deck.add(c);
 					}
 				}catch(Exception e){
 					throw new BadConfigFormatException("Incorrect data format for room legend");
@@ -220,23 +225,23 @@ public class Board {
 			while(readConfig.hasNext()) {
 				try {
 					String data = readConfig.nextLine();
-					String[] lineComponents = data.split(", ");
+					String[] lineComponents = data.split(",");
 					if(lineComponents.length < 3) {
 						throw new BadConfigFormatException("Error: missing or incorrectly formatted data");
 					}
-					String name = lineComponents[0];
-					String color = lineComponents[1];
+					String name = lineComponents[0].trim();
+					String color = lineComponents[1].trim();
 					boolean isHuman = false;
 					if(lineComponents[2].charAt(0) == 'P') {
 						isHuman = true;
 					}
 					BoardCell thisCell;
 					try {
-						String[] a = lineComponents[3].split(" ");
-						int row = Integer.parseInt(a[0]);
-						int column = Integer.parseInt(a[1]);
+						int row = Integer.parseInt(lineComponents[3].trim());
+						int column = Integer.parseInt(lineComponents[4].trim());
 						thisCell = this.getCellAt(row, column);
 					}catch(Exception e) {
+						e.printStackTrace();
 						throw new BadConfigFormatException("Incorrect start location data");
 					}
 					Player p = new Player(name,color,thisCell);
@@ -256,6 +261,7 @@ public class Board {
 			throw e;
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			throw new BadConfigFormatException("Error: Player config file formatted incorrectly.");
 		}
 	}
@@ -268,8 +274,9 @@ public class Board {
 			while(readConfig.hasNext()) {
 				try {
 					String data = readConfig.nextLine();
+					data.trim();
 					Card c = new Card(data, CardType.WEAPON);
-					this.deck.add(c);
+					deck.add(c);
 				}catch(Exception e){
 					throw new BadConfigFormatException("Incorrect data format for weapon legend");
 				}
@@ -299,6 +306,7 @@ public class Board {
 			this.loadPlayerConfig();
 			this.loadWeaponConfig();
 		} catch(Exception e) {
+			e.printStackTrace();
 			throw new BadConfigFormatException(e.getMessage());
 		}
 		int deckSize = deck.size();
@@ -376,20 +384,20 @@ public class Board {
 	}
 
 	public void setDeckConfigFiles(String plCfgFile, String wpCfgFile) {
-		playerConfigFile = plCfgFile;
-		weaponConfigFile = wpCfgFile;
+		this.playerConfigFile = plCfgFile;
+		this.weaponConfigFile = wpCfgFile;
 	}
 	
 	public void setConfigFiles(String bdCfgFile, String rmCfgFile) {
-		boardConfigFile = bdCfgFile;
-		roomConfigFile = rmCfgFile;
+		this.boardConfigFile = bdCfgFile;
+		this.roomConfigFile = rmCfgFile;
 	}
 
 	public Set<Card> getDeck(){
 		return this.deck;
 	}
 	
-	public Set<Player> getPlayers(){
+	public ArrayList<Player> getPlayers(){
 		return this.players;
 	}
 	
