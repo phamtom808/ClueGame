@@ -132,16 +132,13 @@ public class Board {
 				try {
 					String data = readConfig.nextLine();
 					String[] lineComponents = data.split(",");
-					for(String s: lineComponents) {
-						s.trim();
-					}
 					if(lineComponents.length < 3) {
 						throw new BadConfigFormatException("Error: missing or incorrectly formatted data");
 					}
 					Character key = lineComponents[0].charAt(0);
 					String value = lineComponents[1].trim();
 					this.legend.put(key, value);
-					if(lineComponents[2] != "Other") {
+					if(lineComponents[2].trim().toLowerCase().equals("card")) {
 						Card c = new Card(value, CardType.ROOM);
 						this.deck.add(c);
 					}
@@ -232,6 +229,7 @@ public class Board {
 					String name = lineComponents[0].trim();
 					String color = lineComponents[1].trim();
 					boolean isHuman = false;
+					lineComponents[2] = lineComponents[2].trim();
 					if(lineComponents[2].charAt(0) == 'P') {
 						isHuman = true;
 					}
@@ -240,11 +238,13 @@ public class Board {
 						int row = Integer.parseInt(lineComponents[3].trim());
 						int column = Integer.parseInt(lineComponents[4].trim());
 						thisCell = this.getCellAt(row, column);
-					}catch(Exception e) {
-						e.printStackTrace();
+					}catch (Exception e) {
 						throw new BadConfigFormatException("Incorrect start location data");
 					}
 					Player p = new Player(name,color,thisCell);
+					if(isHuman) {
+						p.setIsHuman(true);
+					}
 					this.players.add(p);
 					Card c = new Card(name, CardType.PLAYER);
 					this.deck.add(c);
@@ -313,6 +313,8 @@ public class Board {
 		Set<Card> playerCards = new HashSet<Card>();
 		Set<Card> weaponCards = new HashSet<Card>();
 		Set<Card> roomCards = new HashSet<Card>();
+		Set<Card> tempDeck = new HashSet<Card>();
+		tempDeck.addAll(deck); //copy deck so that cards can be removed as they are dealt, then deck can be restored after
 		for(Card i: deck) {
 			if(i.getCardType() == CardType.PLAYER) {
 				playerCards.add(i);
@@ -342,6 +344,7 @@ public class Board {
 				}
 			}
 		}
+		deck.addAll(tempDeck);
 	}
 	
 	private Card getRandomCard(int cardNum, Set<Card> cards) {
@@ -365,6 +368,18 @@ public class Board {
 	
 	public int getNumRows() {
 		return this.numRows;
+	}
+	
+	public Card getWeaponCard() {
+		return this.weaponCard;
+	}
+	
+	public Card getRoomCard() {
+		return this.roomCard;
+	}
+	
+	public Card getPlayerCard() {
+		return this.playerCard;
 	}
 	
 	public Map<Character,String> getLegend(){

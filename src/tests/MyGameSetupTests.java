@@ -21,8 +21,8 @@ public class MyGameSetupTests {
 	
 	public static final int NUM_PLAYERS = 6;
 	public static final int NUM_WEAPONS = 6;
-	public static final int NUM_ROOMS = 9;
-	public static final int TOTAL_NUM_CARDS = 21;
+	public static final int NUM_ROOMS = 10;
+	public static final int TOTAL_NUM_CARDS = 22;
 	public static final int NUM_HUMAN_PLAYERS = 1;
 	public static final int NUM_COMP_PLAYERS = 5;
 	public static final int MAX_HAND_SIZE = 4;
@@ -68,7 +68,7 @@ public class MyGameSetupTests {
 			case "Mrs. White":
 				assertEquals(Color.GRAY, x.getColor());
 				continue;
-			case "Mr.Green":
+			case "Mr. Green":
 				assertEquals(Color.GREEN, x.getColor());
 				continue;
 			case "Professor Plum":
@@ -98,7 +98,7 @@ public class MyGameSetupTests {
 				assertEquals(19, x.getRow());
 				assertEquals(12, x.getColumn());
 				continue;
-			case "Mr.Green":
+			case "Mr. Green":
 				assertEquals(15, x.getRow());
 				assertEquals(20, x.getColumn());
 				continue;
@@ -140,7 +140,7 @@ public class MyGameSetupTests {
 		assertEquals(NUM_ROOMS, numberOfRooms);
 		//check the deck to see it contains specific cards
 		for (Card y: deck) {
-			if((y.getName() == "Pool") || (y.getName() == "Knife") || (y.getName() == "Professor Plum")) {
+			if((y.getName().equals("Pool")) || (y.getName().equals("Knife")) || (y.getName().equals("Professor Plum"))) {
 				numberOfCorrectNames++;
 			}
 		}
@@ -151,7 +151,17 @@ public class MyGameSetupTests {
 	public void testNumberOfPlayerCards() {
 		ArrayList<Player> players = board.getPlayers();
 		//check if the correct number of player cards dealt
-		assertEquals(NUM_PLAYERS, players.size());
+		int playerCardsDealt = 0;
+		for(Player p: players) {
+			Set<Card> hand = p.getHand();
+			for(Card c: hand){
+				if(c.getCardType() == CardType.PLAYER) {
+					playerCardsDealt++;
+				}
+			}
+		}
+		playerCardsDealt++; //account for undealt card from solution
+		assertEquals(NUM_PLAYERS, playerCardsDealt);
 	}
 	
 	@Test
@@ -166,6 +176,7 @@ public class MyGameSetupTests {
 				}
 			}
 		}
+		numberOfWeapons++; //accounts for undealt solution card
 		assertEquals(NUM_WEAPONS, numberOfWeapons);
 	}
 	
@@ -181,6 +192,7 @@ public class MyGameSetupTests {
 				}
 			}
 		}
+		numberOfRooms++; //account for solution card not dealt to any player
 		assertEquals(NUM_ROOMS, numberOfRooms);
 	}
 	
@@ -195,6 +207,10 @@ public class MyGameSetupTests {
 			totalDeckSize += p.getHand().size();
 			testDeck.addAll(p.getHand());
 		}
+		totalDeckSize += 3; //accounts for 3 cards NOT in player hand
+		testDeck.add(board.getWeaponCard());
+		testDeck.add(board.getRoomCard());
+		testDeck.add(board.getPlayerCard());
 		assertEquals(totalDeckSize, deck.size());
 		assertEquals(testDeck,deck);
 	}

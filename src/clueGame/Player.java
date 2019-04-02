@@ -49,7 +49,6 @@ public class Player {
 		this.currentCell = b;
 	}
 	
-	
 	public void setColor(String c) throws BadConfigFormatException {
 		c = c.trim().toLowerCase();
 		try {
