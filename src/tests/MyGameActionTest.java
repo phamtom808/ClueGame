@@ -32,13 +32,8 @@ public class MyGameActionTest {
 	@Test
 	public void selectTargetLocationComp() {
 		ArrayList<Player> players = board.getPlayers();
-		Player computerPlayer;
-		//Make the computer player Colonel Mustard
-		for(Player x: players) {
-			if(x.getName() == "Colonel Mustard") {
-				computerPlayer = x;
-				break;
-			}
+		Player computerPlayer = new ComputerPlayer("Bob", )
+
 		}
 		
 	}
@@ -63,6 +58,16 @@ public class MyGameActionTest {
 		assertEquals(board.getAccusation(), testAcc);
 		testAcc = new Accusation(testPlayer, testRoom, falseWeapon);
 		assertEquals(board.getAccusation(), testAcc);
+		
+	}
+	
+	@Test
+	public void createSuggestion() {
+		
+	}
+	
+	@Test
+	public void disproveSuggestion() {
 		
 	}
 }
