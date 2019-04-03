@@ -30,6 +30,7 @@ public class MyGameSetupTests {
 	
 	@BeforeClass
 	public static void setUp() {
+		//creates an instance of the board and initializes configuration files and the board
 		board = Board.getInstance();
 		board.setConfigFiles("BoardLayout.csv", "ClueRooms.txt");
 		board.setDeckConfigFiles("CluePlayers.txt", "ClueWeapons.txt");
@@ -38,6 +39,7 @@ public class MyGameSetupTests {
 	
 	@Test
 	public void testPlayerType() {
+		//Checks if the number of human players and computer players are correct
 		ArrayList<Player> players = board.getPlayers();
 		int humanPlayers = 0;
 		int computerPlayers = 0;
@@ -55,6 +57,7 @@ public class MyGameSetupTests {
 	
 	@Test
 	public void testPlayerColor() {
+		//Creates an array of players and checks if their respective colors are correct
 		ArrayList<Player> players = board.getPlayers();
 		for(Player x: players) {
 			String playerName = x.getName();
@@ -82,6 +85,7 @@ public class MyGameSetupTests {
 	
 	@Test
 	public void testStartingLocation() {
+		//Creates an array of players and checks if their starting positions are correct
 		ArrayList<Player> players = board.getPlayers();
 		for(Player x: players) {
 			String playerName = x.getName();
