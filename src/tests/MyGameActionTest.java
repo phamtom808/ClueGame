@@ -163,6 +163,7 @@ public class MyGameActionTest {
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
 			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
 			ArrayList<Card> suggestion = compPlayer.createSuggestion(board, testRoom);
+			assertTrue(suggestion.contains(testRoom));
 			
 		}catch (BadConfigFormatException e) {
 			throw new BadConfigFormatException("computer player did not intiailize correctly");
