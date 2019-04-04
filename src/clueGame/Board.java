@@ -386,6 +386,16 @@ public class Board {
 		return this.legend;
 	}
 	
+	public Card getCardFromLegend(Character c) {
+		String cardName = legend.get(c);
+		for(Card i: deck) {
+			if(i.getName().equals(cardName)) {
+				return i;
+			}
+		}
+		return null;
+	}
+	
 	public Set<BoardCell> getDoorList(){
 		return this.doorList;
 	}

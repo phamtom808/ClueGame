@@ -5,4 +5,7 @@ public class HumanPlayer extends Player {
 		super(name,color,thisBoard.getCellAt(row, column));
 		this.setIsHuman(true);
 	}
+	
+	
+	
 }
