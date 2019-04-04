@@ -20,8 +20,38 @@ public class ComputerPlayer extends Player {
 		cardsSeen = new HashSet<Card>();
 	}
 	
-	public ArrayList<Card> createSuggestion(Card room){
-		
+	public ArrayList<Card> createSuggestion(Board board, Card room){
+		ArrayList<Card> suggestion = new ArrayList<Card>();
+		suggestion.add(room);
+		Set<Card> deck = board.getDeck();
+		deck.removeAll(this.getHand());
+		deck.removeAll(this.cardsSeen);
+		Set<Card> playerCards = new HashSet<Card>();
+		Set<Card> weaponCards = new HashSet<Card>();
+		for(Card c: deck) {
+			if(c.getCardType() == CardType.PLAYER) {
+				playerCards.add(c);
+			}else if(c.getCardType() == CardType.WEAPON) {
+				weaponCards.add(c);
+			}
+		}
+		int i = 0;
+		int randomCard = rand.nextInt(playerCards.size());
+		for(Card c: playerCards) {
+			if(i == randomCard) {
+				suggestion.add(c);
+			}
+			i++;
+		}
+		int j = 0;
+		int randomCard2 = rand.nextInt(weaponCards.size());
+		for(Card c: weaponCards) {
+			if(j == randomCard2) {
+				suggestion.add(c);
+			}
+			j++;
+		}
+		return suggestion;
 	}
 	
 	public void addCardSeen(Card c) {

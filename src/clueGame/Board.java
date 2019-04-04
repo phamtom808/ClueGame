@@ -77,6 +77,17 @@ public class Board {
 		this.calcAdjacencies(); 
 	}
 	
+	public void handleSuggestion() {
+		
+	}
+	
+	public boolean checkAccusation(Card player, Card room, Card weapon) {
+		if(player.equals(this.playerCard) && room.equals(this.roomCard)&& weapon.equals(this.weaponCard)  ) {
+			return true;
+		}
+		return false;
+	}
+	
 	//Function called to calculate adjacent cells for all cells in BoardCell class
 	public void calcAdjacencies() {
 		for(int row = 0; row<this.numRows; row++) {
