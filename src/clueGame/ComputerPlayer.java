@@ -7,7 +7,6 @@ import java.util.Set;
 
 public class ComputerPlayer extends Player {
 	
-	private Set<Card> cardsSeen;
 	private Card lastRoomVisited;
 	private boolean inRoom;
 	private Random rand;
@@ -17,7 +16,6 @@ public class ComputerPlayer extends Player {
 		lastRoomVisited = null;
 		inRoom = false;
 		rand = new Random();
-		cardsSeen = new HashSet<Card>();
 	}
 	
 	public ArrayList<Card> createSuggestion(Board board, Card room){
@@ -25,7 +23,7 @@ public class ComputerPlayer extends Player {
 		suggestion.add(room);
 		Set<Card> deck = board.getDeck();
 		deck.removeAll(this.getHand());
-		deck.removeAll(this.cardsSeen);
+		deck.removeAll(board.getCardsSeen());
 		Set<Card> playerCards = new HashSet<Card>();
 		Set<Card> weaponCards = new HashSet<Card>();
 		for(Card c: deck) {
@@ -54,9 +52,6 @@ public class ComputerPlayer extends Player {
 		return suggestion;
 	}
 	
-	public void addCardSeen(Card c) {
-		cardsSeen.add(c);
-	}
 	
 	public BoardCell selectTarget(Board board) {
 		Set<BoardCell> targets = board.getTargets();

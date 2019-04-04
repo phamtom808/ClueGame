@@ -81,7 +81,7 @@ public class Player {
 		return this.isHumanPlayer;
 	}
 	
-	public Card disproveSuggestion(Card player, Card weapon, Card room) {
+	public Card disproveSuggestion(Card room, Card player, Card weapon) {
 		if(this.hand.contains(player)) {
 			return player;
 		}else if(this.hand.contains(weapon)) {

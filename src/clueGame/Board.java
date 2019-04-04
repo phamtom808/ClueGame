@@ -31,6 +31,7 @@ public class Board {
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
 	private Set<Card> deck;
+	private Set<Card> cardsSeen;
 	private Card playerCard;
 	private Card weaponCard;
 	private Card roomCard;
@@ -55,6 +56,7 @@ public class Board {
 	 * that functions that need to know where there are doors can do so easily
 	 */
 	public void initialize() {
+		this.cardsSeen = new HashSet<Card>();
 		this.visited = new HashSet<BoardCell>(); 
 		this.targets = new HashSet<BoardCell>();
 		this.gameBoard = new BoardCell[MAX_BOARD_SIZE][MAX_BOARD_SIZE];
@@ -78,20 +80,14 @@ public class Board {
 	}
 	
 	public Card handleSuggestion(ArrayList<Card> suggestion, int suggesterIndex) {
-		for(Card c: suggestion) {
 			//the split for loops prevent the suggester from being the one to disprove
-			for(int i = suggesterIndex+1; i<players.size(); i++) {
-				Player p = players.get(i);
-				if(p.getHand().contains(c)) {
-					return c;
-				}
-			}
-			for(int i = 0; i<suggesterIndex; i++){
-				Player p = players.get(i);
-				if(p.getHand().contains(c)) {
-					return c;
-				}
-			}
+		for(int i = suggesterIndex+1; i<players.size(); i++) {
+			Player p = players.get(i);
+			Card c = p.disproveSuggestion(suggestion.get(0),suggestion.get(1),suggestion.get(2));
+		}
+		for(int i = 0; i<suggesterIndex; i++){
+			Player p = players.get(i);
+			Card c = p.disproveSuggestion(suggestion.get(0), suggestion.get(1), suggestion.get(2));
 		}
 		return null;
 	}
@@ -406,6 +402,10 @@ public class Board {
 	
 	public Card getPlayerCard() {
 		return this.playerCard;
+	}
+	
+	public Set<Card> getCardsSeen(){
+		return this.cardsSeen;
 	}
 	
 	public Map<Character,String> getLegend(){
