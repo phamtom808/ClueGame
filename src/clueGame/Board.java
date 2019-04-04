@@ -77,8 +77,23 @@ public class Board {
 		this.calcAdjacencies(); 
 	}
 	
-	public void handleSuggestion() {
-		
+	public Card handleSuggestion(ArrayList<Card> suggestion, int suggesterIndex) {
+		for(Card c: suggestion) {
+			//the split for loops prevent the suggester from being the one to disprove
+			for(int i = suggesterIndex+1; i<players.size(); i++) {
+				Player p = players.get(i);
+				if(p.getHand().contains(c)) {
+					return c;
+				}
+			}
+			for(int i = 0; i<suggesterIndex; i++){
+				Player p = players.get(i);
+				if(p.getHand().contains(c)) {
+					return c;
+				}
+			}
+		}
+		return null;
 	}
 	
 	public boolean checkAccusation(Card player, Card room, Card weapon) {
