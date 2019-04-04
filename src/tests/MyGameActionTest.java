@@ -56,16 +56,16 @@ public class MyGameActionTest {
 					fail("Invalid target.");
 				}
 			}
-			assertTrue(loc_17_7);
+			assertTrue(loc_17_5);
 			assertTrue(loc_16_6);
-			assertTrue(loc_18_6);
+			assertTrue(loc_15_5);
 		}catch (BadConfigFormatException e) {
 			throw new BadConfigFormatException("computer player did not intiailize correctly");
 		}
 		//must select room if wasn't previously visited
 		try {
-			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",0,14,board);
-			board.calcTargets(0,14,1);
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",14,0,board);
+			board.calcTargets(14,0,1);
 			BoardCell selected = compPlayer.selectTarget(board);
 			assertTrue(selected.isRoom());
 		}catch (BadConfigFormatException e) {
@@ -161,7 +161,7 @@ public class MyGameActionTest {
 	public void createSuggestion() throws BadConfigFormatException {
 		try {
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
-			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",0,5,board);
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
 			ArrayList<Card> suggestion = compPlayer.createSuggestion(board, testRoom);
 			
 		}catch (BadConfigFormatException e) {
