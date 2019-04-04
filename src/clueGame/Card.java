@@ -10,6 +10,9 @@ public class Card {
 	}
 	
 	public boolean equals(Card other) {
+		if(other == null) {
+			return false;
+		}
 		if(this.name == other.getName() && this.cardType == other.getCardType()) {
 			return true;
 		}

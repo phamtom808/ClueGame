@@ -65,7 +65,7 @@ public class MyGameActionTest {
 		//must select room if wasn't previously visited
 		try {
 			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",14,0,board);
-			board.calcTargets(14,0,1);
+			board.calcTargets(13,1,1);
 			BoardCell selected = compPlayer.selectTarget(board);
 			assertTrue(selected.isRoom());
 		}catch (BadConfigFormatException e) {
