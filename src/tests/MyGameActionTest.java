@@ -64,14 +64,22 @@ public class MyGameActionTest {
 		}
 		//must select room if wasn't previously visited
 		try {
-			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",14,0,board);
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",13,1,board);
 			board.calcTargets(13,1,1);
 			BoardCell selected = compPlayer.selectTarget(board);
-			assertTrue(selected.isRoom());
+			assertTrue(selected.isDoorway());
 		}catch (BadConfigFormatException e) {
 			throw new BadConfigFormatException("computer player did not intiailize correctly");
 		}
 		//if room just visited each target selected randomly
+		try {
+			ComputerPlayer compPlayer = new ComputerPlayer("Peter", "Pink",5,1,board);
+			board.calcTargets(5, 1, 1);
+			BoardCell selected = compPlayer.selectTarget(board);
+			assertTrue(selected.isWalkway());
+		}catch (BadConfigFormatException e) {
+			throw new BadConfigFormatException("computer player did not initialize correctly");
+		}
 	}
 	
 	/*
@@ -163,6 +171,7 @@ public class MyGameActionTest {
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
 			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
 			ArrayList<Card> suggestion = compPlayer.createSuggestion(board, testRoom);
+			assertTrue(suggestion.contains(testRoom));
 			
 		}catch (BadConfigFormatException e) {
 			throw new BadConfigFormatException("computer player did not intiailize correctly");
