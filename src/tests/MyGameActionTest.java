@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Stack;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -221,13 +222,51 @@ public class MyGameActionTest {
 		try {
 			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
-			Card testWeapon = new Card("Weapon", CardType.WEAPON);
-			
-			
+			Stack<Card> countWeapons = new Stack<Card>(); 
+			while(countWeapons.size() != 4) {
+				ArrayList<Card> testSuggestion = compPlayer.createSuggestion(board, testRoom);
+				board.handleSuggestion(testSuggestion, 0);
+				for(Card card: testSuggestion) {
+					if(card.getCardType() == CardType.WEAPON) {
+						countWeapons.push(card);
+					}
+				}
+			}
+			ArrayList<Card> finalSuggestion = compPlayer.createSuggestion(board, testRoom);
+			while(!countWeapons.isEmpty()) {
+				assertTrue(!finalSuggestion.contains(countWeapons.peek()));
+				countWeapons.pop();
+			}
 		}catch(BadConfigFormatException e) {
 			throw new BadConfigFormatException("computer player did not initialize correctly.");
 		}
 	}
+	
+	@Test
+	public void createSuggestionOnePerson() throws BadConfigFormatException{
+		try {
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+			Card testRoom = new Card("Conservatory", CardType.ROOM);
+			Stack<Card> countPerson = new Stack<Card>(); 
+			while(countPerson.size() != 2) {
+				ArrayList<Card> testSuggestion = compPlayer.createSuggestion(board, testRoom);
+				board.handleSuggestion(testSuggestion, 0);
+				for(Card card: testSuggestion) {
+					if(card.getCardType() == CardType.PLAYER) {
+						countPerson.push(card);
+					}
+				}
+			}
+			ArrayList<Card> finalSuggestion = compPlayer.createSuggestion(board, testRoom);
+			while(!countPerson.isEmpty()) {
+				assertTrue(!finalSuggestion.contains(countPerson.peek()));
+				countPerson.pop();
+			}
+		}catch(BadConfigFormatException e) {
+			throw new BadConfigFormatException("computer player did not initialize correctly.");
+		}
+	}
+	
 	@Test
 	public void disproveSuggestion() throws BadConfigFormatException {
 		try {
