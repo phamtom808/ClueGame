@@ -171,20 +171,79 @@ public class MyGameActionTest {
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
 			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
 			ArrayList<Card> suggestion = compPlayer.createSuggestion(board, testRoom);
-			assertTrue(suggestion.contains(testRoom));
-			
+			//check if the room matches the current location
+			assertTrue(suggestion.contains(testRoom));	
 		}catch (BadConfigFormatException e) {
 			throw new BadConfigFormatException("computer player did not intiailize correctly");
 		}
 	}
 	
 	@Test
-	public void disproveSuggestion() {
-		
+	public void createSuggestionMultipleWeapons() throws BadConfigFormatException {
+		try {
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+			Card testRoom = new Card("Conservatory", CardType.ROOM);
+			Card testWeapon = new Card("Weapon", CardType.WEAPON);
+			Set<Card> compHand = compPlayer.getHand();
+			for(Card card : compHand) {
+				if(card.getCardType() == CardType.WEAPON) {
+					testWeapon = card;
+				}
+			}
+			ArrayList<Card> suggestion = compPlayer.createSuggestion(board, testRoom);
+			assertTrue(!suggestion.contains(testWeapon));
+		}catch(BadConfigFormatException e){
+			throw new BadConfigFormatException("computer player did not initialize correctly.");
+		}
 	}
 	
 	@Test
-	public void handleSuggestion() {
-		
+	public void createSuggestionMultiplePeople() throws BadConfigFormatException {
+		try {
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+			Card testRoom = new Card("Conservatory", CardType.ROOM);
+			Card testPerson = new Card("Person", CardType.PLAYER);
+			Set<Card> compHand = compPlayer.getHand();
+			for(Card card : compHand) {
+				if(card.getCardType() == CardType.PLAYER) {
+					testPerson = card;
+				}
+			}
+			ArrayList<Card> suggestion = compPlayer.createSuggestion(board, testRoom);
+			assertTrue(!suggestion.contains(testPerson));
+		}catch(BadConfigFormatException e){
+			throw new BadConfigFormatException("computer player did not initialize correctly.");
+		}
+	}
+	
+	@Test
+	public void createSuggestionOneWeapon() throws BadConfigFormatException{
+		try {
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+			Card testRoom = new Card("Conservatory", CardType.ROOM);
+			Card testWeapon = new Card("Weapon", CardType.WEAPON);
+			
+			
+		}catch(BadConfigFormatException e) {
+			throw new BadConfigFormatException("computer player did not initialize correctly.");
+		}
+	}
+	@Test
+	public void disproveSuggestion() throws BadConfigFormatException {
+		try {
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+			
+		}catch(BadConfigFormatException e) {
+			throw new BadConfigFormatException("computer player did not initialize correctly");
+		}
+	}
+	
+	@Test
+	public void handleSuggestion() throws BadConfigFormatException {
+		try {
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick","Red",5,0,board);
+		}catch(BadConfigFormatException e) {
+			throw new BadConfigFormatException("computer player did not initialize correctly.");
+		}
 	}
 }
