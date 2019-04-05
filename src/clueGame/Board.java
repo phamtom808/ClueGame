@@ -81,15 +81,19 @@ public class Board {
 	
 	public Card handleSuggestion(ArrayList<Card> suggestion, int suggesterIndex) {
 			//the split for loops prevent the suggester from being the one to disprove
+		Card c = null;
 		for(int i = suggesterIndex+1; i<players.size(); i++) {
 			Player p = players.get(i);
-			Card c = p.disproveSuggestion(suggestion.get(0),suggestion.get(1),suggestion.get(2));
+			c = p.disproveSuggestion(suggestion.get(0),suggestion.get(1),suggestion.get(2));
 		}
 		for(int i = 0; i<suggesterIndex; i++){
 			Player p = players.get(i);
-			Card c = p.disproveSuggestion(suggestion.get(0), suggestion.get(1), suggestion.get(2));
+			c = p.disproveSuggestion(suggestion.get(0), suggestion.get(1), suggestion.get(2));
 		}
-		return null;
+		if(c!= null) {
+			cardsSeen.add(c); 
+		}
+		return c;
 	}
 	
 	public boolean checkAccusation(Card player, Card room, Card weapon) {
@@ -452,4 +456,7 @@ public class Board {
 		return this.players;
 	}
 	
+	public void addPlayer(Player x){
+		this.players.add(x);
+	}
 }

@@ -271,6 +271,33 @@ public class MyGameActionTest {
 	public void disproveSuggestion() throws BadConfigFormatException {
 		try {
 			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+			Card testRoom = new Card("Conservatory", CardType.ROOM);
+			Card testPlayer = new Card("Rick", CardType.PLAYER);
+			Card testWeapon = new Card("Revolver", CardType.WEAPON);
+			Card fakeWeapon = new Card("Shiv", CardType.WEAPON);
+			Card fakePlayer = new Card("Mike", CardType.PLAYER);
+			
+			assertEquals(null, compPlayer.disproveSuggestion(testPlayer,testRoom,testWeapon));
+			
+			compPlayer.dealCard(testRoom);
+			compPlayer.dealCard(testPlayer);
+			compPlayer.dealCard(testWeapon);
+			
+			assertEquals(testRoom,compPlayer.disproveSuggestion(fakePlayer,testRoom,fakeWeapon));
+			
+			boolean isRoom = false;
+			boolean isPlayer = false;
+			
+			for(int i = 0; i < 20; i++) {
+				if(compPlayer.disproveSuggestion(testPlayer,testRoom,fakeWeapon) == testPlayer) {
+					isPlayer = true;
+				}
+				else {
+					isRoom = true;
+				}
+			}
+			assertTrue(isRoom);
+			assertTrue(isPlayer);
 			
 		}catch(BadConfigFormatException e) {
 			throw new BadConfigFormatException("computer player did not initialize correctly");
@@ -279,10 +306,19 @@ public class MyGameActionTest {
 	
 	@Test
 	public void handleSuggestion() throws BadConfigFormatException {
-		try {
-			ComputerPlayer compPlayer = new ComputerPlayer("Rick","Red",5,0,board);
-		}catch(BadConfigFormatException e) {
-			throw new BadConfigFormatException("computer player did not initialize correctly.");
-		}
+		ArrayList<Player> players = board.getPlayers();
+		Card testRoom = new Card("Conservatory", CardType.ROOM);
+		ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+		ArrayList<Card> compSuggestion = compPlayer.createSuggestion(board,testRoom);
+		assertEquals(null, board.handleSuggestion(compSuggestion,5));
+		assertEquals(null, board.handleSuggestion(compSuggestion,4));
+		
+		board.addPlayer(compPlayer);
+		board.dealDeck();
+		compSuggestion = compPlayer.createSuggestion(board,testRoom);
+		board.handleSuggestion(compSuggestion,6);
+		
+		
+		
 	}
 }
