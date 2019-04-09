@@ -27,7 +27,7 @@ public class BoardCell {
 	public static final Color DOORWAY_COLOR = Color.blue;
 	public static final Color CLOSET_COLOR = Color.red;
 	public static final Color TEXT_COLOR = Color.black;
-	public static final int DOOR_SIZE = 2;
+	public static final int DOOR_SIZE = Board.CELL_SIZE/5;
 	
 	//BoardCell constructor
 	public BoardCell(int row, int column, Character initial) {
@@ -186,10 +186,7 @@ public class BoardCell {
 	}
 	
 	public void draw(Graphics g, Board thisBoard) {
-		if(this.isNameCell) {
-			g.setColor(TEXT_COLOR);
-			g.drawString(thisBoard.getCardFromLegend(this.getInitial()).getName(), this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE);
-		}else if(this.isRoom() || this.isDoorway()) {
+		if(this.isRoom() || this.isDoorway()) {
 			if(this.initial == 'C') {
 				g.setColor(CLOSET_COLOR);
 			}else {
@@ -198,12 +195,12 @@ public class BoardCell {
 			g.fillRect(this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE, Board.CELL_SIZE, Board.CELL_SIZE);
 			if(this.isDoorway()) {
 				g.setColor(DOORWAY_COLOR);
-				if(this.doorDirection == DoorDirection.UP) {
-					g.fillRect(this.column*Board.CELL_SIZE, (this.row-1)*Board.CELL_SIZE, Board.CELL_SIZE, DOOR_SIZE);
-				}else if(this.doorDirection == DoorDirection.DOWN) {
-					g.fillRect(this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE-DOOR_SIZE, Board.CELL_SIZE, DOOR_SIZE);
-				}else if(this.doorDirection == DoorDirection.LEFT) {
-					g.fillRect(this.column*Board.CELL_SIZE-DOOR_SIZE, this.row*Board.CELL_SIZE, DOOR_SIZE, Board.CELL_SIZE);
+				if(this.doorDirection == DoorDirection.DOWN) {
+					g.fillRect(this.column*Board.CELL_SIZE, (this.row+1)*Board.CELL_SIZE-DOOR_SIZE, Board.CELL_SIZE, DOOR_SIZE);
+				}else if(this.doorDirection == DoorDirection.UP) {
+					g.fillRect(this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE, Board.CELL_SIZE, DOOR_SIZE);
+				}else if(this.doorDirection == DoorDirection.RIGHT) {
+					g.fillRect((this.column+1)*Board.CELL_SIZE-DOOR_SIZE, this.row*Board.CELL_SIZE, DOOR_SIZE, Board.CELL_SIZE);
 				}else {
 					g.fillRect(this.column*Board.CELL_SIZE-1, this.row*Board.CELL_SIZE, DOOR_SIZE, Board.CELL_SIZE);
 				}
@@ -213,6 +210,10 @@ public class BoardCell {
 			g.fillRect(this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE, Board.CELL_SIZE, Board.CELL_SIZE);
 			g.setColor(TEXT_COLOR);
 			g.drawRect(this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE, Board.CELL_SIZE, Board.CELL_SIZE);
+		}
+		if(this.isNameCell) {
+			g.setColor(TEXT_COLOR);
+			g.drawString(thisBoard.getCardFromLegend(this.getInitial()).getName(), this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE);
 		}
 	}
 }

@@ -25,7 +25,7 @@ import javax.swing.*;
 public class Board extends JPanel {
 	
 	public static final int MAX_BOARD_SIZE = 50;
-	public static final int CELL_SIZE = 10; //cells are pixels of size 10x10, diameter of player token is also 10.
+	public static final int CELL_SIZE = 20; //cells are pixels of size 10x10, diameter of player token is also 10.
 	private int numRows; 
 	private int numColumns; 
 	private BoardCell[][] gameBoard;
@@ -485,6 +485,4 @@ public class Board extends JPanel {
 			p.draw(g);
 		}
 	}
-
-
 }
