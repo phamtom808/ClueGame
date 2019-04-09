@@ -81,6 +81,7 @@ public class Board extends JPanel {
 			System.exit(2);
 		}
 		this.calcAdjacencies(); 
+		this.add(new ControlGUI());
 	}
 	
 	public Card handleSuggestion(ArrayList<Card> suggestion, int suggesterIndex) {
@@ -470,7 +471,9 @@ public class Board extends JPanel {
 		Random die = new Random();
 		return die.nextInt(6) + 1;
 	}
-// ---------------GUI FUNCTIONS---------------
+
+	
+	// ---------------GUI FUNCTIONS---------------
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
