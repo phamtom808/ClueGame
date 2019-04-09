@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 
+import java.awt.Graphics;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -19,7 +20,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-public class Board {
+import javax.swing.*;
+
+public class Board extends JPanel {
 	
 	public static final int MAX_BOARD_SIZE = 50;
 	private int numRows; 
@@ -459,4 +462,21 @@ public class Board {
 	public void addPlayer(Player x){
 		this.players.add(x);
 	}
+
+
+// ---------------GUI FUNCTIONS---------------
+	@Override
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		for(int row = 0; row<numRows; row++) {
+			for(int col = 0; col<numColumns; col++) {
+				gameBoard[row][col].draw(g);
+			}
+		}
+		for(Player p: players) {
+			p.draw(g);
+		}
+	}
+
+
 }

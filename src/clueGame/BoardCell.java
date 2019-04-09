@@ -1,7 +1,9 @@
 package clueGame;
 
+import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.*;
 
 /**
  * @author Emily Christensen
@@ -170,5 +172,9 @@ public class BoardCell {
 			return true;
 		}
 		return false;
+	}
+	
+	public void Draw(Graphics g) {
+		
 	}
 }

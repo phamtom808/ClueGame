@@ -1,10 +1,12 @@
 package clueGame;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+import javax.swing.*;
 
 public class Player {
 	public String name;
@@ -133,10 +135,12 @@ public class Player {
 		}
 	}
 	
-	
 	public Color getColor() {
 		return this.color;
 	}
 	
+	public void Draw(Graphics g) {
+		
+	}
 }
 
