@@ -141,7 +141,7 @@ public class Player {
 	
 	public void draw(Graphics g) {
 		g.setColor(this.color);
-		g.drawOval(this.currentCell.getColumn()*Board.CELL_SIZE + Board.CELL_SIZE/2, this.currentCell.getRow()*Board.CELL_SIZE + Board.CELL_SIZE/2, Board.CELL_SIZE, Board.CELL_SIZE);
+		g.fillOval(this.currentCell.getColumn()*Board.CELL_SIZE + Board.CELL_SIZE/2, this.currentCell.getRow()*Board.CELL_SIZE + Board.CELL_SIZE/2, Board.CELL_SIZE, Board.CELL_SIZE);
 	}
 }
 

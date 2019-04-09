@@ -230,6 +230,8 @@ public class Board extends JPanel {
 						}else if(direction == 'U') {
 							gameBoard[row][column].setDoorDirection(DoorDirection.UP);
 							doorList.add(gameBoard[row][column]);
+						}else {
+							gameBoard[row][column].setIsNameCell(true);
 						}
 					}
 				}
@@ -468,13 +470,15 @@ public class Board extends JPanel {
 		Random die = new Random();
 		return die.nextInt(6) + 1;
 	}
-// ---------------GUI FUNCTIONS---------------
+
+	
+	// ---------------GUI FUNCTIONS---------------
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		for(int row = 0; row<numRows; row++) {
 			for(int col = 0; col<numColumns; col++) {
-				gameBoard[row][col].draw(g);
+				gameBoard[row][col].draw(g,this);
 			}
 		}
 		for(Player p: players) {
