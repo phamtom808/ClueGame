@@ -6,6 +6,6 @@ L, Living Room, Card
 S, Study, Card
 P, Pool, Card
 G, Garrage, Card
-H, Hall, Card
+A, Atrium, Card
 X, Closet, Card
 W, Walkway, Other

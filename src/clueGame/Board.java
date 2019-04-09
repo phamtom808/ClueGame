@@ -148,6 +148,14 @@ public class Board extends JPanel {
 	}
 
 	
+	public String getName(Character c) {
+		if(legend.get(c) != null) {
+			return legend.get(c);
+		}else {
+			return "ERROR: NAME NOT FOUND";
+		}
+	}
+	
 	/*
 	 * loadRoomConfig
 	 * Attempt to read in config file. If file doesn't open/isn't found, throw BadConfigFormatException with message that file wasn't found
@@ -230,7 +238,7 @@ public class Board extends JPanel {
 						}else if(direction == 'U') {
 							gameBoard[row][column].setDoorDirection(DoorDirection.UP);
 							doorList.add(gameBoard[row][column]);
-						}else {
+						}else if(direction == 'N'){
 							gameBoard[row][column].setIsNameCell(true);
 						}
 					}

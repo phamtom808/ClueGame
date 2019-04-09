@@ -3,6 +3,7 @@ package clueGame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.swing.*;
 
@@ -36,6 +37,7 @@ public class BoardCell {
 		this.initial = initial;
 		adjCells = new HashSet<BoardCell>();
 		doorDirection = DoorDirection.NONE;
+		this.isNameCell = false;
 	}	
 	
 	//Getter for row 
@@ -187,7 +189,7 @@ public class BoardCell {
 	
 	public void draw(Graphics g, Board thisBoard) {
 		if(this.isRoom() || this.isDoorway()) {
-			if(this.initial == 'C') {
+			if(this.initial == 'X') {
 				g.setColor(CLOSET_COLOR);
 			}else {
 				g.setColor(ROOM_COLOR);
@@ -213,7 +215,7 @@ public class BoardCell {
 		}
 		if(this.isNameCell) {
 			g.setColor(TEXT_COLOR);
-			g.drawString(thisBoard.getCardFromLegend(this.getInitial()).getName(), this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE);
+			g.drawString(thisBoard.getName(this.initial), this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE);
 		}
 	}
 }
