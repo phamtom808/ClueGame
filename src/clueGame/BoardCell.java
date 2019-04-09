@@ -174,7 +174,7 @@ public class BoardCell {
 		return false;
 	}
 	
-	public void Draw(Graphics g) {
+	public void draw(Graphics g) {
 		
 	}
 }
