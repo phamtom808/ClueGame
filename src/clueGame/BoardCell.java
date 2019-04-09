@@ -1,5 +1,6 @@
 package clueGame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,10 +18,16 @@ public class BoardCell {
 	//Instance Variables: 
 	private int row;
 	private int column;
+	private boolean isNameCell;
 	private Character initial;
 	private HashSet<BoardCell> adjCells;
 	private DoorDirection doorDirection;
-	
+	public static final Color WALKWAY_COLOR = Color.yellow;
+	public static final Color ROOM_COLOR = Color.white;
+	public static final Color DOORWAY_COLOR = Color.blue;
+	public static final Color CLOSET_COLOR = Color.red;
+	public static final Color TEXT_COLOR = Color.black;
+	public static final int DOOR_SIZE = 2;
 	
 	//BoardCell constructor
 	public BoardCell(int row, int column, Character initial) {
@@ -140,6 +147,10 @@ public class BoardCell {
 		return this.adjCells;
 	}
 	
+	public void setIsNameCell(boolean i) {
+		this.isNameCell = i;
+	}
+	
 	public void setDoorDirection(DoorDirection doorDirection) {
 		this.doorDirection = doorDirection;
 	}
@@ -174,7 +185,34 @@ public class BoardCell {
 		return false;
 	}
 	
-	public void draw(Graphics g) {
-		
+	public void draw(Graphics g, Board thisBoard) {
+		if(this.isNameCell) {
+			g.setColor(TEXT_COLOR);
+			g.drawString(thisBoard.getCardFromLegend(this.getInitial()).getName(), this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE);
+		}else if(this.isRoom() || this.isDoorway()) {
+			if(this.initial == 'C') {
+				g.setColor(CLOSET_COLOR);
+			}else {
+				g.setColor(ROOM_COLOR);
+			}
+			g.fillRect(this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE, Board.CELL_SIZE, Board.CELL_SIZE);
+			if(this.isDoorway()) {
+				g.setColor(DOORWAY_COLOR);
+				if(this.doorDirection == DoorDirection.UP) {
+					g.fillRect(this.column*Board.CELL_SIZE, (this.row-1)*Board.CELL_SIZE, Board.CELL_SIZE, DOOR_SIZE);
+				}else if(this.doorDirection == DoorDirection.DOWN) {
+					g.fillRect(this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE-DOOR_SIZE, Board.CELL_SIZE, DOOR_SIZE);
+				}else if(this.doorDirection == DoorDirection.LEFT) {
+					g.fillRect(this.column*Board.CELL_SIZE-DOOR_SIZE, this.row*Board.CELL_SIZE, DOOR_SIZE, Board.CELL_SIZE);
+				}else {
+					g.fillRect(this.column*Board.CELL_SIZE-1, this.row*Board.CELL_SIZE, DOOR_SIZE, Board.CELL_SIZE);
+				}
+			}
+		}else {
+			g.setColor(WALKWAY_COLOR);
+			g.fillRect(this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE, Board.CELL_SIZE, Board.CELL_SIZE);
+			g.setColor(TEXT_COLOR);
+			g.drawRect(this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE, Board.CELL_SIZE, Board.CELL_SIZE);
+		}
 	}
 }
