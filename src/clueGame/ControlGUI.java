@@ -17,21 +17,48 @@ public class ControlGUI extends JPanel{
 	public ControlGUI() {
 		setLayout(new GridLayout(3,1)); //3 rows, each with one panel element
 		add(this.createTextDisplays());
+		add(this.createGuessHandler());
 		add(this.createButtons()); // bottom row contains the buttons
 	}
 	
 	private JPanel createTextDisplays() {
 		JPanel textDisplay = new JPanel();
 		textDisplay.setLayout(new GridLayout(1,2)); //one row, 2 items: die roll and guess handler
+		JTextField myGuess = new JTextField(10);
+		JTextField dieRoll = new JTextField(3);
+		myGuess.setEditable(false);
+		dieRoll.setEditable(false);
+		JLabel rollLabel = new JLabel("Die Roll");
+		JLabel guessLabel = new JLabel("Previous Guess");
+		
+		textDisplay.add(rollLabel, BorderLayout.WEST);
+		textDisplay.add(dieRoll, BorderLayout.EAST);
+		textDisplay.setBorder(new TitledBorder(new EtchedBorder(), "Die and Last Guess"));
+		textDisplay.add(guessLabel, BorderLayout.WEST);
+		textDisplay.add(myGuess);
+		
+		return textDisplay;
+	}
+	
+	private JPanel createGuessHandler() {
 		JPanel guessHandler = new JPanel(); 
 		guessHandler.setLayout(new GridLayout(2,1)); //2 rows, 1 column: top is the guess, bottom is the result
 		JTextField lastGuess = new JTextField();
 		JTextField lastGuessResult = new JTextField();
-		JTextField dieRoll = new JTextField();
+		lastGuessResult.setEditable(false);
+		lastGuess.setEditable(false);
+		JLabel lastGuessLabel = new JLabel ("My Guess");
+		JLabel lastGuessResultLabel = new JLabel ("Result");
+		guessHandler.add(lastGuessLabel, BorderLayout.WEST);
+		guessHandler.add(lastGuess, BorderLayout.EAST);
+		guessHandler.add(lastGuessResultLabel);
+		guessHandler.add(lastGuessResult);
+		
+		return guessHandler;
 	}
 	
 	private JPanel createButtons() {
-		JPanel buttonMenu = new JPanel();
+		JPanel buttonMenu = new JPanel();//creates the action buttons on the bottom
 		buttonMenu.setLayout(new GridLayout(1,2));
 		JButton makeAccusation = new JButton("Make Accusation");
 		JButton nextPlayer = new JButton("Next Player");
@@ -50,7 +77,4 @@ public class ControlGUI extends JPanel{
 		frame.setVisible(true);
 	}
 	
-	public String getStringGuess() {
-		return "It was: "; 
-	}
 }

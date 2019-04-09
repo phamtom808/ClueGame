@@ -9,6 +9,9 @@ public class Card {
 		this.cardType = ctype;
 	}
 	
+	public Card() {
+		
+	}
 	public boolean equals(Card other) {
 		if(other == null) {
 			return false;

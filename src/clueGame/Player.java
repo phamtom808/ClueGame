@@ -3,6 +3,7 @@ package clueGame;
 import java.awt.Color;
 import java.lang.reflect.Field;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class Player {
@@ -82,7 +83,46 @@ public class Player {
 	}
 	
 	public Card disproveSuggestion(Card room, Card player, Card weapon) {
-		if(this.hand.contains(player)) {
+		if(this.hand.contains(room) && this.hand.contains(weapon) && this.hand.contains(player)) {
+			Random rand = new Random();
+			int randomChoice = rand.nextInt(3);
+			switch(randomChoice) {
+			case 1:
+				return room;
+			case 2:
+				return player;
+			default:
+				return weapon;
+			}
+		}else if(this.hand.contains(player) && this.hand.contains(room)) {
+			Random rand = new Random();
+			int randomChoice = rand.nextInt(2);
+			switch(randomChoice) {
+			case 1:
+				return player;
+			default:
+				return room;
+			}
+		}else if(this.hand.contains(player) && this.hand.contains(weapon)) {
+			Random rand = new Random();
+			int randomChoice = rand.nextInt(2);
+			switch(randomChoice) {
+			case 1:
+				return player;
+			default:
+				return weapon;
+			}
+		}else if(this.hand.contains(room) && this.hand.contains(weapon)) {
+			Random rand = new Random();
+			int randomChoice = rand.nextInt(2);
+			switch(randomChoice) {
+			case 1:
+				return room;
+			default:
+				return weapon;
+			}
+		}
+		else if(this.hand.contains(player)) {
 			return player;
 		}else if(this.hand.contains(weapon)) {
 			return weapon;
@@ -92,6 +132,7 @@ public class Player {
 			return null;
 		}
 	}
+	
 	
 	public Color getColor() {
 		return this.color;

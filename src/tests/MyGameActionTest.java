@@ -1,3 +1,8 @@
+/**
+ * @author Emily Christensen
+ * @author Dane Pham
+ * MyGameActionTest Class: handles tests pertaining to game actions
+ */
 package tests;
 
 import static org.junit.Assert.*;
@@ -109,6 +114,7 @@ public class MyGameActionTest {
 	
 	@Test
 	public void checkWrongWeaponAccusation() {
+		//checks to make sure it throws an error when the wrong weapon is accused
 		ArrayList<Card> testCards = new ArrayList<Card>();
 		Card testWeapon = new Card("Rope", CardType.WEAPON);
 		Card testPlayer = new Card("Colonel Mustard", CardType.PLAYER);
@@ -128,6 +134,7 @@ public class MyGameActionTest {
 	
 	@Test
 	public void checkWrongRoomAccusation() {
+		//checks to make sure the program throws an error when the wrong room is accused
 		ArrayList<Card> testCards = new ArrayList<Card>();
 		Card testWeapon = new Card("Rope", CardType.WEAPON);
 		Card testPlayer = new Card("Colonel Mustard", CardType.PLAYER);
@@ -148,6 +155,7 @@ public class MyGameActionTest {
 	
 	@Test
 	public void checkWrongPlayerAccusation() {
+		//checks to make sure the program throws an error when the wrong player is accused
 		ArrayList<Card> testCards = new ArrayList<Card>();
 		Card testWeapon = new Card("Rope", CardType.WEAPON);
 		Card testPlayer = new Card("Colonel Mustard", CardType.PLAYER);
@@ -168,6 +176,7 @@ public class MyGameActionTest {
 	
 	@Test
 	public void createSuggestion() throws BadConfigFormatException {
+		//checks if the suggestion created is correct with respect to where the player is
 		try {
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
 			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
@@ -181,6 +190,7 @@ public class MyGameActionTest {
 	
 	@Test
 	public void createSuggestionMultipleWeapons() throws BadConfigFormatException {
+		//checks to make sure the suggestion doesn't contain players weapon and only draws from the unseen cards
 		try {
 			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
@@ -200,6 +210,7 @@ public class MyGameActionTest {
 	
 	@Test
 	public void createSuggestionMultiplePeople() throws BadConfigFormatException {
+		//checks to make sure the suggestion doesn't contain the player and only draws from the unseen cards
 		try {
 			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
@@ -219,6 +230,7 @@ public class MyGameActionTest {
 	
 	@Test
 	public void createSuggestionOneWeapon() throws BadConfigFormatException{
+		//checks to make sure the suggestion must contain the only unseen weapon card
 		try {
 			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
@@ -244,6 +256,7 @@ public class MyGameActionTest {
 	
 	@Test
 	public void createSuggestionOnePerson() throws BadConfigFormatException{
+		//checks to make sure the suggestion must contain the only unseen person card
 		try {
 			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
@@ -269,6 +282,7 @@ public class MyGameActionTest {
 	
 	@Test
 	public void disproveSuggestion() throws BadConfigFormatException {
+		//checks to disprove suggestions based on different scenerios
 		try {
 			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
@@ -306,19 +320,17 @@ public class MyGameActionTest {
 	
 	@Test
 	public void handleSuggestion() throws BadConfigFormatException {
+		//checks that suggestions are handled appropriately based on the scenerio
 		ArrayList<Player> players = board.getPlayers();
 		Card testRoom = new Card("Conservatory", CardType.ROOM);
 		ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
 		ArrayList<Card> compSuggestion = compPlayer.createSuggestion(board,testRoom);
-		assertEquals(null, board.handleSuggestion(compSuggestion,5));
+		assertEquals(null, board.handleSuggestion(compSuggestion,0));
 		assertEquals(null, board.handleSuggestion(compSuggestion,4));
 		
 		board.addPlayer(compPlayer);
 		board.dealDeck();
 		compSuggestion = compPlayer.createSuggestion(board,testRoom);
-		board.handleSuggestion(compSuggestion,6);
-		
-		
-		
+		assertEquals(null, board.handleSuggestion(compSuggestion,6)); 
 	}
 }
