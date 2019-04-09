@@ -16,6 +16,7 @@ public class PlayerCardsGUI extends JPanel{
 		add(this.createPeopleCardDisplay());
 		add(this.createRoomsCardDisplay());
 		add(this.createWeaponsCardDisplay());
+		this.setBorder(new TitledBorder(new EtchedBorder(), "My Cards"));
 	}
 
 	private JPanel createPeopleCardDisplay() {
