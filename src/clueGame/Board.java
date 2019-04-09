@@ -81,7 +81,6 @@ public class Board extends JPanel {
 			System.exit(2);
 		}
 		this.calcAdjacencies(); 
-		this.add(new ControlGUI());
 	}
 	
 	public Card handleSuggestion(ArrayList<Card> suggestion, int suggesterIndex) {
