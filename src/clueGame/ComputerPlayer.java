@@ -52,7 +52,6 @@ public class ComputerPlayer extends Player {
 		return suggestion;
 	}
 	
-	
 	public BoardCell selectTarget(Board board) {
 		Set<BoardCell> targets = board.getTargets();
 		int spaceNum = rand.nextInt(targets.size());
@@ -76,5 +75,12 @@ public class ComputerPlayer extends Player {
 		return targetCell;
 	}
 	
+	public void makeMove(Board thisBoard) {
+		ClueGame.rollDie();
+		int pathLength = ClueGame.getDieRoll();
+		thisBoard.calcTargets(this.getCurrentCell().getRow(), this.getCurrentCell().getColumn(), dieRoll);
+		BoardCell targetCell = selectTarget(thisBoard);
+		this.setCellFromCell(targetCell);
+	}
 }
 

@@ -121,11 +121,11 @@ public class Board extends JPanel {
 	 * Algorithm detailed in slides
 	 */
 	public void calcTargets(int row, int column, int pathLength) {
-		this.targets.clear();
+		targets.clear();
 		BoardCell startCell = this.getCellAt(row, column);
-		this.visited.add(startCell);
+		visited.add(startCell);
 		findAllTargets(startCell, pathLength);
-		this.visited.clear();
+		visited.clear();
 	}
 	
 	/*
@@ -146,7 +146,6 @@ public class Board extends JPanel {
 			}
 		}
 	}
-
 	
 	public String getName(Character c) {
 		if(legend.get(c) != null) {
@@ -474,11 +473,16 @@ public class Board extends JPanel {
 		this.players.add(x);
 	}
 
-	public int rollDie() {
-		Random die = new Random();
-		return die.nextInt(6) + 1;
+	public void setTargets() {
+		for(int row = 0; row<numRows; row++) {
+			for(int column = 0; column<numColumns; column++) {
+				gameBoard[row][column].setIsTarget(false);
+			}
+		}
+		for(BoardCell b: targets) {
+			b.setIsTarget(true);
+		}
 	}
-
 	
 	// ---------------GUI FUNCTIONS---------------
 	@Override
@@ -493,4 +497,5 @@ public class Board extends JPanel {
 			p.draw(g);
 		}
 	}
+	
 }
