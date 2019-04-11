@@ -11,6 +11,8 @@ import java.util.Scanner;
 import static org.junit.Assert.assertEquals;
 
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class Board extends JPanel {
 	private int numRows; 
 	private int numColumns; 
 	private BoardCell[][] gameBoard;
+	private BoardCell cellClicked;
 	private Map<Character, String> legend;
 	private ArrayList<Player> players;
 	private int currentPlayerIndex;
@@ -478,12 +481,15 @@ public class Board extends JPanel {
 		this.players.add(x);
 	}
 
-	public void setTargets() {
+	public void clearTargets() {
 		for(int row = 0; row<numRows; row++) {
 			for(int column = 0; column<numColumns; column++) {
 				gameBoard[row][column].setIsTarget(false);
 			}
 		}
+	}
+	
+	public void setTargets() {
 		for(BoardCell b: targets) {
 			b.setIsTarget(true);
 		}
@@ -508,5 +514,17 @@ public class Board extends JPanel {
 	public void playGame() {
 		Player currentPlayer = players.get(currentPlayerIndex);
 		currentPlayer.makeMove(this);
+	}
+	
+	private class BoardListener implements MouseListener {
+		public void mousePressed(MouseEvent event) {}
+		public void mouseReleased(MouseEvent event) {}
+		public void mouseEntered(MouseEvent event) {}
+		public void mouseExited(MouseEvent event) {}
+		public void mouseClicked(MouseEvent event) {
+			int column = event.getX()/CELL_SIZE;
+			int row = event.getY()/CELL_SIZE;
+			cellClicked = getCellAt(row, column);
+		}
 	}
 }

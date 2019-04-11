@@ -84,8 +84,11 @@ public abstract class Player {
 		return this.isHumanPlayer;
 	}
 	
-	public Card disproveSuggestion(Card room, Card player, Card weapon) {
-		if(this.hand.contains(room) && this.hand.contains(weapon) && this.hand.contains(player)) {
+	public Card disproveSuggestion(Guess suggestion) {
+		Card player = suggestion.getPlayer();
+		Card room = suggestion.getRoom();
+		Card weapon = suggestion.getWeapon();
+		if(this.hand.contains(suggestion.getRoom()) && this.hand.contains(suggestion.getWeapon()) && this.hand.contains(suggestion.getPlayer)) {
 			Random rand = new Random();
 			int randomChoice = rand.nextInt(3);
 			switch(randomChoice) {
