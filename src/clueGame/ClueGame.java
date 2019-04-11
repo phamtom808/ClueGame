@@ -22,7 +22,7 @@ public class ClueGame extends JFrame {
 		game.add(board);
 		game.add(new DetectiveNotesGUI());
 		game.add(new ControlGUI());
-		game.add(new PlayerCardsGUI());
+		game.add(new DisplayGUI());
 		game.setVisible(true);
 	}
 	
