@@ -18,9 +18,9 @@ public class ComputerPlayer extends Player {
 		rand = new Random();
 	}
 	
-	public ArrayList<Card> createSuggestion(Board board, Card room){
-		ArrayList<Card> suggestion = new ArrayList<Card>();
-		suggestion.add(room);
+	public Guess createSuggestion(Board board, Card room){
+		Guess suggestion = new Guess());
+		suggestion.setRoom(room);
 		Set<Card> deck = board.getDeck();
 		deck.removeAll(this.getHand());
 		deck.removeAll(board.getCardsSeen());
@@ -37,7 +37,7 @@ public class ComputerPlayer extends Player {
 		int randomCard = rand.nextInt(playerCards.size());
 		for(Card c: playerCards) {
 			if(i == randomCard) {
-				suggestion.add(c);
+				suggestion.(c);
 			}
 			i++;
 		}
