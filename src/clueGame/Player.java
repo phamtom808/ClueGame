@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.Set;
 import javax.swing.*;
 
-public class Player {
+public abstract class Player {
 	public String name;
 	private BoardCell currentCell;
 	private Color color;
@@ -143,5 +143,8 @@ public class Player {
 		g.setColor(this.color);
 		g.fillOval(this.currentCell.getColumn()*Board.CELL_SIZE, this.currentCell.getRow()*Board.CELL_SIZE, Board.CELL_SIZE, Board.CELL_SIZE);
 	}
+
+	//method must have body because player class is not abstract and I don't want to deal with MAKING it abstract
+	public void makeMove(Board thisBoard) {}
 }
 

@@ -31,6 +31,7 @@ public class ClueGame extends JFrame {
 	
 	public static void main(String args[]) {
 		ClueGame thisGame = new ClueGame();
+		thisGame.playGame();
 	}
 	
 	public static void rollDie() {
@@ -39,5 +40,9 @@ public class ClueGame extends JFrame {
 	
 	public static int getDieRoll() {
 		return dieRoll;
+	}
+	
+	public void playGame() {
+		board.playGame();
 	}
 }

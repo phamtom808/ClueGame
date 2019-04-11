@@ -31,6 +31,7 @@ public class Board extends JPanel {
 	private BoardCell[][] gameBoard;
 	private Map<Character, String> legend;
 	private ArrayList<Player> players;
+	private int currentPlayerIndex;
 	private Set<BoardCell> doorList; //may have become irrelevant for now, but may have use later
 	private Set<BoardCell> visited;
 	private Set<BoardCell> targets;
@@ -81,6 +82,7 @@ public class Board extends JPanel {
 			System.exit(2);
 		}
 		this.calcAdjacencies(); 
+		currentPlayerIndex = 0;
 	}
 	
 	public Card handleSuggestion(ArrayList<Card> suggestion, int suggesterIndex) {
@@ -280,9 +282,12 @@ public class Board extends JPanel {
 					}catch (Exception e) {
 						throw new BadConfigFormatException("Incorrect start location data");
 					}
-					Player p = new Player(name,color,thisCell);
+					Player p;
 					if(isHuman) {
+						p = new HumanPlayer(name, color, thisCell);
 						p.setIsHuman(true);
+					}else {
+						p = new ComputerPlayer(name, color, thisCell);
 					}
 					this.players.add(p);
 					Card c = new Card(name, CardType.PLAYER);
@@ -484,7 +489,7 @@ public class Board extends JPanel {
 		}
 	}
 	
-	// ---------------GUI FUNCTIONS---------------
+	// ---------------GUI FUNCTIONS--------------- //
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -498,4 +503,10 @@ public class Board extends JPanel {
 		}
 	}
 	
+	// ------------GAME LOGIC FUNCTIONS----------- //
+	
+	public void playGame() {
+		Player currentPlayer = players.get(currentPlayerIndex);
+		currentPlayer.makeMove(this);
+	}
 }
