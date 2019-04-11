@@ -16,13 +16,7 @@ import java.util.Stack;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import clueGame.BadConfigFormatException;
-import clueGame.Board;
-import clueGame.BoardCell;
-import clueGame.Card;
-import clueGame.CardType;
-import clueGame.ComputerPlayer;
-import clueGame.Player;
+import clueGame.*;
 
 public class MyGameActionTest {
 
@@ -41,7 +35,7 @@ public class MyGameActionTest {
 	public void selectTargetLocationComp() throws BadConfigFormatException {
 		//random selection test
 		try {
-			ComputerPlayer compPlayer = new ComputerPlayer("Bob", "Blue",17,6,board);
+			ComputerPlayer compPlayer = new ComputerPlayer("Bob", "Blue",board.getCellAt(17, 6));
 			board.calcTargets(16,5,1);
 			boolean loc_16_6 = false;
 			boolean loc_17_5 = false;
@@ -70,7 +64,7 @@ public class MyGameActionTest {
 		}
 		//must select room if wasn't previously visited
 		try {
-			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",13,1,board);
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",board.getCellAt(13, 1));
 			board.calcTargets(13,1,1);
 			BoardCell selected = compPlayer.selectTarget(board);
 			assertTrue(selected.isDoorway());
@@ -79,7 +73,7 @@ public class MyGameActionTest {
 		}
 		//if room just visited each target selected randomly
 		try {
-			ComputerPlayer compPlayer = new ComputerPlayer("Peter", "Pink",5,1,board);
+			ComputerPlayer compPlayer = new ComputerPlayer("Peter", "Pink",board.getCellAt(5, 1));
 			board.calcTargets(5, 1, 1);
 			BoardCell selected = compPlayer.selectTarget(board);
 			assertTrue(selected.isWalkway());
@@ -129,7 +123,7 @@ public class MyGameActionTest {
 		assertTrue(testCards.contains(testRoom));
 		assertEquals("Pool", testRoom.getName());
 		assertEquals(CardType.ROOM, testRoom.getCardType());
-		assertEquals("Rope", falseWeapon.getName());
+		assertEquals("Axe", falseWeapon.getName());
 	}
 	
 	@Test
@@ -150,7 +144,7 @@ public class MyGameActionTest {
 		assertEquals("Colonel Mustard", testPlayer.getName());
 		assertEquals(CardType.PLAYER, testPlayer.getCardType());
 		assertTrue(testCards.contains(testRoom));
-		assertEquals("Pool", falseRoom.getName());
+		assertEquals("Kitchen", falseRoom.getName());
 	}
 	
 	@Test
@@ -171,7 +165,7 @@ public class MyGameActionTest {
 		assertEquals("Colonel Mustard", testPlayer.getName());
 		assertEquals(CardType.PLAYER, testPlayer.getCardType());
 		assertTrue(testCards.contains(testRoom));
-		assertEquals("Colonel Mustard", falsePlayer.getName());
+		assertEquals("ABC", falsePlayer.getName());
 	}
 	
 	@Test
@@ -179,7 +173,7 @@ public class MyGameActionTest {
 		//checks if the suggestion created is correct with respect to where the player is
 		try {
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
-			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",board.getCellAt(5, 0));
 			ArrayList<Card> suggestion = compPlayer.createSuggestion(board, testRoom);
 			//check if the room matches the current location
 			assertTrue(suggestion.contains(testRoom));	
@@ -192,7 +186,7 @@ public class MyGameActionTest {
 	public void createSuggestionMultipleWeapons() throws BadConfigFormatException {
 		//checks to make sure the suggestion doesn't contain players weapon and only draws from the unseen cards
 		try {
-			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",board.getCellAt(5, 0));
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
 			Card testWeapon = new Card("Weapon", CardType.WEAPON);
 			Set<Card> compHand = compPlayer.getHand();
@@ -212,7 +206,7 @@ public class MyGameActionTest {
 	public void createSuggestionMultiplePeople() throws BadConfigFormatException {
 		//checks to make sure the suggestion doesn't contain the player and only draws from the unseen cards
 		try {
-			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",board.getCellAt(5,0));
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
 			Card testPerson = new Card("Person", CardType.PLAYER);
 			Set<Card> compHand = compPlayer.getHand();
@@ -232,11 +226,11 @@ public class MyGameActionTest {
 	public void createSuggestionOneWeapon() throws BadConfigFormatException{
 		//checks to make sure the suggestion must contain the only unseen weapon card
 		try {
-			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",board.getCellAt(5, 0));
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
 			Stack<Card> countWeapons = new Stack<Card>(); 
 			while(countWeapons.size() != 4) {
-				ArrayList<Card> testSuggestion = compPlayer.createSuggestion(board, testRoom);
+				Guess testSuggestion = compPlayer.createSuggestion(board, testRoom);
 				board.handleSuggestion(testSuggestion, 0);
 				for(Card card: testSuggestion) {
 					if(card.getCardType() == CardType.WEAPON) {
@@ -258,7 +252,7 @@ public class MyGameActionTest {
 	public void createSuggestionOnePerson() throws BadConfigFormatException{
 		//checks to make sure the suggestion must contain the only unseen person card
 		try {
-			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",board.getCellAt(5, 0));
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
 			Stack<Card> countPerson = new Stack<Card>(); 
 			while(countPerson.size() != 2) {
@@ -284,7 +278,7 @@ public class MyGameActionTest {
 	public void disproveSuggestion() throws BadConfigFormatException {
 		//checks to disprove suggestions based on different scenerios
 		try {
-			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",board.getCellAt(5, 0));
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
 			Card testPlayer = new Card("Rick", CardType.PLAYER);
 			Card testWeapon = new Card("Revolver", CardType.WEAPON);
@@ -323,7 +317,7 @@ public class MyGameActionTest {
 		//checks that suggestions are handled appropriately based on the scenerio
 		ArrayList<Player> players = board.getPlayers();
 		Card testRoom = new Card("Conservatory", CardType.ROOM);
-		ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",5,0,board);
+		ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",board.getCellAt(5, 0));
 		ArrayList<Card> compSuggestion = compPlayer.createSuggestion(board,testRoom);
 		assertEquals(null, board.handleSuggestion(compSuggestion,0));
 		assertEquals(null, board.handleSuggestion(compSuggestion,4));

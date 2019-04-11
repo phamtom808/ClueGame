@@ -19,7 +19,7 @@ public class ComputerPlayer extends Player {
 	}
 	
 	public Guess createSuggestion(Board board, Card room){
-		Guess suggestion = new Guess());
+		Guess suggestion = new Guess();
 		suggestion.setRoom(room);
 		Set<Card> deck = board.getDeck();
 		deck.removeAll(this.getHand());
@@ -37,7 +37,7 @@ public class ComputerPlayer extends Player {
 		int randomCard = rand.nextInt(playerCards.size());
 		for(Card c: playerCards) {
 			if(i == randomCard) {
-				suggestion.(c);
+				suggestion.setPlayer(c); 
 			}
 			i++;
 		}
@@ -45,7 +45,7 @@ public class ComputerPlayer extends Player {
 		int randomCard2 = rand.nextInt(weaponCards.size());
 		for(Card c: weaponCards) {
 			if(j == randomCard2) {
-				suggestion.add(c);
+				suggestion.setWeapon(c);
 			}
 			j++;
 		}
