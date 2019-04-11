@@ -19,6 +19,7 @@ public class BoardCell {
 	//Instance Variables: 
 	private int row;
 	private int column;
+	private boolean isTarget;
 	private boolean isNameCell;
 	private Character initial;
 	private HashSet<BoardCell> adjCells;
@@ -28,6 +29,7 @@ public class BoardCell {
 	public static final Color DOORWAY_COLOR = Color.blue;
 	public static final Color CLOSET_COLOR = Color.red;
 	public static final Color TEXT_COLOR = Color.black;
+	public static final Color TARGET_COLOR = Color.green;
 	public static final int DOOR_SIZE = Board.CELL_SIZE/5;
 	
 	//BoardCell constructor
@@ -189,7 +191,9 @@ public class BoardCell {
 	
 	public void draw(Graphics g, Board thisBoard) {
 		if(this.isRoom() || this.isDoorway()) {
-			if(this.initial == 'X') {
+			if(this.isTarget) {
+				g.setColor(TARGET_COLOR);
+			}else if(this.initial == 'X') {
 				g.setColor(CLOSET_COLOR);
 			}else {
 				g.setColor(ROOM_COLOR);
@@ -208,7 +212,11 @@ public class BoardCell {
 				}
 			}
 		}else {
-			g.setColor(WALKWAY_COLOR);
+			if(this.isTarget) {
+				g.setColor(TARGET_COLOR);
+			}else {
+				g.setColor(WALKWAY_COLOR);
+			}
 			g.fillRect(this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE, Board.CELL_SIZE, Board.CELL_SIZE);
 			g.setColor(TEXT_COLOR);
 			g.drawRect(this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE, Board.CELL_SIZE, Board.CELL_SIZE);
@@ -217,5 +225,9 @@ public class BoardCell {
 			g.setColor(TEXT_COLOR);
 			g.drawString(thisBoard.getName(this.initial), this.column*Board.CELL_SIZE, this.row*Board.CELL_SIZE);
 		}
+	}
+
+	public void setIsTarget(boolean b) {
+		isTarget = b;
 	}
 }

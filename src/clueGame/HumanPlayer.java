@@ -1,11 +1,19 @@
 package clueGame;
 
 public class HumanPlayer extends Player {
-	public HumanPlayer(String name, String color, int row, int column, Board thisBoard) throws BadConfigFormatException {
-		super(name,color,thisBoard.getCellAt(row, column));
+	
+	public HumanPlayer(String name, String color, BoardCell thisCell) throws BadConfigFormatException {
+		super(name,color,thisCell);
 		this.setIsHuman(true);
 	}
 	
-	
+	@Override
+	public void makeMove(Board thisBoard) {
+		ClueGame.rollDie();
+		int dieRoll = ClueGame.getDieRoll();
+		thisBoard.calcTargets(getCurrentCell().getRow(), getCurrentCell().getColumn(), dieRoll);
+		thisBoard.setTargets();
+		//set up mouse listener to get player selection
+	}
 	
 }

@@ -77,4 +77,5 @@ public class ControlGUI extends JPanel{
 		frame.setVisible(true);
 	}
 	
+	
 }

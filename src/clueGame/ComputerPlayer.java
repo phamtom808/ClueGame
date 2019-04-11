@@ -11,8 +11,8 @@ public class ComputerPlayer extends Player {
 	private boolean inRoom;
 	private Random rand;
 	
-	public ComputerPlayer(String name, String color, int row, int column, Board thisBoard) throws BadConfigFormatException {
-		super(name,color,thisBoard.getCellAt(row,column));
+	public ComputerPlayer(String name, String color, BoardCell thisCell) throws BadConfigFormatException {
+		super(name,color,thisCell);
 		lastRoomVisited = null;
 		inRoom = false;
 		rand = new Random();
@@ -52,7 +52,6 @@ public class ComputerPlayer extends Player {
 		return suggestion;
 	}
 	
-	
 	public BoardCell selectTarget(Board board) {
 		Set<BoardCell> targets = board.getTargets();
 		int spaceNum = rand.nextInt(targets.size());
@@ -76,5 +75,13 @@ public class ComputerPlayer extends Player {
 		return targetCell;
 	}
 	
+	@Override
+	public void makeMove(Board thisBoard) {
+		ClueGame.rollDie();
+		int dieRoll = ClueGame.getDieRoll();
+		thisBoard.calcTargets(this.getCurrentCell().getRow(), this.getCurrentCell().getColumn(), dieRoll);
+		BoardCell targetCell = selectTarget(thisBoard);
+		this.setCellFromCell(targetCell);
+	}
 }
 

@@ -3,12 +3,15 @@ package clueGame;
 import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.util.Random;
 import java.awt.Color;
 
 public class ClueGame extends JFrame {
 	
 	private Board board;
 	private JFrame game;
+	private static int dieRoll;
+	private static Random dieRoller = new Random();
 	public static final int FRAME_SIZE = 1200;
 	
 	public ClueGame() {
@@ -28,5 +31,18 @@ public class ClueGame extends JFrame {
 	
 	public static void main(String args[]) {
 		ClueGame thisGame = new ClueGame();
+		thisGame.playGame();
+	}
+	
+	public static void rollDie() {
+		dieRoll = dieRoller.nextInt(6) + 1;
+	}
+	
+	public static int getDieRoll() {
+		return dieRoll;
+	}
+	
+	public void playGame() {
+		board.playGame();
 	}
 }
