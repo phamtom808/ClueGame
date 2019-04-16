@@ -516,6 +516,10 @@ public class Board extends JPanel {
 		currentPlayer.makeMove(this);
 	}
 	
+	public BoardCell getCellClicked() {
+		return cellClicked;
+	}
+	
 	private class BoardListener implements MouseListener {
 		public void mousePressed(MouseEvent event) {}
 		public void mouseReleased(MouseEvent event) {}

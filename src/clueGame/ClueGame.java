@@ -24,7 +24,7 @@ public class ClueGame extends JFrame {
 		game.setSize(FRAME_SIZE, FRAME_SIZE);
 		game.add(board);
 		game.add(new DetectiveNotesGUI());
-		game.add(new ControlGUI());
+		game.add(new ControlGUI(game));
 		game.add(new DisplayGUI());
 		game.setVisible(true);
 	}
