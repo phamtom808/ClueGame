@@ -88,7 +88,7 @@ public abstract class Player {
 		Card player = suggestion.getPlayer();
 		Card room = suggestion.getRoom();
 		Card weapon = suggestion.getWeapon();
-		if(this.hand.contains(suggestion.getRoom()) && this.hand.contains(suggestion.getWeapon()) && this.hand.contains(suggestion.getPlayer)) {
+		if(this.hand.contains(suggestion.getRoom()) && this.hand.contains(suggestion.getWeapon()) && this.hand.contains(suggestion.getPlayer())) {
 			Random rand = new Random();
 			int randomChoice = rand.nextInt(3);
 			switch(randomChoice) {
@@ -148,6 +148,8 @@ public abstract class Player {
 	}
 
 	//method must have body because player class is not abstract and I don't want to deal with MAKING it abstract
-	public void makeMove(Board thisBoard) {}
+	public void makeMove(Board thisBoard) {
+		return;
+	}
 }
 

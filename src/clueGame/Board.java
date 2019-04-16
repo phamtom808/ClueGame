@@ -88,16 +88,16 @@ public class Board extends JPanel {
 		currentPlayerIndex = 0;
 	}
 	
-	public Card handleSuggestion(ArrayList<Card> suggestion, int suggesterIndex) {
+	public Card handleSuggestion(Guess suggestion, int suggesterIndex) {
 			//the split for loops prevent the suggester from being the one to disprove
 		Card c = null;
 		for(int i = suggesterIndex+1; i<players.size(); i++) {
 			Player p = players.get(i);
-			c = p.disproveSuggestion(suggestion.get(0),suggestion.get(1),suggestion.get(2));
+			c = p.disproveSuggestion(suggestion);
 		}
 		for(int i = 0; i<suggesterIndex; i++){
 			Player p = players.get(i);
-			c = p.disproveSuggestion(suggestion.get(0), suggestion.get(1), suggestion.get(2));
+			c = p.disproveSuggestion(suggestion);
 		}
 		if(c!= null) {
 			cardsSeen.add(c); 
