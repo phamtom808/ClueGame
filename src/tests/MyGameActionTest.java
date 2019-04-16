@@ -174,9 +174,9 @@ public class MyGameActionTest {
 		try {
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
 			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",board.getCellAt(5, 0));
-			ArrayList<Card> suggestion = compPlayer.createSuggestion(board, testRoom);
+			Guess suggestion = compPlayer.createSuggestion(board, testRoom);
 			//check if the room matches the current location
-			assertTrue(suggestion.contains(testRoom));	
+			assertEquals(suggestion.getRoom(), testRoom);	
 		}catch (BadConfigFormatException e) {
 			throw new BadConfigFormatException("computer player did not intiailize correctly");
 		}
@@ -195,8 +195,8 @@ public class MyGameActionTest {
 					testWeapon = card;
 				}
 			}
-			ArrayList<Card> suggestion = compPlayer.createSuggestion(board, testRoom);
-			assertTrue(!suggestion.contains(testWeapon));
+			Guess suggestion = compPlayer.createSuggestion(board, testRoom);
+			assertNotEquals(suggestion.getWeapon(), testWeapon);
 		}catch(BadConfigFormatException e){
 			throw new BadConfigFormatException("computer player did not initialize correctly.");
 		}
@@ -215,8 +215,8 @@ public class MyGameActionTest {
 					testPerson = card;
 				}
 			}
-			ArrayList<Card> suggestion = compPlayer.createSuggestion(board, testRoom);
-			assertTrue(!suggestion.contains(testPerson));
+			Guess suggestion = compPlayer.createSuggestion(board, testRoom);
+			assertNotEquals(suggestion.getPlayer(), testPerson);
 		}catch(BadConfigFormatException e){
 			throw new BadConfigFormatException("computer player did not initialize correctly.");
 		}
@@ -232,15 +232,11 @@ public class MyGameActionTest {
 			while(countWeapons.size() != 4) {
 				Guess testSuggestion = compPlayer.createSuggestion(board, testRoom);
 				board.handleSuggestion(testSuggestion, 0);
-				for(Card card: testSuggestion) {
-					if(card.getCardType() == CardType.WEAPON) {
-						countWeapons.push(card);
-					}
-				}
+				countWeapons.push(testSuggestion.getWeapon());
 			}
-			ArrayList<Card> finalSuggestion = compPlayer.createSuggestion(board, testRoom);
+			Guess finalSuggestion = compPlayer.createSuggestion(board, testRoom);
 			while(!countWeapons.isEmpty()) {
-				assertTrue(!finalSuggestion.contains(countWeapons.peek()));
+				assertNotEquals(finalSuggestion.getWeapon(), countWeapons.peek());
 				countWeapons.pop();
 			}
 		}catch(BadConfigFormatException e) {
@@ -256,75 +252,17 @@ public class MyGameActionTest {
 			Card testRoom = new Card("Conservatory", CardType.ROOM);
 			Stack<Card> countPerson = new Stack<Card>(); 
 			while(countPerson.size() != 2) {
-				ArrayList<Card> testSuggestion = compPlayer.createSuggestion(board, testRoom);
+				Guess testSuggestion = compPlayer.createSuggestion(board, testRoom);
 				board.handleSuggestion(testSuggestion, 0);
-				for(Card card: testSuggestion) {
-					if(card.getCardType() == CardType.PLAYER) {
-						countPerson.push(card);
-					}
-				}
+				countPerson.push(testSuggestion.getPlayer());
 			}
-			ArrayList<Card> finalSuggestion = compPlayer.createSuggestion(board, testRoom);
+			Guess finalSuggestion = compPlayer.createSuggestion(board, testRoom);
 			while(!countPerson.isEmpty()) {
-				assertTrue(!finalSuggestion.contains(countPerson.peek()));
+				assertNotEquals(finalSuggestion.getPlayer(), countPerson.peek());
 				countPerson.pop();
 			}
 		}catch(BadConfigFormatException e) {
 			throw new BadConfigFormatException("computer player did not initialize correctly.");
 		}
-	}
-	
-	@Test
-	public void disproveSuggestion() throws BadConfigFormatException {
-		//checks to disprove suggestions based on different scenerios
-		try {
-			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",board.getCellAt(5, 0));
-			Card testRoom = new Card("Conservatory", CardType.ROOM);
-			Card testPlayer = new Card("Rick", CardType.PLAYER);
-			Card testWeapon = new Card("Revolver", CardType.WEAPON);
-			Card fakeWeapon = new Card("Shiv", CardType.WEAPON);
-			Card fakePlayer = new Card("Mike", CardType.PLAYER);
-			
-			assertEquals(null, compPlayer.disproveSuggestion(testPlayer,testRoom,testWeapon));
-			
-			compPlayer.dealCard(testRoom);
-			compPlayer.dealCard(testPlayer);
-			compPlayer.dealCard(testWeapon);
-			
-			assertEquals(testRoom,compPlayer.disproveSuggestion(fakePlayer,testRoom,fakeWeapon));
-			
-			boolean isRoom = false;
-			boolean isPlayer = false;
-			
-			for(int i = 0; i < 20; i++) {
-				if(compPlayer.disproveSuggestion(testPlayer,testRoom,fakeWeapon) == testPlayer) {
-					isPlayer = true;
-				}
-				else {
-					isRoom = true;
-				}
-			}
-			assertTrue(isRoom);
-			assertTrue(isPlayer);
-			
-		}catch(BadConfigFormatException e) {
-			throw new BadConfigFormatException("computer player did not initialize correctly");
-		}
-	}
-	
-	@Test
-	public void handleSuggestion() throws BadConfigFormatException {
-		//checks that suggestions are handled appropriately based on the scenerio
-		ArrayList<Player> players = board.getPlayers();
-		Card testRoom = new Card("Conservatory", CardType.ROOM);
-		ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",board.getCellAt(5, 0));
-		ArrayList<Card> compSuggestion = compPlayer.createSuggestion(board,testRoom);
-		assertEquals(null, board.handleSuggestion(compSuggestion,0));
-		assertEquals(null, board.handleSuggestion(compSuggestion,4));
-		
-		board.addPlayer(compPlayer);
-		board.dealDeck();
-		compSuggestion = compPlayer.createSuggestion(board,testRoom);
-		assertEquals(null, board.handleSuggestion(compSuggestion,6)); 
 	}
 }
