@@ -489,6 +489,10 @@ public class Board extends JPanel {
 		}
 	}
 	
+	public Player getCurrentPlayer() {
+		return players.get(currentPlayerIndex);
+	}
+	
 	public void setTargets() {
 		for(BoardCell b: targets) {
 			b.setIsTarget(true);
@@ -512,8 +516,15 @@ public class Board extends JPanel {
 	// ------------GAME LOGIC FUNCTIONS----------- //
 	
 	public void playGame() {
+		
+	}
+	
+	public void takeTurn() {
 		Player currentPlayer = players.get(currentPlayerIndex);
-		currentPlayer.makeMove(this);
+		//currentPlayer.makeMove(this);
+		ClueGame.update();
+		currentPlayerIndex++;
+		currentPlayerIndex %= players.size();
 	}
 	
 	public BoardCell getCellClicked() {

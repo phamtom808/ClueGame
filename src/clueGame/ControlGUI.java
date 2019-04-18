@@ -21,36 +21,45 @@ public class ControlGUI extends JPanel{
 	
 	private JTextField dieRoll;
 	private JTextField myGuess;
+	private JTextField currentPlayer;
 	private JPanel textDisplay;
 	private JPanel guessHandler;
 	private JTextField lastGuess;
 	private JTextField lastGuessResult;
+	private JPanel buttonMenu;
+	private JButton makeAccusation;
+	private JButton nextPlayer;
 	
-	public ControlGUI(JFrame framePass) {
-		JFrame frame = framePass;
+	public ControlGUI() {
 		setLayout(new GridLayout(3,1)); //3 rows, each with one panel element
 		createTextDisplays();
 		createGuessHandler();
+		createButtonMenu();
 		add(textDisplay);
 		add(guessHandler);
-		add(this.createButtons(frame)); // bottom row contains the buttons
+		add(buttonMenu); // bottom row contains the buttons
 	}
 	
 	private void createTextDisplays() {
 		textDisplay = new JPanel();
-		textDisplay.setLayout(new GridLayout(1,2)); //one row, 2 items: die roll and guess handler
+		textDisplay.setLayout(new GridLayout(1,3)); //one row, 2 items: die roll and guess handler
 		myGuess = new JTextField(10);
 		dieRoll = new JTextField(3);
+		currentPlayer = new JTextField(16);
+		currentPlayer.setEditable(false);
 		myGuess.setEditable(false);
 		dieRoll.setEditable(false);
 		JLabel rollLabel = new JLabel("Die Roll");
 		JLabel guessLabel = new JLabel("Previous Guess");
+		JLabel playerLabel = new JLabel("Current Player");
 		
 		textDisplay.add(rollLabel, BorderLayout.WEST);
 		textDisplay.add(dieRoll, BorderLayout.EAST);
 		textDisplay.setBorder(new TitledBorder(new EtchedBorder(), "Die and Last Guess"));
 		textDisplay.add(guessLabel, BorderLayout.WEST);
 		textDisplay.add(myGuess);
+		textDisplay.add(playerLabel, BorderLayout.WEST);
+		textDisplay.add(currentPlayer);
 	}
 	
 	private void createGuessHandler() {
@@ -68,22 +77,19 @@ public class ControlGUI extends JPanel{
 		guessHandler.add(lastGuessResult);
 	}
 	
-	private JPanel createButtons(JFrame framePass) {
-		JFrame frame = framePass;
-		JPanel buttonMenu = new JPanel();//creates the action buttons on the bottom
+	private void createButtonMenu() {
+		buttonMenu = new JPanel();//creates the action buttons on the bottom
 		buttonMenu.setLayout(new GridLayout(1,2));
-		JButton makeAccusation = new JButton("Make Accusation");
-		JButton nextPlayer = new JButton("Next Player");
+		makeAccusation = new JButton("Make Accusation");
+		nextPlayer = new JButton("Next Player");
 		buttonMenu.add(makeAccusation);
 		buttonMenu.add(nextPlayer);
 		nextPlayer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(frame, "This hopefully will work...");
+				ClueGame.takeTurn();
 			}
 		});
-		
-		return buttonMenu;
 	}
 	
 	public void updateDieRoll(Integer roll) {
@@ -102,14 +108,18 @@ public class ControlGUI extends JPanel{
 		lastGuessResult.setText(result.toString());
 	}
 	
+	public void updatePlayer(Player player) {
+		currentPlayer.setText(player.toString());
+	}
+	/*
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Clue");
 		frame.setSize(500,200);
-		ControlGUI gui = new ControlGUI(frame);
+		ControlGUI gui = new ControlGUI();
 		frame.add(gui, BorderLayout.CENTER);
 		frame.setVisible(true);
-	}
-	
+	}	
+	*/
 }

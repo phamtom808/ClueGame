@@ -22,7 +22,6 @@ public class DisplayGUI extends JPanel{
 		board = ClueGame.getBoard(); //creates game board for testing purposes
 		setLayout(new GridLayout(6,1));
 		displayHumanPlayerHand();
-		
 		this.setBorder(new TitledBorder(new EtchedBorder(), "My Cards"));
 	}
 
