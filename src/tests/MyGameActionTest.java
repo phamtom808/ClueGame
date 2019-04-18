@@ -268,44 +268,6 @@ public class MyGameActionTest {
 	}
 	
 	@Test
-	public void disproveSuggestion() throws BadConfigFormatException {
-		//checks to disprove suggestions based on different scenerios
-		try {
-			ComputerPlayer compPlayer = new ComputerPlayer("Rick", "Red",board.getCellAt(5, 0));
-			Card testRoom = new Card("Conservatory", CardType.ROOM);
-			Card testPlayer = new Card("Rick", CardType.PLAYER);
-			Card testWeapon = new Card("Revolver", CardType.WEAPON);
-			Card fakeWeapon = new Card("Shiv", CardType.WEAPON);
-			Card fakePlayer = new Card("Mike", CardType.PLAYER);
-			
-			assertEquals(null, compPlayer.disproveSuggestion(testPlayer,testRoom,testWeapon));
-			
-			compPlayer.dealCard(testRoom);
-			compPlayer.dealCard(testPlayer);
-			compPlayer.dealCard(testWeapon);
-			
-			assertEquals(testRoom,compPlayer.disproveSuggestion(fakePlayer,testRoom,fakeWeapon));
-			
-			boolean isRoom = false;
-			boolean isPlayer = false;
-			
-			for(int i = 0; i < 20; i++) {
-				if(compPlayer.disproveSuggestion(testPlayer,testRoom,fakeWeapon) == testPlayer) {
-					isPlayer = true;
-				}
-				else {
-					isRoom = true;
-				}
-			}
-			assertTrue(isRoom);
-			assertTrue(isPlayer);
-			
-		}catch(BadConfigFormatException e) {
-			throw new BadConfigFormatException("computer player did not initialize correctly");
-		}
-	}
-	
-	@Test
 	public void handleSuggestion() throws BadConfigFormatException {
 		//checks that suggestions are handled appropriately based on the scenerio
 		ArrayList<Player> players = board.getPlayers();
