@@ -20,13 +20,18 @@ public class ClueGame extends JFrame {
 		board.setDeckConfigFiles("CluePlayers.txt", "ClueWeapons.txt");
 		board.initialize();
 		game = new JFrame();
+		ControlGUI gameControl = new ControlGUI(game);
 		game.setLayout(new GridLayout(2,2));
 		game.setSize(FRAME_SIZE, FRAME_SIZE);
 		game.add(board);
 		game.add(new DetectiveNotesGUI());
-		game.add(new ControlGUI(game));
+		game.add(gameControl);
 		game.add(new DisplayGUI());
 		game.setVisible(true);
+		if(gameControl.throwPlay()) {
+			gameControl.setThrowPlay(false);
+			board.playGame();
+		}
 	}
 	
 	public static void main(String args[]) {
