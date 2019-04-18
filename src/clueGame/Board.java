@@ -95,7 +95,7 @@ public class Board extends JPanel {
 			Player p = players.get(i);
 			c = p.disproveSuggestion(suggestion);
 		}
-		for(int i = 0; i<suggesterIndex; i++){
+		for(int i = 0; i<suggesterIndex-1; i++){
 			Player p = players.get(i);
 			c = p.disproveSuggestion(suggestion);
 		}
