@@ -13,8 +13,11 @@ public class HumanPlayer extends Player {
 		int dieRoll = ClueGame.getDieRoll();
 		thisBoard.calcTargets(getCurrentCell().getRow(), getCurrentCell().getColumn(), dieRoll);
 		thisBoard.setTargets();
-		
-		
+		BoardCell cellClicked = null;
+		while(!thisBoard.getTargets().contains(cellClicked)) {
+			cellClicked = thisBoard.getCellClicked();
+		}
+		this.setCellFromCell(cellClicked);
 		//at end of player turn, wipe targets
 		thisBoard.clearTargets();
 	}
