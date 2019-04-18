@@ -30,6 +30,7 @@ public class ControlGUI extends JPanel{
 		JFrame frame = framePass;
 		setLayout(new GridLayout(3,1)); //3 rows, each with one panel element
 		createTextDisplays();
+		createGuessHandler();
 		add(textDisplay);
 		add(guessHandler);
 		add(this.createButtons(frame)); // bottom row contains the buttons

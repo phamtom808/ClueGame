@@ -19,19 +19,13 @@ public class DisplayGUI extends JPanel{
 	public DisplayGUI() {
 		
 		splashScreen(); //calls the method to display the welcome message
-		initializeBoard(); //creates game board for testing purposes
+		board = ClueGame.getBoard(); //creates game board for testing purposes
 		setLayout(new GridLayout(6,1));
 		displayHumanPlayerHand();
 		
 		this.setBorder(new TitledBorder(new EtchedBorder(), "My Cards"));
 	}
-	
-	private void initializeBoard() {
-		board = Board.getInstance();
-		board.setConfigFiles("BoardLayout.csv", "ClueRooms.txt");
-		board.setDeckConfigFiles("CluePlayers.txt", "ClueWeapons.txt");
-		board.initialize();
-	}
+
 	
 	private void splashScreen() {
 		JOptionPane.showMessageDialog(null, "You are Miss Scarlet, press Next Player to begin play.", "Welcome to Clue", JOptionPane.INFORMATION_MESSAGE);

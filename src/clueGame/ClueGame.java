@@ -8,7 +8,7 @@ import java.awt.Color;
 
 public class ClueGame extends JFrame {
 	
-	private Board board;
+	private static Board board;
 	private JFrame game;
 	private static int dieRoll;
 	private static Random dieRoller = new Random();
@@ -46,4 +46,9 @@ public class ClueGame extends JFrame {
 	public void playGame() {
 		board.playGame();
 	}
+
+	public static Board getBoard() {
+		return board;
+	}
+	
 }
