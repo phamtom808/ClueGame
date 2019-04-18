@@ -28,10 +28,6 @@ public class ClueGame extends JFrame {
 		game.add(gameControl);
 		game.add(new DisplayGUI());
 		game.setVisible(true);
-		if(gameControl.throwPlay()) {
-			gameControl.setThrowPlay(false);
-			board.playGame();
-		}
 	}
 	
 	public static void main(String args[]) {

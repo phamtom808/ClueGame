@@ -19,20 +19,27 @@ import javax.swing.border.TitledBorder;
 
 public class ControlGUI extends JPanel{
 	
+	private JTextField dieRoll;
+	private JTextField myGuess;
+	private JPanel textDisplay;
+	private JPanel guessHandler;
+	private JTextField lastGuess;
+	private JTextField lastGuessResult;
 	
 	public ControlGUI(JFrame framePass) {
 		JFrame frame = framePass;
 		setLayout(new GridLayout(3,1)); //3 rows, each with one panel element
-		add(this.createTextDisplays());
-		add(this.createGuessHandler());
+		createTextDisplays();
+		add(textDisplay);
+		add(guessHandler);
 		add(this.createButtons(frame)); // bottom row contains the buttons
 	}
 	
-	private JPanel createTextDisplays() {
-		JPanel textDisplay = new JPanel();
+	private void createTextDisplays() {
+		textDisplay = new JPanel();
 		textDisplay.setLayout(new GridLayout(1,2)); //one row, 2 items: die roll and guess handler
-		JTextField myGuess = new JTextField(10);
-		JTextField dieRoll = new JTextField(3);
+		myGuess = new JTextField(10);
+		dieRoll = new JTextField(3);
 		myGuess.setEditable(false);
 		dieRoll.setEditable(false);
 		JLabel rollLabel = new JLabel("Die Roll");
@@ -43,15 +50,13 @@ public class ControlGUI extends JPanel{
 		textDisplay.setBorder(new TitledBorder(new EtchedBorder(), "Die and Last Guess"));
 		textDisplay.add(guessLabel, BorderLayout.WEST);
 		textDisplay.add(myGuess);
-		
-		return textDisplay;
 	}
 	
-	private JPanel createGuessHandler() {
-		JPanel guessHandler = new JPanel(); 
+	private void createGuessHandler() {
+		guessHandler = new JPanel(); 
 		guessHandler.setLayout(new GridLayout(2,1)); //2 rows, 1 column: top is the guess, bottom is the result
-		JTextField lastGuess = new JTextField();
-		JTextField lastGuessResult = new JTextField();
+		lastGuess = new JTextField();
+		lastGuessResult = new JTextField();
 		lastGuessResult.setEditable(false);
 		lastGuess.setEditable(false);
 		JLabel lastGuessLabel = new JLabel ("My Guess");
@@ -60,8 +65,6 @@ public class ControlGUI extends JPanel{
 		guessHandler.add(lastGuess, BorderLayout.EAST);
 		guessHandler.add(lastGuessResultLabel);
 		guessHandler.add(lastGuessResult);
-		
-		return guessHandler;
 	}
 	
 	private JPanel createButtons(JFrame framePass) {
@@ -76,14 +79,26 @@ public class ControlGUI extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(frame, "This hopefully will work...");
-				
 			}
 		});
+		
 		return buttonMenu;
 	}
 	
-	private void throwPlay() {
-		board.playGame();
+	public void updateDieRoll(Integer roll) {
+		dieRoll.setText(roll.toString());
+	}
+	
+	public void updateMyGuess(Guess guess) {
+		myGuess.setText(guess.toString());
+	}
+	
+	public void updateLastGuess(Guess guess) {
+		lastGuess.setText(guess.toString());
+	}
+	
+	public void updateLastGuessResult(Boolean result) {
+		lastGuessResult.setText(result.toString());
 	}
 	
 	public static void main(String[] args) {
@@ -94,8 +109,6 @@ public class ControlGUI extends JPanel{
 		ControlGUI gui = new ControlGUI(frame);
 		frame.add(gui, BorderLayout.CENTER);
 		frame.setVisible(true);
-		
 	}
-	
 	
 }
