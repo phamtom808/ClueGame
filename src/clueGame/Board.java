@@ -86,6 +86,7 @@ public class Board extends JPanel {
 		}
 		this.calcAdjacencies(); 
 		currentPlayerIndex = 0;
+		cellClicked = gameBoard[0][0];
 	}
 	
 	public Card handleSuggestion(Guess suggestion, int suggesterIndex) {
@@ -143,11 +144,10 @@ public class Board extends JPanel {
 			if(!this.visited.contains(adj)) {
 				visited.add(adj);
 				if(pathLength == 1 || adj.isDoorway()) {
-					this.targets.add(adj);
+					targets.add(adj);
 				}else {
 					findAllTargets(adj, pathLength-1);
 				}
-				visited.remove(adj);
 			}
 		}
 	}
@@ -481,6 +481,10 @@ public class Board extends JPanel {
 		this.players.add(x);
 	}
 
+	public Player getCurrentPlayer() {
+		return players.get(currentPlayerIndex);
+	}
+	
 	public void clearTargets() {
 		for(int row = 0; row<numRows; row++) {
 			for(int column = 0; column<numColumns; column++) {
@@ -489,13 +493,15 @@ public class Board extends JPanel {
 		}
 	}
 	
-	public Player getCurrentPlayer() {
-		return players.get(currentPlayerIndex);
-	}
-	
 	public void setTargets() {
-		for(BoardCell b: targets) {
-			b.setIsTarget(true);
+		for(int row = 0; row<numRows; row++) {
+			for(int column = 0; column<numColumns; column++) {
+				if(targets.contains(gameBoard[row][column])) {
+					gameBoard[row][column].setIsTarget(true);
+				}else {
+					gameBoard[row][column].setIsTarget(false);
+				}
+			}
 		}
 	}
 	
@@ -515,13 +521,17 @@ public class Board extends JPanel {
 	
 	// ------------GAME LOGIC FUNCTIONS----------- //
 	
-	public void playGame() {
-		
-	}
-	
 	public void takeTurn() {
 		Player currentPlayer = players.get(currentPlayerIndex);
+		ClueGame.rollDie();
+		this.calcTargets(currentPlayer.getCurrentCell().getRow(), currentPlayer.getCurrentCell().getColumn(), ClueGame.getDieRoll());
 		//currentPlayer.makeMove(this);
+		if(currentPlayer.getIsHumanPlayer()) {
+			this.setTargets();
+		}else {
+			this.clearTargets();
+		}
+		repaint();
 		ClueGame.update();
 		currentPlayerIndex++;
 		currentPlayerIndex %= players.size();

@@ -14,7 +14,7 @@ import javax.swing.*;
  */
 
 
-public class BoardCell {
+public class BoardCell  {
 	
 	//Instance Variables: 
 	private int row;
@@ -230,4 +230,5 @@ public class BoardCell {
 	public void setIsTarget(boolean b) {
 		isTarget = b;
 	}
+	
 }

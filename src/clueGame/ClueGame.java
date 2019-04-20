@@ -44,10 +44,6 @@ public class ClueGame extends JFrame {
 	public static int getDieRoll() {
 		return dieRoll;
 	}
-	
-	public void playGame() {
-		board.playGame();
-	}
 
 	public static void takeTurn() {
 		board.takeTurn();

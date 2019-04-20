@@ -77,9 +77,6 @@ public class ComputerPlayer extends Player {
 	
 	@Override
 	public void makeMove(Board thisBoard) {
-		ClueGame.rollDie();
-		int dieRoll = ClueGame.getDieRoll();
-		thisBoard.calcTargets(this.getCurrentCell().getRow(), this.getCurrentCell().getColumn(), dieRoll);
 		BoardCell targetCell = selectTarget(thisBoard);
 		this.setCellFromCell(targetCell);
 	}

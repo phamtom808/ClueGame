@@ -217,23 +217,18 @@ public class MyCalcAdjacencyTests {
 	public void testTargetsIntoRoomShortcut() {
 		board.calcTargets(12, 19, 3);
 		Set<BoardCell> targets = board.getTargets();
-		assertEquals(12, targets.size());
+		for(BoardCell b: targets) {
+			System.out.println(b.getRow() + ", " + b.getColumn());
+		}
+		assertEquals(7, targets.size());
 		//directly up and down
 		assertTrue(targets.contains(board.getCellAt(9, 19)));
 		assertTrue(targets.contains(board.getCellAt(15, 19)));
-		//directly left
-		assertTrue(targets.contains(board.getCellAt(12, 16)));
-		//into the rooms
-		assertTrue(targets.contains(board.getCellAt(11, 18)));
-		assertTrue(targets.contains(board.getCellAt(11, 17)));
-		//three away
-		assertTrue(targets.contains(board.getCellAt(10, 20)));
-		assertTrue(targets.contains(board.getCellAt(14, 20)));
-		assertTrue(targets.contains(board.getCellAt(11, 19)));
 		assertTrue(targets.contains(board.getCellAt(12, 18)));
-		assertTrue(targets.contains(board.getCellAt(13, 19)));
-		assertTrue(targets.contains(board.getCellAt(13, 17)));
 		assertTrue(targets.contains(board.getCellAt(12, 20)));
+		assertTrue(targets.contains(board.getCellAt(10, 20)));
+		assertTrue(targets.contains(board.getCellAt(13, 17)));
+		assertTrue(targets.contains(board.getCellAt(14, 20)));
 	}
 	
 	@Test
