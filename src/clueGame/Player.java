@@ -10,6 +10,7 @@ import javax.swing.*;
 
 public abstract class Player {
 	public String name;
+	protected boolean didMove = false;
 	private BoardCell currentCell;
 	private Color color;
 	private boolean isHumanPlayer;
@@ -150,6 +151,10 @@ public abstract class Player {
 	//method must have body because player class is not abstract and I don't want to deal with MAKING it abstract
 	public void makeMove(Board thisBoard) {
 		return;
+	}
+	
+	public boolean didMove() {
+		return this.didMove;
 	}
 	
 	//I don't know why it wants this, but at this point, I'm no longer asking...

@@ -65,8 +65,8 @@ public class MyGameSetupTests {
 			case "Miss Scarlett":
 				assertEquals(Color.RED, x.getColor());
 				continue;
-			case "Colonel Mustard":
-				assertEquals(Color.YELLOW, x.getColor());
+			case "Lady Black":
+				assertEquals(Color.BLACK, x.getColor());
 				continue;
 			case "Mrs. White":
 				assertEquals(Color.GRAY, x.getColor());
@@ -94,7 +94,7 @@ public class MyGameSetupTests {
 				assertEquals(0, x.getRow());
 				assertEquals(5, x.getColumn());
 				continue;
-			case "Colonel Mustard":
+			case "Lady Black":
 				assertEquals(19, x.getRow());
 				assertEquals(5, x.getColumn());
 				continue;

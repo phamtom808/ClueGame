@@ -1,5 +1,5 @@
 Miss Scarlett, Red, P, 0, 5 
-Colonel Mustard, Yellow, C, 19, 5
+Lady Black, Black, C, 19, 5
 Mrs. White, Gray, C, 19, 12
 Mr. Green, Green, C, 15, 20
 Professor Plum, Magenta, C, 8, 19

@@ -523,11 +523,20 @@ public class Board extends JPanel implements MouseListener{
 	// ------------GAME LOGIC FUNCTIONS----------- //
 	
 	public void takeTurn() {
+		boolean doRoll = true;
 		if(currentPlayerIndex == 1) {
 			players.get(0).updateLocation(this);
+			if(!targets.contains(players.get(0).getCurrentCell())) {
+				currentPlayerIndex = 0;
+				displayError();
+				doRoll = false;
+				//display an error message
+			}
 		}
 		Player currentPlayer = players.get(currentPlayerIndex);
-		ClueGame.rollDie();
+		if(doRoll) {
+			ClueGame.rollDie();
+		}
 		this.calcTargets(currentPlayer.getCurrentCell().getRow(), currentPlayer.getCurrentCell().getColumn(), ClueGame.getDieRoll());
 		if(currentPlayer.getIsHumanPlayer()) {
 			this.setTargets();
@@ -553,5 +562,9 @@ public class Board extends JPanel implements MouseListener{
 		int column = event.getX()/CELL_SIZE;
 		int row = event.getY()/CELL_SIZE;
 		cellClicked = getCellAt(row, column);
+	}
+	
+	private void displayError() {
+		JOptionPane.showMessageDialog(null, "Please choose one of the highlighted targets.", "Error: Invalid Target", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
