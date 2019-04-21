@@ -24,7 +24,7 @@ import java.util.Set;
 
 import javax.swing.*;
 
-public class Board extends JPanel {
+public class Board extends JPanel implements MouseListener{
 	
 	public static final int MAX_BOARD_SIZE = 50;
 	public static final int CELL_SIZE = 20; //cells are pixels of size 10x10, diameter of player token is also 10.
@@ -87,6 +87,7 @@ public class Board extends JPanel {
 		this.calcAdjacencies(); 
 		currentPlayerIndex = 0;
 		cellClicked = gameBoard[0][0];
+		this.addMouseListener(this);
 	}
 	
 	public Card handleSuggestion(Guess suggestion, int suggesterIndex) {
@@ -141,7 +142,7 @@ public class Board extends JPanel {
 	 */
 	public void findAllTargets(BoardCell b, int pathLength) {
 		for(BoardCell adj: b.getAdjCells()) {
-			if(!this.visited.contains(adj)) {
+			if(!visited.contains(adj)) {
 				visited.add(adj);
 				if(pathLength == 1 || adj.isDoorway()) {
 					targets.add(adj);
@@ -522,15 +523,18 @@ public class Board extends JPanel {
 	// ------------GAME LOGIC FUNCTIONS----------- //
 	
 	public void takeTurn() {
+		if(currentPlayerIndex == 1) {
+			players.get(0).updateLocation(this);
+		}
 		Player currentPlayer = players.get(currentPlayerIndex);
 		ClueGame.rollDie();
 		this.calcTargets(currentPlayer.getCurrentCell().getRow(), currentPlayer.getCurrentCell().getColumn(), ClueGame.getDieRoll());
-		//currentPlayer.makeMove(this);
 		if(currentPlayer.getIsHumanPlayer()) {
 			this.setTargets();
 		}else {
 			this.clearTargets();
 		}
+		currentPlayer.makeMove(this);
 		repaint();
 		ClueGame.update();
 		currentPlayerIndex++;
@@ -541,15 +545,13 @@ public class Board extends JPanel {
 		return cellClicked;
 	}
 	
-	private class BoardListener implements MouseListener {
-		public void mousePressed(MouseEvent event) {}
-		public void mouseReleased(MouseEvent event) {}
-		public void mouseEntered(MouseEvent event) {}
-		public void mouseExited(MouseEvent event) {}
-		public void mouseClicked(MouseEvent event) {
-			int column = event.getX()/CELL_SIZE;
-			int row = event.getY()/CELL_SIZE;
-			cellClicked = getCellAt(row, column);
-		}
+	public void mousePressed(MouseEvent event) {}
+	public void mouseReleased(MouseEvent event) {}
+	public void mouseEntered(MouseEvent event) {}
+	public void mouseExited(MouseEvent event) {}
+	public void mouseClicked(MouseEvent event) {
+		int column = event.getX()/CELL_SIZE;
+		int row = event.getY()/CELL_SIZE;
+		cellClicked = getCellAt(row, column);
 	}
 }

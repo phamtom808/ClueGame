@@ -9,14 +9,15 @@ public class HumanPlayer extends Player {
 	
 	@Override
 	public void makeMove(Board thisBoard) {
-		BoardCell cellClicked = null;
-		while(!thisBoard.getTargets().contains(cellClicked)) {
-			cellClicked = thisBoard.getCellClicked();
-		}
-		this.setCellFromCell(cellClicked);
-		//at end of player turn, wipe targets
+		updateLocation(thisBoard);
 	}
 	
-	
-	
+	@Override
+	public void updateLocation(Board thisBoard) {
+		if(thisBoard.getTargets().contains(thisBoard.getCellClicked())) {
+			setCellFromCell(thisBoard.getCellClicked());
+		}else {
+			return;
+		}
+	}
 }

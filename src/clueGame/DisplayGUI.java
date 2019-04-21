@@ -45,7 +45,6 @@ public class DisplayGUI extends JPanel{
 				add(this.createWeaponsCardDisplay(x));
 			}
 		}
-		System.out.println(humanHand.size());
 	}
 	
 	private JPanel createPeopleCardDisplay(Card x) {

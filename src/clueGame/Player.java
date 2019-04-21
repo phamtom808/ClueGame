@@ -149,7 +149,12 @@ public abstract class Player {
 
 	//method must have body because player class is not abstract and I don't want to deal with MAKING it abstract
 	public void makeMove(Board thisBoard) {
-
+		return;
+	}
+	
+	//I don't know why it wants this, but at this point, I'm no longer asking...
+	public void updateLocation(Board thisBoard) {
+		return;
 	}
 	
 	@Override
