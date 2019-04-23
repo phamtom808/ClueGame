@@ -565,6 +565,16 @@ public class Board extends JPanel implements MouseListener{
 		currentPlayer.makeMove(this);
 		repaint();
 		ClueGame.update();
+		//if computer player moves to a room
+		if(!currentPlayer.getIsHumanPlayer() && currentPlayer.getCurrentCell().isRoom()) {
+			ComputerPlayer compPlayer = (ComputerPlayer) currentPlayer;
+			Guess compPlayerGuess = new Guess();
+			Card throwSuggestion = new Card();
+			compPlayerGuess = compPlayer.createSuggestion(this, compPlayer.getLastRoomVisited());
+			throwSuggestion = this.handleSuggestion(compPlayerGuess, currentPlayerIndex);
+			ClueGame.showSuggestion(throwSuggestion);
+		}
+		
 		currentPlayerIndex++;
 		currentPlayerIndex %= players.size();
 	}
