@@ -65,6 +65,9 @@ public class ClueGame extends JFrame {
 		Player currentPlayer = board.getCurrentPlayer();
 		gameControl.updatePlayer(currentPlayer);
 		gameControl.updateDieRoll(dieRoll);
+		if(Board.getGuess().getPlayer() != null && Board.getGuess().getWeapon() != null && board.getGuess().getRoom() != null) {
+			gameControl.updateLastGuess(board.getGuess());
+		}
 	}
 	
 }

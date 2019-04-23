@@ -30,6 +30,7 @@ public class Board extends JPanel implements MouseListener{
 	public static final int CELL_SIZE = 20; //cells are pixels of size 10x10, diameter of player token is also 10.
 	private int numRows; 
 	private int numColumns; 
+	private static Guess lastSentGuess;
 	private BoardCell[][] gameBoard;
 	private BoardCell cellClicked;
 	private Map<Character, String> legend;
@@ -75,6 +76,7 @@ public class Board extends JPanel implements MouseListener{
 		this.doorList = new HashSet<BoardCell>();
 		this.deck = new HashSet<Card>();
 		this.players = new ArrayList<Player>();
+		lastSentGuess = new Guess();
 		try {
 			this.loadBoardConfig();
 		}catch(BadConfigFormatException e) {
@@ -538,7 +540,11 @@ public class Board extends JPanel implements MouseListener{
 				currentPlayerIndex = 0;
 				displayError();
 				doRoll = false;
-				//display an error message
+			}else {
+				if(players.get(0).getCurrentCell().isDoorway()) {
+					GuessGUI guessGUI = new GuessGUI(this, getCardFromLegend(players.get(0).getCurrentCell().getInitial())); 
+					handleSuggestion(Board.lastSentGuess, 0);
+				}
 			}
 		}
 		Player currentPlayer = players.get(currentPlayerIndex);
@@ -595,5 +601,13 @@ public class Board extends JPanel implements MouseListener{
 	
 	private void displayError() {
 		JOptionPane.showMessageDialog(null, "Please choose one of the highlighted targets.", "Error: Invalid Target", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public static void sendGuess(Guess guess) {
+		lastSentGuess = guess;
+	}
+	
+	public static Guess getGuess() {
+		return lastSentGuess;
 	}
 }

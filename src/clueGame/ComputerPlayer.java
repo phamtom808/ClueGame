@@ -7,7 +7,6 @@ import java.util.Set;
 
 public class ComputerPlayer extends Player {
 	
-	
 	private Card lastRoomVisited;
 	private boolean inRoom;
 	private Random rand;
@@ -20,6 +19,7 @@ public class ComputerPlayer extends Player {
 		didMove = true;
 	}
 	
+
 	public Guess createSuggestion(Board board, Card room){
 		Guess suggestion = new Guess();
 		suggestion.setRoom(room);
@@ -51,6 +51,7 @@ public class ComputerPlayer extends Player {
 			}
 			j++;
 		}
+		Board.sendGuess(suggestion);
 		return suggestion;
 	}
 	
