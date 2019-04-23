@@ -166,5 +166,6 @@ public abstract class Player {
 	public String toString() {
 		return this.name;
 	}
+	
 }
 
