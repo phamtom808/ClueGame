@@ -47,7 +47,10 @@ public class Board extends JPanel implements MouseListener{
 	private String boardConfigFile;
 	private String playerConfigFile;
 	private String weaponConfigFile;
+	private boolean makeAccusation = false;
+	private Guess nextAccusation = new Guess();
 	private static Board theInstance = new Board();
+	
 	
 	private Board() {}
 	
@@ -104,11 +107,15 @@ public class Board extends JPanel implements MouseListener{
 		if(c!= null) {
 			cardsSeen.add(c); 
 		}
+		if(c == null) {
+			makeAccusation = true;
+			nextAccusation = suggestion;
+		}
 		return c;
 	}
 	
-	public boolean checkAccusation(Card player, Card room, Card weapon) {
-		if(player.equals(this.playerCard) && room.equals(this.roomCard)&& weapon.equals(this.weaponCard)  ) {
+	public boolean checkAccusation(Guess accusation) {
+		if(accusation.getPlayer().equals(this.playerCard) && accusation.getRoom().equals(this.roomCard)&& accusation.getWeapon().equals(this.weaponCard)  ) {
 			return true;
 		}
 		return false;
@@ -506,6 +513,7 @@ public class Board extends JPanel implements MouseListener{
 		}
 	}
 	
+	
 	// ---------------GUI FUNCTIONS--------------- //
 	@Override
 	public void paintComponent(Graphics g){
@@ -534,6 +542,17 @@ public class Board extends JPanel implements MouseListener{
 			}
 		}
 		Player currentPlayer = players.get(currentPlayerIndex);
+		
+		//if previous player wasn't disproved next computer player makes an accusation
+		if(makeAccusation && !currentPlayer.getIsHumanPlayer()) {
+			if(checkAccusation(nextAccusation)){
+				System.out.println("You WIN!");
+			}
+			else {
+				System.out.println("sorry you lose");
+			}
+		}
+		
 		if(doRoll) {
 			ClueGame.rollDie();
 		}
