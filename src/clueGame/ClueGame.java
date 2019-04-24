@@ -53,6 +53,10 @@ public class ClueGame extends JFrame {
 		return board;
 	}
 	
+	public static void makeGuess(Board board, Card room) {
+		game.add(new GuessGUI(board, room));
+	}
+	
 	public static void main(String[] args) {
 		ClueGame game = new ClueGame();
 	}
