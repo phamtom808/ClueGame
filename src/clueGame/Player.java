@@ -15,6 +15,7 @@ public abstract class Player {
 	private Color color;
 	private boolean isHumanPlayer;
 	private Set<Card> hand;
+	private boolean makeAccusation = false;
 	
 	public Player(String name, String color, BoardCell thisCell) throws BadConfigFormatException {
 		this.hand = new HashSet<Card>();
@@ -165,6 +166,14 @@ public abstract class Player {
 	@Override
 	public String toString() {
 		return this.name;
+	}
+	
+	public void setMakeAccusation(boolean b) {
+		makeAccusation = b;
+	}
+	
+	public boolean doMakeAccusation() {
+		return makeAccusation;
 	}
 	
 }

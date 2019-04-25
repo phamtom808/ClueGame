@@ -61,19 +61,21 @@ public class ComputerPlayer extends Player {
 		int i = 0;
 		BoardCell targetCell = null;
 		for(BoardCell b: targets) {
-			if(b.isDoorway() && !board.getCardFromLegend(b.getInitial()).equals(lastRoomVisited)) {
-				inRoom = true;
-				lastRoomVisited = board.getCardFromLegend(b.getInitial());
-				return b;
-			}else if(inRoom) {
-				inRoom = false;
-			}else {
-				lastRoomVisited = null;
+			if(!(b == null)) {
+				if(b.isDoorway() && !board.getCardFromLegend(b.getInitial()).equals(lastRoomVisited)) {
+					inRoom = true;
+					lastRoomVisited = board.getCardFromLegend(b.getInitial());
+					return b;
+				}else if(inRoom) {
+					inRoom = false;
+				}else {
+					lastRoomVisited = null;
+				}
+				if(i == spaceNum) {
+					targetCell = b;
+				}
+				i++;
 			}
-			if(i == spaceNum) {
-				targetCell = b;
-			}
-			i++;
 		}
 		return targetCell;
 	}
@@ -81,7 +83,9 @@ public class ComputerPlayer extends Player {
 	@Override
 	public void makeMove(Board thisBoard) {
 		BoardCell targetCell = selectTarget(thisBoard);
-		this.setCellFromCell(targetCell);
+		if(targetCell != null) {
+			this.setCellFromCell(targetCell);
+		}
 	}
 }
 
