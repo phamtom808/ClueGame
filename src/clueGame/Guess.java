@@ -36,7 +36,7 @@ public class Guess {
 	}
 	
 	public String toString() {
-		return "Player: " + this.player.getName() + "Room: " + this.room.getName() + "Weapon: " + this.weapon.getName();
+		return "Player: " + this.player.getName() + " Room: " + this.room.getName() + " Weapon: " + this.weapon.getName();
 	}
 	
 	public boolean equals(Guess other) {

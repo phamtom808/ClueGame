@@ -454,7 +454,7 @@ public class Board extends JPanel implements MouseListener{
 				return i;
 			}
 		}
-		return null;
+		return new Card();
 	}
 	
 	public Set<BoardCell> getDoorList(){
@@ -553,9 +553,11 @@ public class Board extends JPanel implements MouseListener{
 		if(makeAccusation && !currentPlayer.getIsHumanPlayer()) {
 			if(checkAccusation(nextAccusation)){
 				System.out.println("You WIN!");
+				System.exit(0);
 			}
 			else {
-				System.out.println("sorry you lose");
+				System.out.println("Sorry you lose");
+				System.exit(0);
 			}
 		}
 		
@@ -572,13 +574,19 @@ public class Board extends JPanel implements MouseListener{
 		repaint();
 		ClueGame.update();
 		//if computer player moves to a room
-		if(!currentPlayer.getIsHumanPlayer() && currentPlayer.getCurrentCell().isRoom()) {
+		if(!currentPlayer.getIsHumanPlayer() && (currentPlayer.getCurrentCell().isRoom() || currentPlayer.getCurrentCell().isDoorway())) {
 			ComputerPlayer compPlayer = (ComputerPlayer) currentPlayer;
 			Guess compPlayerGuess = new Guess();
 			Card throwSuggestion = new Card();
-			compPlayerGuess = compPlayer.createSuggestion(this, compPlayer.getLastRoomVisited());
+			compPlayerGuess = compPlayer.createSuggestion(this, getCardFromLegend(compPlayer.getCurrentCell().getInitial()));
 			throwSuggestion = this.handleSuggestion(compPlayerGuess, currentPlayerIndex);
-			ClueGame.showSuggestion(throwSuggestion);
+			if(throwSuggestion == null) {
+				makeAccusation = true;
+				nextAccusation = compPlayerGuess;
+			}else {
+				makeAccusation = false;
+			}
+			ClueGame.showSuggestion(compPlayerGuess, throwSuggestion);
 		}
 		//if human player moves to a room
 		if(currentPlayer.getIsHumanPlayer() && currentPlayer.getCurrentCell().isRoom()) {

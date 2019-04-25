@@ -43,7 +43,7 @@ public class ControlGUI extends JPanel{
 	private void createTextDisplays() {
 		textDisplay = new JPanel();
 		textDisplay.setLayout(new GridLayout(1,3)); //one row, 2 items: die roll and guess handler
-		myGuess = new JTextField(10);
+		myGuess = new JTextField(30);
 		dieRoll = new JTextField(3);
 		currentPlayer = new JTextField(16);
 		currentPlayer.setEditable(false);
@@ -101,7 +101,7 @@ public class ControlGUI extends JPanel{
 	}
 	
 	public void updateLastGuess(Guess guess) {
-		lastGuess.setText(guess.toString());
+		myGuess.setText(guess.toString());
 	}
 	
 	public void updateLastGuessResult(Boolean result) {

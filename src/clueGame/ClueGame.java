@@ -61,8 +61,8 @@ public class ClueGame extends JFrame {
 		ClueGame game = new ClueGame();
 	}
 	
-	public static void showSuggestion(Card suggestion) {
-		game.add(new suggestionBoxGUI(suggestion, game));
+	public static void showSuggestion(Guess guess, Card suggestion) {
+		game.add(new SuggestionBoxGUI(guess, suggestion,game));
 	}
 	
 	public static void update() {
