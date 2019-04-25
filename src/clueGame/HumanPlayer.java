@@ -33,8 +33,8 @@ public class HumanPlayer extends Player {
 		}
 	}
 
-	@Override 
-	public Card disproveSuggestion(Guess suggestion) {
+	@Override
+	public void disproveHumanSuggestion(Guess suggestion) {
 		JFrame disproveBox = new JFrame();
 		disproveBox.setSize(500,500);
 		disproveBox.setLayout(new GridLayout(2,1));
@@ -57,5 +57,22 @@ public class HumanPlayer extends Player {
 		}
 		disproveBox.add(cards);
 		disproveBox.add(doneButton);
+	}
+	
+	@Override
+	public Card getCardSelected() {
+		if(cardWasSelected) {
+			return cardSelected;
+		}else {
+			return null;
+		}
+	}
+	
+	public boolean wasCardSelected() {
+		if(cardWasSelected) {
+			cardWasSelected = false;
+			return true;
+		}
+		return false;
 	}
 }

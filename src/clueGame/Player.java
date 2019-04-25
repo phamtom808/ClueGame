@@ -176,5 +176,16 @@ public abstract class Player {
 		return makeAccusation;
 	}
 	
+	public void disproveHumanSuggestion(Guess suggestion) {
+		return;
+	}
+	
+	public Card getCardSelected() {
+		return null;
+	}
+	
+	public boolean wasCardSelected() {
+		return false;
+	}
 }
 

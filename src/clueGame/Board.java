@@ -100,11 +100,27 @@ public class Board extends JPanel implements MouseListener{
 		Card c = null;
 		for(int i = suggesterIndex+1; i<players.size(); i++) {
 			Player p = players.get(i);
-			c = p.disproveSuggestion(suggestion);
+			if(p.getIsHumanPlayer()) {
+				p.disproveHumanSuggestion(suggestion);
+				c = p.getCardSelected();
+				if(p == null && p.wasCardSelected()) {
+					i--;
+				}
+			}else {
+				c = p.disproveSuggestion(suggestion);
+			}
 		}
 		for(int i = 0; i<suggesterIndex-1; i++){
 			Player p = players.get(i);
-			c = p.disproveSuggestion(suggestion);
+			if(p.getIsHumanPlayer()) {
+				p.disproveHumanSuggestion(suggestion);
+				c = p.getCardSelected();
+				if(p == null && p.wasCardSelected()) {
+					i--;
+				}
+			}else {
+				c = p.disproveSuggestion(suggestion);
+			}
 		}
 		if(c!= null) {
 			cardsSeen.add(c); 
