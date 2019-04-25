@@ -87,7 +87,11 @@ public class ControlGUI extends JPanel{
 		nextPlayer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ClueGame.takeTurn();
+				if(e.getSource() == nextPlayer) {
+					ClueGame.takeTurn();
+				}else {
+					ClueGame.showAccusation();
+				}
 			}
 		});
 	}

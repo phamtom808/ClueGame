@@ -57,14 +57,19 @@ public class ClueGame extends JFrame {
 		game.add(new GuessGUI(board, room));
 	}
 	
-	public static void main(String[] args) {
-		ClueGame game = new ClueGame();
+	public static void showAccusation() {
+		game.add(new AccusationBoxGUI(board));
 	}
 	
 	public static void showSuggestion(Guess guess, Card suggestion) {
 		game.add(new SuggestionBoxGUI(guess, suggestion,game));
 	}
 	
+	
+	public static void main(String[] args) {
+		ClueGame game = new ClueGame();
+	}
+
 	public static void update() {
 		Player currentPlayer = board.getCurrentPlayer();
 		gameControl.updatePlayer(currentPlayer);

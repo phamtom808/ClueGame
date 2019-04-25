@@ -560,6 +560,9 @@ public class Board extends JPanel implements MouseListener{
 				System.exit(0);
 			}
 		}
+		if (currentPlayer.getIsHumanPlayer()) {
+			ClueGame.showAccusation();
+		}
 		
 		if(doRoll) {
 			ClueGame.rollDie();
