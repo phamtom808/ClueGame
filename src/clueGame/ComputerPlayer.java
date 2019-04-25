@@ -78,6 +78,10 @@ public class ComputerPlayer extends Player {
 		return targetCell;
 	}
 	
+	public Card getLastRoomVisited() {
+		return lastRoomVisited;
+	}
+	
 	@Override
 	public void makeMove(Board thisBoard) {
 		BoardCell targetCell = selectTarget(thisBoard);
