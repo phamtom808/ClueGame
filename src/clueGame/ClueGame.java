@@ -65,6 +65,14 @@ public class ClueGame extends JFrame {
 		game.add(new SuggestionBoxGUI(guess, suggestion,game));
 	}
 	
+	public static void winMessage() {
+		JOptionPane.showMessageDialog(game, "You WIN!");
+		
+	}
+	
+	public static void loseMessage() {
+		JOptionPane.showMessageDialog(game, "You lost.");
+	}
 	
 	public static void main(String[] args) {
 		ClueGame game = new ClueGame();

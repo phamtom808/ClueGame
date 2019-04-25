@@ -568,16 +568,13 @@ public class Board extends JPanel implements MouseListener{
 		//if previous player wasn't disproved next computer player makes an accusation
 		if(makeAccusation && !currentPlayer.getIsHumanPlayer()) {
 			if(checkAccusation(nextAccusation)){
-				System.out.println("You WIN!");
+				ClueGame.winMessage();
 				System.exit(0);
 			}
 			else {
-				System.out.println("Sorry you lose");
+				ClueGame.loseMessage();
 				System.exit(0);
 			}
-		}
-		if (currentPlayer.getIsHumanPlayer()) {
-			ClueGame.showAccusation();
 		}
 		
 		if(doRoll) {
