@@ -553,9 +553,11 @@ public class Board extends JPanel implements MouseListener{
 		if(makeAccusation && !currentPlayer.getIsHumanPlayer()) {
 			if(checkAccusation(nextAccusation)){
 				System.out.println("You WIN!");
+				System.exit(0);
 			}
 			else {
 				System.out.println("Sorry you lose");
+				System.exit(0);
 			}
 		}
 		
@@ -580,6 +582,7 @@ public class Board extends JPanel implements MouseListener{
 			throwSuggestion = this.handleSuggestion(compPlayerGuess, currentPlayerIndex);
 			if(throwSuggestion == null) {
 				makeAccusation = true;
+				nextAccusation = compPlayerGuess;
 			}else {
 				makeAccusation = false;
 			}
